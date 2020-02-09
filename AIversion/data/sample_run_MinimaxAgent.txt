@@ -1,0 +1,1411 @@
+$ python pacman.py -p MinimaxAgent -l testClassicTight -t
+
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%< .%
+%%%%%
+Score: 0
+
+Parent Action: Stop
+  successor 1: 3 1 [-2.0, -2.0, -2.0] -2.0 Stop
+   Pacman: (x,y)=(1, 1), Stop -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-2.0, -2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [8.0, 8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [-2.0, -2.0, 8.0] 8.0 North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 Stop
+   Pacman: (x,y)=(1, 1), Stop -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [-2.0, -2.0, 8.0] 8.0 North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 Stop
+   Pacman: (x,y)=(1, 1), Stop -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [-2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [-2.0, -2.0, 8.0] 8.0 North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 Stop
+   Pacman: (x,y)=(1, 1), Stop -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [-2.0, -2.0, 8.0] 8.0 North
+  successor 1: 1 1 [8.0, 8.0, 8.0, 8.0] 8.0 Stop
+   Pacman: (x,y)=(1, 1), Stop -- Ghost: (x,y)=(1.0, 4.0), West
+Parent Action: East
+  successor 1: 3 1 [-2.0, -2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [8.0, 8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-502.0, -2.0, -2.0] -502.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-2.0, -2.0, -2.0] -2.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [-2.0, 8.0, -502.0, -2.0] 8.0 West
+  successor 1: 3 1 [-2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [-2.0, 8.0, -2.0, -2.0] 8.0 West
+  successor 1: 3 1 [-2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [-2.0, -2.0] -2.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [-2.0, -2.0] -2.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [-2.0, 8.0, -2.0, -2.0] 8.0 West
+  successor 1: 3 1 [-2.0, -2.0] -2.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [-2.0, -2.0] -2.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [-2.0, 8.0, -2.0, -2.0] 8.0 West
+  successor 1: 1 1 [8.0, 8.0, 8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(1.0, 4.0), West
+Parent Action: North
+  successor 1: 3 1 [8.0, 8.0, 8.0] 8.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [8.0, 8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-492.0, 8.0, 8.0] -492.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [8.0, 8.0, -492.0] -492.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [8.0, 8.0, -492.0, -492.0] 8.0 North
+  successor 1: 3 1 [8.0, 8.0] 8.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [8.0, 8.0, 8.0, 8.0] 8.0 North
+  successor 1: 3 1 [8.0, 8.0] 8.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [8.0, 8.0, 8.0, 8.0] 8.0 North
+  successor 1: 3 1 [8.0, 8.0] 8.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [8.0, 8.0] 8.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [-492.0, 8.0] -492.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [8.0, 8.0, 8.0, -492.0] 8.0 North
+  successor 1: 1 1 [8.0, 8.0, 8.0, 8.0] 8.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(1.0, 4.0), West
+>> Best, 2nd Best actions: ('East', 8.0) ('East', 8.0)
+
+%%%%%
+% . %
+%. G%
+% . %
+%. .%
+% <.%
+%%%%%
+Score: -1
+
+Parent Action: Stop
+  successor 1: 3 1 [-3.0, -3.0] -3.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [7.0, 7.0] 7.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-3.0, -3.0] -3.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-3.0, -3.0] -3.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [-3.0, 7.0, -3.0, -3.0] 7.0 West
+  successor 1: 3 1 [-3.0] -3.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [7.0] 7.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [-3.0] -3.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [-3.0] -3.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [-3.0, 7.0, -3.0, -3.0] 7.0 West
+  successor 1: 1 1 [7.0, 7.0] 7.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: East
+  successor 1: 3 1 [7.0, 7.0] 7.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-483.0, 17.0] -483.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [7.0, 7.0] 7.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [7.0, -483.0, 7.0] 7.0 West
+  successor 1: 3 1 [7.0] 7.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [17.0] 17.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [7.0] 7.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [7.0, 17.0, 7.0] 17.0 West
+  successor 1: 1 1 [7.0, 17.0] 7.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: North
+  successor 1: 3 1 [-3.0, -3.0] -3.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-3.0, -3.0] -3.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-493.0, 7.0] -493.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [7.0, -493.0] -493.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [7.0, 7.0] 7.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [-3.0, -3.0, -493.0, -493.0, 7.0] 7.0 West
+  successor 1: 3 1 [-3.0] -3.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [-3.0] -3.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [7.0] 7.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [7.0] 7.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [7.0] 7.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [-3.0, -3.0, 7.0, 7.0, 7.0] 7.0 West
+  successor 1: 1 1 [7.0, 7.0] 7.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: West
+  successor 1: 3 1 [-3.0, -3.0] -3.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-3.0, -3.0] -3.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [7.0, 7.0] 7.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [-3.0, -3.0, 7.0] 7.0 North
+  successor 1: 3 1 [-3.0] -3.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [-3.0] -3.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [7.0] 7.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [-3.0, -3.0, 7.0] 7.0 North
+  successor 1: 1 1 [7.0, 7.0] 7.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(3.0, 5.0), North
+>> Best, 2nd Best actions: ('East', 7.0) ('East', 7.0)
+
+%%%%%
+% .G%
+%. .%
+% . %
+%. .%
+%  <%
+%%%%%
+Score: 8
+
+Parent Action: Stop
+  successor 1: 3 1 [6.0, 6.0] 6.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [16.0, 16.0] 16.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [6.0, 6.0] 6.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [6.0, 16.0, 6.0] 16.0 West
+  successor 1: 1 1 [16.0] 16.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(2.0, 5.0), West
+Parent Action: North
+  successor 1: 3 1 [16.0, 16.0] 16.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [16.0, 16.0] 16.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [16.0, 16.0] 16.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [16.0, 16.0] 16.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [16.0, 16.0, 16.0, 16.0] 16.0 West
+  successor 1: 1 1 [16.0] 16.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(2.0, 5.0), West
+Parent Action: West
+  successor 1: 3 1 [6.0, 6.0] 6.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [6.0, 6.0] 6.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [6.0, 6.0] 6.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [6.0, 6.0] 6.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [6.0, 6.0, 6.0, 6.0] 6.0 West
+  successor 1: 1 1 [6.0] 6.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(2.0, 5.0), West
+>> Best, 2nd Best actions: ('North', 16.0) ('North', 16.0)
+
+%%%%%
+% G %
+%. .%
+% . %
+%. v%
+%   %
+%%%%%
+Score: 17
+
+Parent Action: South
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [15.0, 15.0, 15.0] 15.0 West
+  successor 1: 3 1 [15.0] 15.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 West
+   Pacman: (x,y)=(2, 1), West -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 0: 2 0 [15.0, 15.0, 15.0] 15.0 West
+  successor 1: 1 1 [15.0, 15.0] 15.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 5.0), West
+Parent Action: Stop
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [15.0, 15.0, 15.0, 15.0] 15.0 West
+  successor 1: 3 1 [15.0] 15.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 0: 2 0 [15.0, 15.0, 15.0, 15.0] 15.0 West
+  successor 1: 1 1 [15.0, 15.0] 15.0 North
+   Pacman: (x,y)=(3, 2), North -- Ghost: (x,y)=(1.0, 5.0), West
+Parent Action: North
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [25.0, -475.0, 25.0] -475.0 North
+   Pacman: (x,y)=(3, 4), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [-475.0, 25.0, 25.0] -475.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [15.0, 15.0, -475.0, -475.0] 15.0 West
+  successor 1: 3 1 [15.0] 15.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [25.0] 25.0 North
+   Pacman: (x,y)=(3, 4), North -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [25.0] 25.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 0: 2 0 [15.0, 15.0, 25.0, 25.0] 25.0 West
+  successor 1: 1 1 [15.0, 25.0] 15.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 5.0), West
+Parent Action: West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [15.0, 15.0, 15.0] 15.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [-475.0, 25.0, 25.0] -475.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [25.0, 25.0, 25.0] 25.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [15.0, 15.0, 15.0, -475.0, 25.0] 25.0 West
+  successor 1: 3 1 [15.0] 15.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [15.0] 15.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [25.0] 25.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 1: 3 1 [25.0] 25.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 4.0), South
+  successor 0: 2 0 [15.0, 15.0, 15.0, 25.0, 25.0] 25.0 West
+  successor 1: 1 1 [25.0, 25.0] 25.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 5.0), West
+>> Best, 2nd Best actions: ('West', 25.0) ('Stop', 15.0)
+
+%%%%%
+% . %
+%.G.%
+% . %
+%.> %
+%   %
+%%%%%
+Score: 16
+
+Parent Action: South
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-486.0, 14.0, 14.0] -486.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [14.0, 14.0, -486.0, 14.0] 14.0 West
+  successor 1: 3 1 [14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [14.0, 14.0, 14.0, 14.0] 14.0 West
+  successor 1: 3 1 [14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 1), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 North
+   Pacman: (x,y)=(2, 2), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(1, 1), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [14.0, 14.0, 14.0, 14.0] 14.0 West
+  successor 1: 1 1 [14.0, 14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 4.0), West
+Parent Action: Stop
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-486.0, 14.0, 14.0] -486.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [24.0, 24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [14.0, -486.0, 14.0, -476.0, 24.0] 24.0 West
+  successor 1: 3 1 [14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [14.0, 14.0, 14.0, 24.0, 24.0] 24.0 West
+  successor 1: 3 1 [14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [14.0, 14.0, 14.0, 24.0, 24.0] 24.0 West
+  successor 1: 1 1 [24.0, 24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 4.0), West
+Parent Action: East
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [14.0, 14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [14.0, -486.0, 14.0] -486.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-486.0, 14.0, 14.0] -486.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [14.0, 14.0, -486.0, -486.0] 14.0 West
+  successor 1: 3 1 [14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [-486.0, 14.0] -486.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [14.0, 14.0, -486.0, 14.0] 14.0 West
+  successor 1: 3 1 [14.0, 14.0] 14.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [14.0, 14.0] 14.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [14.0, 14.0, 14.0, 14.0] 14.0 West
+  successor 1: 1 1 [14.0, 14.0, 14.0] 14.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 4.0), West
+Parent Action: North
+  successor 1: 3 1 [24.0, 24.0] 24.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [-476.0, 24.0] -476.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [24.0, 24.0, -476.0, 24.0, 24.0] 24.0 West
+  successor 1: 3 1 [24.0, 24.0] 24.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [-476.0, 24.0] -476.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [24.0, 24.0, 24.0, 24.0, -476.0] 24.0 West
+  successor 1: 1 1 [-475.0, 24.0, 24.0] -475.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(1.0, 4.0), West
+Parent Action: West
+  successor 1: 3 1 [24.0, 24.0, 24.0] 24.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [24.0, 24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-476.0, 24.0, 24.0] -476.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [24.0, 24.0, -476.0] -476.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [24.0, 24.0, -476.0, -476.0] 24.0 North
+  successor 1: 3 1 [24.0, 24.0] 24.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [24.0, 24.0, 24.0, 24.0] 24.0 North
+  successor 1: 3 1 [24.0, 24.0] 24.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [24.0, 24.0] 24.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [-476.0, 24.0] -476.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [24.0, 24.0, 24.0, -476.0] 24.0 North
+  successor 1: 1 1 [24.0, 24.0, 24.0] 24.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 4.0), West
+>> Best, 2nd Best actions: ('West', 24.0) ('West', 24.0)
+
+%%%%%
+% . %
+%. G%
+% . %
+%>  %
+%   %
+%%%%%
+Score: 25
+
+Parent Action: South
+  successor 1: 3 1 [23.0, 23.0] 23.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [23.0, 23.0, 23.0] 23.0 North
+  successor 1: 3 1 [23.0] 23.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 East
+   Pacman: (x,y)=(2, 1), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 North
+   Pacman: (x,y)=(1, 2), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [23.0, 23.0, 23.0] 23.0 North
+  successor 1: 1 1 [23.0, 23.0] 23.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: Stop
+  successor 1: 3 1 [23.0, 23.0] 23.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [23.0, 23.0, 23.0, 23.0] 23.0 North
+  successor 1: 3 1 [23.0] 23.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [23.0, 23.0, 23.0, 23.0] 23.0 North
+  successor 1: 1 1 [23.0, 23.0] 23.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: East
+  successor 1: 3 1 [23.0, 23.0] 23.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [-477.0, 23.0] -477.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [33.0, -467.0] -467.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [23.0, 23.0, -477.0, -467.0, 23.0] 23.0 West
+  successor 1: 3 1 [23.0] 23.0 South
+   Pacman: (x,y)=(2, 1), South -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [33.0] 33.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [23.0, 23.0, 23.0, 33.0, 23.0] 33.0 West
+  successor 1: 1 1 [23.0, 33.0] 23.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: North
+  successor 1: 3 1 [23.0, 23.0] 23.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [23.0, 23.0] 23.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [33.0, -467.0] -467.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [33.0, 33.0] 33.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [23.0, 23.0, -467.0, 33.0] 33.0 North
+  successor 1: 3 1 [23.0] 23.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [23.0] 23.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [33.0] 33.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [33.0] 33.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [23.0, 23.0, 33.0, 33.0] 33.0 North
+  successor 1: 1 1 [33.0, 33.0] 33.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(3.0, 5.0), North
+>> Best, 2nd Best actions: ('North', 33.0) ('Stop', 23.0)
+
+%%%%%
+% . %
+%. .%
+%v.G%
+%   %
+%   %
+%%%%%
+Score: 24
+
+Parent Action: South
+  successor 1: 3 1 [22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [22.0, -478.0] -478.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [22.0, 22.0] 22.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [22.0, 22.0, -478.0, 22.0] 22.0 North
+  successor 1: 3 1 [22.0, 22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 1), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [22.0, 22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [-478.0, 22.0, 22.0] -478.0 East
+   Pacman: (x,y)=(2, 2), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [22.0, 22.0, -478.0] -478.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [22.0, 22.0, -478.0, -478.0] 22.0 North
+  successor 1: 1 1 [22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(2.0, 3.0), West
+Parent Action: Stop
+  successor 1: 3 1 [22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [22.0, 22.0] 22.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [22.0, 22.0, 32.0, 32.0] 32.0 North
+  successor 1: 3 1 [22.0, 22.0, 22.0] 22.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [22.0, 22.0, -478.0] -478.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [32.0, 32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [22.0, -478.0, -468.0, 32.0] 32.0 North
+  successor 1: 1 1 [32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 3), North -- Ghost: (x,y)=(2.0, 3.0), West
+Parent Action: East
+  successor 1: 3 1 [32.0, -468.0] -468.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [-468.0, 32.0, 32.0, 32.0, 32.0] 32.0 West
+  successor 1: 1 1 [32.0, -467.0] -467.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(2.0, 3.0), West
+Parent Action: North
+  successor 1: 3 1 [32.0, 32.0] 32.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [32.0, 32.0, 32.0, 32.0] 32.0 North
+  successor 1: 3 1 [32.0, 32.0, -468.0] -468.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [32.0, 32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [32.0, -468.0, 32.0] -468.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [32.0, 32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [-468.0, 32.0, -468.0, 32.0] 32.0 North
+  successor 1: 1 1 [32.0, 32.0] 32.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(2.0, 3.0), West
+>> Best, 2nd Best actions: ('North', 32.0) ('North', 32.0)
+
+%%%%%
+% . %
+%v .%
+% G %
+%   %
+%   %
+%%%%%
+Score: 33
+
+Parent Action: South
+  successor 1: 3 1 [31.0, 31.0, -469.0] -469.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [41.0, 41.0, 41.0] 41.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [-469.0, 31.0, 41.0, 31.0] 41.0 North
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [41.0, 41.0, 41.0] 41.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [31.0, 31.0, -469.0] -469.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [31.0, 31.0, 41.0, -469.0] 41.0 North
+  successor 1: 1 1 [41.0, 41.0, -468.0] -468.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 3.0), West
+Parent Action: Stop
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [31.0, 31.0, 31.0, 31.0] 31.0 North
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [31.0, 31.0, -469.0] -469.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [31.0, -469.0, -469.0, 31.0] 31.0 North
+  successor 1: 3 1 [31.0, -469.0] -469.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [31.0, 31.0] 31.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 0: 2 0 [-469.0, -469.0, 31.0, 31.0] 31.0 North
+  successor 1: 1 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 3.0), West
+Parent Action: East
+  successor 1: 3 1 [41.0, 41.0, 41.0] 41.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [41.0, 41.0, 41.0] 41.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [41.0, 41.0, 41.0] 41.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [41.0, 31.0, 41.0, 41.0, 31.0] 41.0 West
+  successor 1: 3 1 [41.0, 41.0] 41.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [31.0, 31.0] 31.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [41.0, 41.0] 41.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [41.0, 41.0] 41.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [31.0, -469.0] -469.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 0: 2 0 [41.0, 31.0, 41.0, 41.0, -469.0] 41.0 West
+  successor 1: 1 1 [41.0, -468.0, 41.0] -468.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 3.0), West
+Parent Action: North
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [41.0, 41.0, 41.0] 41.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [31.0, 31.0, 41.0] 41.0 East
+  successor 1: 3 1 [31.0, 31.0, -469.0] -469.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [31.0, 31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 1: 3 1 [41.0, -459.0, 41.0] -459.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 4.0), West
+  successor 0: 2 0 [-469.0, 31.0, -459.0] 31.0 East
+  successor 1: 3 1 [31.0, -469.0] -469.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [31.0, 31.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 1: 3 1 [41.0, 41.0] 41.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 4.0), North
+  successor 0: 2 0 [-469.0, 31.0, 41.0] 41.0 East
+  successor 1: 1 1 [41.0, 31.0, 41.0] 31.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 3.0), West
+>> Best, 2nd Best actions: ('North', 31.0) ('North', 31.0)
+
+%%%%%
+%v. %
+%  .%
+%G. %
+%   %
+%   %
+%%%%%
+Score: 32
+
+Parent Action: South
+  successor 1: 3 1 [30.0, 30.0] 30.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [30.0, 30.0] 30.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [30.0, 30.0] 30.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [30.0, 30.0] 30.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 0: 2 0 [30.0, 30.0, 30.0, 30.0] 30.0 North
+  successor 1: 1 1 [30.0, -469.0] -469.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(1.0, 4.0), North
+Parent Action: Stop
+  successor 1: 3 1 [30.0, 30.0] 30.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [30.0, 30.0] 30.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 0: 2 0 [30.0, 30.0, 40.0] 40.0 East
+  successor 1: 3 1 [30.0, -470.0] -470.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [-470.0, -470.0, 40.0] 40.0 East
+  successor 1: 1 1 [40.0, 40.0] 40.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 4.0), North
+Parent Action: East
+  successor 1: 3 1 [40.0, 40.0] 40.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 1: 3 1 [40.0, 40.0] 40.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 2.0), East
+  successor 0: 2 0 [40.0, 40.0, 40.0, 40.0] 40.0 West
+  successor 1: 3 1 [-460.0, 40.0] -460.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 1: 3 1 [40.0, -460.0] -460.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(1.0, 5.0), North
+  successor 0: 2 0 [-460.0, 40.0, 40.0, -460.0] 40.0 West
+  successor 1: 1 1 [40.0, 40.0] 40.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 4.0), North
+>> Best, 2nd Best actions: ('East', 40.0) ('East', 40.0)
+
+%%%%%
+% < %
+%G .%
+% . %
+%   %
+%   %
+%%%%%
+Score: 41
+
+Parent Action: South
+  successor 1: 3 1 [49.0] 49.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [39.0] 39.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [49.0] 49.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [-461.0] -461.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [39.0] 39.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 0: 2 0 [49.0, 39.0, 49.0, -461.0, 39.0] 49.0 West
+  successor 1: 1 1 [-460.0, 49.0] -460.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 5.0), North
+Parent Action: Stop
+  successor 1: 3 1 [39.0, 39.0, -461.0] -461.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 1: 3 1 [39.0, 39.0, 39.0] 39.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 1: 3 1 [39.0, 39.0, 39.0] 39.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 0: 2 0 [-461.0, -461.0, 39.0, 39.0] 39.0 West
+  successor 1: 3 1 [39.0] 39.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [-461.0] -461.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [39.0] 39.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 0: 2 0 [39.0, -461.0, 39.0, -461.0] 39.0 West
+  successor 1: 1 1 [39.0, 39.0] 39.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 5.0), North
+Parent Action: East
+  successor 1: 3 1 [49.0, -451.0, 49.0] -451.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 1: 3 1 [39.0, 39.0, 39.0] 39.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 1: 3 1 [39.0, 39.0, -461.0] -461.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 0: 2 0 [-451.0, 39.0, -461.0] 39.0 West
+  successor 1: 3 1 [49.0] 49.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [39.0] 39.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 1: 3 1 [-461.0] -461.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 5.0), East
+  successor 0: 2 0 [49.0, 39.0, -461.0] 49.0 West
+  successor 1: 1 1 [39.0, 49.0] 39.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 5.0), North
+Parent Action: West
+  successor 1: 3 1 [39.0, 39.0, 39.0] 39.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 1: 3 1 [39.0, 39.0, 39.0] 39.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 1: 3 1 [39.0, 39.0, -461.0] -461.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(2.0, 5.0), North
+  successor 0: 2 0 [39.0, 39.0, -461.0] 39.0 East
+  successor 1: 1 1 [39.0, -460.0] -460.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(1.0, 5.0), North
+>> Best, 2nd Best actions: ('East', 39.0) ('East', 39.0)
+
+%%%%%
+%  <%
+% G.%
+% . %
+%   %
+%   %
+%%%%%
+Score: 40
+
+Parent Action: South
+  successor 1: 3 1 [48.0, -452.0, 48.0] -452.0 South
+   Pacman: (x,y)=(3, 3), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [48.0, 48.0, 48.0] 48.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [48.0, 48.0, 48.0] 48.0 North
+   Pacman: (x,y)=(3, 5), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [48.0, 48.0, 48.0] 48.0 West
+   Pacman: (x,y)=(2, 4), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [-452.0, 48.0, 48.0, 48.0] 48.0 West
+  successor 1: 3 1 [48.0, 48.0] 48.0 South
+   Pacman: (x,y)=(3, 3), South -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [48.0, 48.0] 48.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [-452.0, 48.0] -452.0 North
+   Pacman: (x,y)=(3, 5), North -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [48.0, 48.0] 48.0 West
+   Pacman: (x,y)=(2, 4), West -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [48.0, 48.0, -452.0, 48.0] 48.0 West
+  successor 1: 1 1 [48.0, -451.0, 48.0] -451.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(2.0, 5.0), North
+Parent Action: Stop
+  successor 1: 3 1 [48.0, 48.0, 48.0] 48.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [38.0, 38.0, 38.0] 38.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [38.0, 38.0, 38.0] 38.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [48.0, 38.0, 38.0] 48.0 West
+  successor 1: 3 1 [38.0, -462.0] -462.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [38.0, 38.0] 38.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [-452.0, -462.0, 38.0] 38.0 West
+  successor 1: 3 1 [48.0, 48.0] 48.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 1: 3 1 [-462.0, 38.0] -462.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 5.0), West
+  successor 0: 2 0 [48.0, -462.0, -462.0] 48.0 West
+  successor 1: 1 1 [48.0, 38.0, 48.0] 38.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 5.0), North
+Parent Action: West
+  successor 1: 3 1 [38.0, 38.0, 38.0] 38.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [38.0, 38.0, 38.0] 38.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [38.0, 38.0, 38.0] 38.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [38.0, 38.0, 38.0] 38.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [38.0, 38.0, 38.0, 38.0] 38.0 West
+  successor 1: 3 1 [38.0, 38.0] 38.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [38.0, 38.0] 38.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [38.0, -462.0] -462.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 1: 3 1 [38.0, 38.0] 38.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(3.0, 5.0), North
+  successor 0: 2 0 [38.0, 38.0, -462.0, 38.0] 38.0 West
+  successor 1: 1 1 [38.0, 38.0, -461.0] -461.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 5.0), North
+>> Best, 2nd Best actions: ('Stop', 38.0) ('West', -461.0)
+
+%%%%%
+%  <%
+%  G%
+% . %
+%   %
+%   %
+%%%%%
+Score: 39
+
+Parent Action: South
+Parent Action: Stop
+  successor 1: 3 1 [47.0, 47.0] 47.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [37.0, 37.0] 37.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [37.0, 37.0] 37.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [47.0, 37.0, 37.0] 47.0 West
+  successor 1: 1 1 [47.0, -462.0] -462.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(3.0, 5.0), North
+Parent Action: West
+  successor 1: 3 1 [37.0, 37.0] 37.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [37.0, 37.0] 37.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [37.0, 37.0] 37.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 1: 3 1 [37.0, 37.0] 37.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 3.0), West
+  successor 0: 2 0 [37.0, 37.0, 37.0, 37.0] 37.0 West
+  successor 1: 3 1 [37.0] 37.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [-463.0] -463.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 1: 3 1 [37.0] 37.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 5.0), West
+  successor 0: 2 0 [37.0, -463.0, -463.0, 37.0] 37.0 West
+  successor 1: 1 1 [37.0, 37.0] 37.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(3.0, 5.0), North
+>> Best, 2nd Best actions: ('West', 37.0) ('Stop', -462.0)
+
+%%%%%
+% > %
+%  .%
+% .G%
+%   %
+%   %
+%%%%%
+Score: 38
+
+Parent Action: South
+  successor 1: 3 1 [46.0, 46.0] 46.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [46.0, 46.0] 46.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [46.0, 36.0, 46.0, 36.0, 36.0] 46.0 West
+  successor 1: 3 1 [36.0, -464.0, 36.0] -464.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [46.0, 46.0, 46.0] 46.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [-454.0, -464.0, 46.0, 36.0, 36.0] 46.0 West
+  successor 1: 1 1 [46.0, 46.0] 46.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 3.0), West
+Parent Action: Stop
+  successor 1: 3 1 [36.0, 36.0] 36.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [36.0, 36.0, 36.0, 36.0] 36.0 West
+  successor 1: 3 1 [36.0, -464.0, 36.0] -464.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [-464.0, 36.0, 36.0, 36.0] 36.0 West
+  successor 1: 1 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 3.0), West
+Parent Action: East
+  successor 1: 3 1 [46.0, 46.0] 46.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [46.0, 36.0, 36.0] 46.0 West
+  successor 1: 3 1 [46.0, 46.0, 46.0] 46.0 South
+   Pacman: (x,y)=(3, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(2, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [46.0, 36.0, 36.0] 46.0 West
+  successor 1: 1 1 [46.0, 46.0] 46.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 3.0), West
+Parent Action: West
+  successor 1: 3 1 [36.0, 36.0] 36.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 1: 3 1 [36.0, 36.0] 36.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(2.0, 2.0), West
+  successor 0: 2 0 [36.0, 36.0, 36.0] 36.0 East
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 South
+   Pacman: (x,y)=(1, 4), South -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 1: 3 1 [36.0, 36.0, 36.0] 36.0 East
+   Pacman: (x,y)=(2, 5), East -- Ghost: (x,y)=(1.0, 3.0), West
+  successor 0: 2 0 [36.0, 36.0, 36.0] 36.0 East
+  successor 1: 1 1 [36.0, 36.0] 36.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 3.0), West
+>> Best, 2nd Best actions: ('South', 46.0) ('East', 46.0)
+
+%%%%%
+%   %
+% ^.%
+% . %
+%  G%
+%   %
+%%%%%
+Score: 37
+
+Parent Action: South
+  successor 1: 3 1 [45.0] 45.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 0: 2 0 [45.0, 45.0, 45.0, 45.0, 45.0] 45.0 West
+  successor 1: 3 1 [45.0, -455.0, 45.0] -455.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [-455.0, -455.0, 45.0, 45.0, 45.0] 45.0 West
+  successor 1: 1 1 [45.0, 45.0] 45.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(2.0, 2.0), West
+Parent Action: Stop
+  successor 1: 3 1 [45.0] 45.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 0: 2 0 [45.0, 35.0, 45.0, 35.0, 35.0] 45.0 West
+  successor 1: 3 1 [45.0, -455.0, 45.0] -455.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [-455.0, 35.0, 45.0, 35.0, 35.0] 45.0 West
+  successor 1: 1 1 [45.0, 45.0] 45.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 2.0), West
+Parent Action: East
+  successor 1: 3 1 [45.0] 45.0 South
+   Pacman: (x,y)=(3, 3), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 North
+   Pacman: (x,y)=(3, 5), North -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [45.0] 45.0 West
+   Pacman: (x,y)=(2, 4), West -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 0: 2 0 [45.0, 45.0, 45.0, 45.0] 45.0 West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 South
+   Pacman: (x,y)=(3, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 North
+   Pacman: (x,y)=(3, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [45.0, 45.0, 45.0] 45.0 West
+   Pacman: (x,y)=(2, 4), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [45.0, 45.0, 45.0, 45.0] 45.0 West
+  successor 1: 1 1 [45.0, 45.0] 45.0 East
+   Pacman: (x,y)=(3, 4), East -- Ghost: (x,y)=(2.0, 2.0), West
+Parent Action: North
+  successor 1: 3 1 [35.0] 35.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 0: 2 0 [35.0, 35.0, 35.0, 35.0] 35.0 West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 South
+   Pacman: (x,y)=(2, 4), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 East
+   Pacman: (x,y)=(3, 5), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 West
+   Pacman: (x,y)=(1, 5), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [35.0, 35.0, 35.0, 35.0] 35.0 West
+  successor 1: 1 1 [35.0, 35.0] 35.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(2.0, 2.0), West
+Parent Action: West
+  successor 1: 3 1 [35.0] 35.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 1: 3 1 [35.0] 35.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(2.0, 1.0), West
+  successor 0: 2 0 [35.0, 35.0, 35.0, 35.0] 35.0 North
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 South
+   Pacman: (x,y)=(1, 3), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 East
+   Pacman: (x,y)=(2, 4), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [35.0, 35.0, 35.0] 35.0 North
+   Pacman: (x,y)=(1, 5), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [35.0, 35.0, 35.0, 35.0] 35.0 North
+  successor 1: 1 1 [35.0, 35.0] 35.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(2.0, 2.0), West
+>> Best, 2nd Best actions: ('South', 45.0) ('Stop', 45.0)
+
+%%%%%
+%   %
+%  .%
+% ^ %
+%   %
+%  G%
+%%%%%
+Score: 46
+
+Parent Action: South
+  successor 1: 3 1 [-456.0, 44.0] -456.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 East
+   Pacman: (x,y)=(3, 2), East -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 North
+   Pacman: (x,y)=(2, 3), North -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 West
+   Pacman: (x,y)=(1, 2), West -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 0: 2 0 [-456.0, -456.0, 44.0, 44.0, 44.0] 44.0 West
+  successor 1: 1 1 [44.0] 44.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(2.0, 1.0), West
+Parent Action: Stop
+  successor 1: 3 1 [-456.0, 44.0] -456.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 0: 2 0 [-456.0, 44.0, 44.0, 44.0, 44.0] 44.0 West
+  successor 1: 1 1 [44.0] 44.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(2.0, 1.0), West
+Parent Action: East
+  successor 1: 3 1 [44.0, 44.0] 44.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 0: 2 0 [44.0, 44.0, 554.0, 44.0] 554.0 West
+  successor 1: 1 1 [554.0] 554.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(2.0, 1.0), West
+Parent Action: North
+  successor 1: 3 1 [44.0, 44.0] 44.0 South
+   Pacman: (x,y)=(2, 3), South -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 North
+   Pacman: (x,y)=(2, 5), North -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 West
+   Pacman: (x,y)=(1, 4), West -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 0: 2 0 [44.0, 44.0, 554.0, 44.0, 44.0] 554.0 West
+  successor 1: 1 1 [554.0] 554.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(2.0, 1.0), West
+Parent Action: West
+  successor 1: 3 1 [44.0, 44.0] 44.0 South
+   Pacman: (x,y)=(1, 2), South -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 East
+   Pacman: (x,y)=(2, 3), East -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 1: 3 1 [44.0, 44.0] 44.0 North
+   Pacman: (x,y)=(1, 4), North -- Ghost: (x,y)=(1.0, 1.0), West
+  successor 0: 2 0 [44.0, 44.0, 44.0, 44.0] 44.0 North
+  successor 1: 1 1 [44.0] 44.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(2.0, 1.0), West
+>> Best, 2nd Best actions: ('East', 554.0) ('North', 554.0)
+
+%%%%%
+%   %
+%  .%
+%  <%
+%   %
+% G %
+%%%%%
+Score: 45
+
+Parent Action: South
+  successor 1: 3 1 [43.0, 43.0, 43.0] 43.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [-457.0, 43.0, 43.0] -457.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [43.0, 43.0, 43.0] 43.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [43.0, -457.0, 43.0, -457.0] 43.0 West
+  successor 1: 3 1 [43.0] 43.0 South
+   Pacman: (x,y)=(3, 1), South -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 North
+   Pacman: (x,y)=(3, 3), North -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 West
+   Pacman: (x,y)=(2, 2), West -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 0: 2 0 [43.0, 43.0, 43.0, 43.0] 43.0 West
+  successor 1: 1 1 [43.0, 43.0] 43.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 1.0), West
+Parent Action: Stop
+  successor 1: 3 1 [-457.0, 43.0, 43.0] -457.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [43.0, 43.0, 43.0] 43.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [43.0, -457.0, 43.0] -457.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [-457.0, 43.0, 553.0, -457.0] 553.0 West
+  successor 1: 3 1 [43.0] 43.0 South
+   Pacman: (x,y)=(3, 2), South -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 0: 2 0 [43.0, 43.0, 553.0, 43.0] 553.0 West
+  successor 1: 1 1 [553.0, 553.0] 553.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 1.0), West
+Parent Action: North
+Parent Action: West
+  successor 1: 3 1 [43.0, -457.0, 43.0] -457.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [43.0, 43.0, 43.0] 43.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [43.0, 43.0, 43.0] 43.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 1: 3 1 [43.0, 43.0, 43.0] 43.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(1.0, 2.0), West
+  successor 0: 2 0 [-457.0, -457.0, 43.0, 43.0, 43.0] 43.0 West
+  successor 1: 3 1 [43.0] 43.0 South
+   Pacman: (x,y)=(2, 2), South -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 East
+   Pacman: (x,y)=(3, 3), East -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 North
+   Pacman: (x,y)=(2, 4), North -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 1: 3 1 [43.0] 43.0 West
+   Pacman: (x,y)=(1, 3), West -- Ghost: (x,y)=(1.0, 2.0), North
+  successor 0: 2 0 [43.0, 43.0, 43.0, 43.0, 43.0] 43.0 West
+  successor 1: 1 1 [43.0, 43.0] 43.0 West
+   Pacman: (x,y)=(2, 3), West -- Ghost: (x,y)=(1.0, 1.0), West
+>> Best, 2nd Best actions: ('North', 554.0) ('West', 43.0)
+
+%%%%%
+%   %
+%  v%
+%   %
+%   %
+% G %
+%%%%%
+Score: 554
+
+Pacman emerges victorious! Score: 554
+Average Score: 554.0
+Scores:        554.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+

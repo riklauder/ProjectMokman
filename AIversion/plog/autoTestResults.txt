@@ -1,0 +1,382 @@
+
+Question q1
+===========
+
+Pacman emerges victorious! Score: 1242
+Pacman emerges victorious! Score: 1263
+Pacman emerges victorious! Score: 1250
+Pacman emerges victorious! Score: 1258
+Pacman died! Score: 73
+Pacman emerges victorious! Score: 1256
+Pacman emerges victorious! Score: 1252
+Pacman emerges victorious! Score: 1258
+Pacman emerges victorious! Score: 1256
+Pacman emerges victorious! Score: 1260
+Average Score: 1136.8
+Scores:        1242.0, 1263.0, 1250.0, 1258.0, 73.0, 1256.0, 1252.0, 1258.0, 1256.0, 1260.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win
+*** FAIL: auto_test_cases\q1\grade-agent.test (3 of 4 points)
+***     1136.8 average score (2 of 2 points)
+***         Grading scheme:
+***          < 500:  0 points
+***         >= 500:  1 points
+***         >= 1000:  2 points
+***     10 games not timed out (0 of 0 points)
+***         Grading scheme:
+***          < 10:  fail
+***         >= 10:  0 points
+***     9 wins (1 of 2 points)
+***         Grading scheme:
+***          < 1:  fail
+***         >= 1:  0 points
+***         >= 5:  1 points
+***         >= 10:  2 points
+
+### Question q1: 3/4 ###
+
+
+Question q2
+===========
+
+*** PASS: auto_test_cases\q2\0-lecture-6-tree.test
+*** PASS: auto_test_cases\q2\0-small-tree.test
+*** PASS: auto_test_cases\q2\1-1-minmax.test
+*** PASS: auto_test_cases\q2\1-2-minmax.test
+*** PASS: auto_test_cases\q2\1-3-minmax.test
+*** PASS: auto_test_cases\q2\1-4-minmax.test
+*** PASS: auto_test_cases\q2\1-5-minmax.test
+*** PASS: auto_test_cases\q2\1-6-minmax.test
+*** PASS: auto_test_cases\q2\1-7-minmax.test
+*** PASS: auto_test_cases\q2\1-8-minmax.test
+*** PASS: auto_test_cases\q2\2-1a-vary-depth.test
+*** PASS: auto_test_cases\q2\2-1b-vary-depth.test
+*** PASS: auto_test_cases\q2\2-2a-vary-depth.test
+*** PASS: auto_test_cases\q2\2-2b-vary-depth.test
+*** PASS: auto_test_cases\q2\2-3a-vary-depth.test
+*** PASS: auto_test_cases\q2\2-3b-vary-depth.test
+*** PASS: auto_test_cases\q2\2-4a-vary-depth.test
+*** PASS: auto_test_cases\q2\2-4b-vary-depth.test
+*** PASS: auto_test_cases\q2\2-one-ghost-3level.test
+*** PASS: auto_test_cases\q2\3-one-ghost-4level.test
+*** PASS: auto_test_cases\q2\4-two-ghosts-3level.test
+*** PASS: auto_test_cases\q2\5-two-ghosts-4level.test
+*** PASS: auto_test_cases\q2\6-tied-root.test
+*** PASS: auto_test_cases\q2\7-1a-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q2\7-1b-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q2\7-1c-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q2\7-2a-check-depth-two-ghosts.test
+*** PASS: auto_test_cases\q2\7-2b-check-depth-two-ghosts.test
+*** PASS: auto_test_cases\q2\7-2c-check-depth-two-ghosts.test
+*** FAIL: Exception raised: 'map' object is not subscriptable
+***
+*** Traceback (most recent call last):
+***   File "C:\rikcuts\aWorking\grading.py", line 75, in grade
+***     util.TimeoutFunction(getattr(gradingModule, q),300)(self) # Call the question's function
+***   File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+***     result = self.function(*args, **keyArgs)
+***   File "autograder.py", line 312, in <lambda>
+***     return lambda grades: question.execute(grades)
+***   File "C:\rikcuts\aWorking\testClasses.py", line 57, in execute
+***     if not f(grades):
+***   File "autograder.py", line 307, in <lambda>
+***     return lambda grades: testCase.execute(grades, moduleDict, solutionDict)
+***   File "multiagentTestClasses.py", line 310, in execute
+***     pac = GradingAgent(self.seed, studentAgent, allActions, altDepthActions, partialPlyBugActions)
+***   File "multiagentTestClasses.py", line 156, in __init__
+***     self.actionsConsistentWithOptimal = [True for i in range(len(optimalActions[0]))]
+*** TypeError: 'map' object is not subscriptable
+***
+
+### Question q2: 0/5 ###
+
+
+Question q3
+===========
+
+*** PASS: auto_test_cases\q3\0-lecture-6-tree.test
+*** PASS: auto_test_cases\q3\0-small-tree.test
+*** PASS: auto_test_cases\q3\1-1-minmax.test
+*** PASS: auto_test_cases\q3\1-2-minmax.test
+*** PASS: auto_test_cases\q3\1-3-minmax.test
+*** PASS: auto_test_cases\q3\1-4-minmax.test
+*** PASS: auto_test_cases\q3\1-5-minmax.test
+*** PASS: auto_test_cases\q3\1-6-minmax.test
+*** PASS: auto_test_cases\q3\1-7-minmax.test
+*** PASS: auto_test_cases\q3\1-8-minmax.test
+*** PASS: auto_test_cases\q3\2-1a-vary-depth.test
+*** PASS: auto_test_cases\q3\2-1b-vary-depth.test
+*** PASS: auto_test_cases\q3\2-2a-vary-depth.test
+*** PASS: auto_test_cases\q3\2-2b-vary-depth.test
+*** PASS: auto_test_cases\q3\2-3a-vary-depth.test
+*** PASS: auto_test_cases\q3\2-3b-vary-depth.test
+*** PASS: auto_test_cases\q3\2-4a-vary-depth.test
+*** PASS: auto_test_cases\q3\2-4b-vary-depth.test
+*** PASS: auto_test_cases\q3\2-one-ghost-3level.test
+*** PASS: auto_test_cases\q3\3-one-ghost-4level.test
+*** PASS: auto_test_cases\q3\4-two-ghosts-3level.test
+*** PASS: auto_test_cases\q3\5-two-ghosts-4level.test
+*** PASS: auto_test_cases\q3\6-tied-root.test
+*** PASS: auto_test_cases\q3\7-1a-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q3\7-1b-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q3\7-1c-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q3\7-2a-check-depth-two-ghosts.test
+*** PASS: auto_test_cases\q3\7-2b-check-depth-two-ghosts.test
+*** PASS: auto_test_cases\q3\7-2c-check-depth-two-ghosts.test
+*** FAIL: Exception raised: 'map' object is not subscriptable
+***
+*** Traceback (most recent call last):
+***   File "C:\rikcuts\aWorking\grading.py", line 75, in grade
+***     util.TimeoutFunction(getattr(gradingModule, q),300)(self) # Call the question's function
+***   File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+***     result = self.function(*args, **keyArgs)
+***   File "autograder.py", line 312, in <lambda>
+***     return lambda grades: question.execute(grades)
+***   File "C:\rikcuts\aWorking\testClasses.py", line 57, in execute
+***     if not f(grades):
+***   File "autograder.py", line 307, in <lambda>
+***     return lambda grades: testCase.execute(grades, moduleDict, solutionDict)
+***   File "multiagentTestClasses.py", line 310, in execute
+***     pac = GradingAgent(self.seed, studentAgent, allActions, altDepthActions, partialPlyBugActions)
+***   File "multiagentTestClasses.py", line 156, in __init__
+***     self.actionsConsistentWithOptimal = [True for i in range(len(optimalActions[0]))]
+*** TypeError: 'map' object is not subscriptable
+***
+
+### Question q3: 0/5 ###
+
+
+Question q4
+===========
+
+*** PASS: auto_test_cases\q4\0-expectimax1.test
+*** PASS: auto_test_cases\q4\1-expectimax2.test
+*** PASS: auto_test_cases\q4\2-one-ghost-3level.test
+*** PASS: auto_test_cases\q4\3-one-ghost-4level.test
+*** PASS: auto_test_cases\q4\4-two-ghosts-3level.test
+*** PASS: auto_test_cases\q4\5-two-ghosts-4level.test
+*** PASS: auto_test_cases\q4\6-1a-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q4\6-1b-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q4\6-1c-check-depth-one-ghost.test
+*** PASS: auto_test_cases\q4\6-2a-check-depth-two-ghosts.test
+*** PASS: auto_test_cases\q4\6-2b-check-depth-two-ghosts.test
+*** PASS: auto_test_cases\q4\6-2c-check-depth-two-ghosts.test
+*** FAIL: Exception raised: 'map' object is not subscriptable
+***
+*** Traceback (most recent call last):
+***   File "C:\rikcuts\aWorking\grading.py", line 75, in grade
+***     util.TimeoutFunction(getattr(gradingModule, q),300)(self) # Call the question's function
+***   File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+***     result = self.function(*args, **keyArgs)
+***   File "autograder.py", line 312, in <lambda>
+***     return lambda grades: question.execute(grades)
+***   File "C:\rikcuts\aWorking\testClasses.py", line 57, in execute
+***     if not f(grades):
+***   File "autograder.py", line 307, in <lambda>
+***     return lambda grades: testCase.execute(grades, moduleDict, solutionDict)
+***   File "multiagentTestClasses.py", line 310, in execute
+***     pac = GradingAgent(self.seed, studentAgent, allActions, altDepthActions, partialPlyBugActions)
+***   File "multiagentTestClasses.py", line 156, in __init__
+***     self.actionsConsistentWithOptimal = [True for i in range(len(optimalActions[0]))]
+*** TypeError: 'map' object is not subscriptable
+***
+
+### Question q4: 0/5 ###
+
+
+Question q5
+===========
+
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Traceback (most recent call last):
+  File "C:\rikcuts\aWorking\game.py", line 638, in run
+    action = timed_func(observation)
+  File "C:\rikcuts\aWorking\util.py", line 620, in __call__
+    result = self.function(*args, **keyArgs)
+  File "multiAgents.py", line 445, in getAction
+    temp = expectimax(1, range(gameState.getNumAgents()), successor[1], self.depth, self.evaluationFunction)
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 471, in expectimax
+    v = max(v, expectimax(agentList[agent+1], agentList, successor, depth, evalFunc))
+  File "multiAgents.py", line 474, in expectimax
+    v += p * expectimax(agentList[0], agentList, successor, depth - 1, evalFunc)
+  File "multiAgents.py", line 456, in expectimax
+    return evalFunc(state)
+TypeError: betterEvaluationFunction() missing 1 required positional argument: 'action'
+Pacman crashed
+Average Score: 0.0
+Scores:        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+Win Rate:      0/10 (0.00)
+Record:        Loss, Loss, Loss, Loss, Loss, Loss, Loss, Loss, Loss, Loss
+*** FAIL: auto_test_cases\q5\grade-agent.test (0 of 6 points)
+***     0.0 average score (0 of 2 points)
+***         Grading scheme:
+***          < 500:  0 points
+***         >= 500:  1 points
+***         >= 1000:  2 points
+***     10 games not timed out (1 of 1 points)
+***         Grading scheme:
+***          < 0:  fail
+***         >= 0:  0 points
+***         >= 10:  1 points
+***     0 wins (fail: below minimum value 1)
+***         Grading scheme:
+***          < 1:  fail
+***         >= 1:  1 points
+***         >= 5:  2 points
+***         >= 10:  3 points
+
+### Question q5: 0/6 ###

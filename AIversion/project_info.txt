@@ -1,0 +1,108 @@
+# Pac-Man-ai
+😾  👻  Artificial Intelligence with Pac-Man
+
+
+## Team Members:
+- Nigel Fong
+- Karan Grewal
+- Simon Wozny
+
+
+## Quickstart; Run the Game
+
+See commands to run the game in `commands.txt` [the commands are parsed by `readCommand` located in `pacman.py`]
+
+(E.g.) `python pacman.py -p ReflexAgent -l testClassic`
+
+Choose levels available in the `layouts` directory. Note, there are more levels available in the UofT starter code [not given here].
+
+
+
+#### Command Line Options (from `pacman.py` file)
+- `'-n', '--numGames'`, the number of games to play. Only works with `quietTextGraphics` option.
+- `'-l', '--layout'`, the layout_file in `layouts` from which to load the map layout. default='mediumClassic'.
+- `'-p', '--pacman'`, the agent type in the `multiAgents` module to use. default='KeyboardAgent' in `keyboardAgents.py`.
+- `'-t', '--textGraphics'`, Display output as text only (like our Sokoban game). default=False.
+- `'-q', '--quietTextGraphics'`, Instant feedback with score. Generate minimal output and no graphics. default=False.
+- `'-s', '--silent'`, Prevent print statements of game results when finished. default=False.
+- `'-g', '--ghosts'`, the ghost agent type in the `ghostAgents` module to use (only other option is `DirectionalGhost`, which makes it hard for PacMan). default='RandomGhost'.
+- `'-k', '--numghosts'`, The maximum number of ghosts to use. This doesn't apply to GUI or textGraphics mode, so who knows what its for. default=4.
+- `'-z', '--zoom'`, Zoom the size of the graphics window. default=1.0
+- `'-f', '--fixRandomSeed'`, Fixes the random seed to always play the same game. default=False
+- `'-r', '--recordActions'`, Writes game history to a file (named by the time they were played) into the`recorded-games` directory. default=False.
+- `'--replay'`, A recorded game file (object pickle'd in binary) from `recordActions` to replay. default=None.
+    - E.g. usage, `python pacman.py --replay <name-of-recorded-game>`
+- `'-a','--agentArgs'`, Comma separated values sent to agent. e.g. "opt1=val1,opt2,opt3=val3".
+- `'-x', '--numTraining'`, How many episodes are training (suppresses output). default=0    <== TODO/FIXME
+- `'--frameTime'`, Time to delay between frames; <0 means keyboard. default=0.1
+- `'-c', '--catchExceptions'`, Turns on exception handling and timeouts during games. default=False.
+- `'--timeout'`, Maximum length of time an agent can spend computing in a single game. default=30.
+
+
+
+## Our Work
+
+Most of our work is in the `MultiAgents.py` file.
+
+
+## Proposal [(old source)](https://docs.google.com/document/d/1kjVGLtswHzkQPUBrdHy2fAFzzqlkVxvUP6-qIfeQvhk/edit)
+
+### _What is the problem?_
+
+We will use heuristic search to find solutions to various types of Pac-Man puzzles involving three adversarial agents or ghosts. A solution is defined as a sequence of moves such that Pac-Man gathers every food token and never shares a cell of the grid with a ghost. We will implement an adversarial search agent that can generalize to include up to 3 ghosts, whose behaviour will be modeled by a probability function. The search space depends on branch factor, which is the sum of the agents (pac-man + ghosts). Alpha/Beta pruning can significantly reduce the size. Depth can be limited as opposed to DFS.
+
+[If there is time, we may explore the Traveling Salesman Problem with Pac-Man (and no ghosts) trying to eat the food in the most optimal path, within a constraint of computation time.]
+
+
+### _Why is it suited to the problem-solving technique we’ve developed?_
+
+We will explore the use of various search techniques to assess their relative strengths and weaknesses, including: ... expectimax search (navigation of a game tree with knowledge of the probabilistic model governing ghost behaviour), along with different evaluation heuristics, to determine which approach results in the most wins (valid solutions returned before encounter with a ghost) for Pac-Man. We use Berkeley, Stanford, and UofT starter code sources as basis for our project.
+
+Expectimax is useful for games of chance with agents that behave rationally after chance operations take place. Ghosts can act rationally if the `DirectionalGhost` flag is used in the `ghostAgents.py` file.
+
+The TA recommends a certain approach depending on the behavior of the ghosts, "The game might be better modeled as a search, where the ghosts are dynamic 'obstacles'. There are variants of A* designed for this just fyi, you might want to look into D* lite for example."
+
+
+### _How will we evaluate our solution?_
+
+We will explore the use of various game tree search techniques to determine which techniques have the highest success rate (Pac-Man collects all the food tokens and never shares a space with a ghost); the lowest number of nodes expanded at each step; the runtime required for a solution to be provided; the number of nodes pruned; and the path length of the shortest solution provided. The data will be presented in tabular and graphical formats. We expect this data to be affected by the amount of ghost agents (hence branch factor) and will evaluate the differences based on amount of ghosts. This will provide a measure of how effective our heuristics are, whether they are able to guide the pac-man agent towards the tokens efficiently and which search algorithms are best-suited for this task. In addition, we will identify edge cases and poor performances from tricky maze layouts, and relate the difficulties to the heuristic implementation. 
+
+
+## Tests
+
+Run the tests on our test directory by typing `nosetests tests` on the command line. 
+Recall, nosetests will run anything starting with 'test', so unless we specify
+the directory, then it will try to run tests on unintended files.
+
+The travis config file can be found in `.travis.yml`
+
+
+
+
+## Pac-Man Starter Code Sources
+
+- UofT: http://www.cs.toronto.edu/~lyan/csc384/a1/A1Pacman.pdf
+
+- Stanford: http://stanford.edu/~cpiech/cs221/homework/prog/pacman/pacman.html
+    - Same as Berkeley, but with some extra annotations, and a nicer layout.
+
+- Berkeley: https://inst.eecs.berkeley.edu/~cs188/fa11/projects/multiagent/multiagentProject.html
+    - We skip the MiniMax, and go straight to Expectimax in Q4.
+    - More test files: http://ai.berkeley.edu/multiagent.html
+
+
+## Discussions on Code for Pac-Man
+
+- Comparing DFS, BFS, UCS, A* in Pac-Man: http://www.cs.princeton.edu/~andyz/pacmansearch
+
+- Comparing Minimax/Alpha-Beta, Expectimax in Pac-Man: http://www.cs.princeton.edu/~andyz/pacmanfriends
+    - Expectimax is more appropriate than Minimax for Pac-Man.
+
+- Fast A* Heuristics for Solving the Travelling Salesman Problem [RE: Pac-Man], http://www.briangoldfain.com/wp/wp-content/uploads/2012/05/CS6601_Project1_Revised.pdf
+
+
+## Pac-Man Background Reading
+
+- Pac-Man Game Mechanics: http://gameinternals.com/post/2072558330/understanding-pac-man-ghost-behavior
+
+- The Pac-Man Dossier, By Jamey Pittman: http://www.gamasutra.com/view/feature/3938/the_pacman_dossier.php?print=1

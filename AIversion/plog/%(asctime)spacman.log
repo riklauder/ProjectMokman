@@ -1,0 +1,3084 @@
+DEBUG:legalMoves:['North', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFTF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%   %
+%  .%
+%v  %
+%  .%
+%%%%%
+Score: -1
+ newPos:(1, 2) ::Ghost: (x,y)=(2, 7), Stop
+ NextScore:-1.0 foodScore:56.0
+DEBUG:ghostScore:36
+DEBUG:OverallScore:North:91.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+% <.%
+%%%%%
+Score: -1
+ newPos:(2, 1) ::Ghost: (x,y)=(2, 7), Stop
+ NextScore:-1.0 foodScore:84.0
+DEBUG:ghostScore:36
+DEBUG:OverallScore:East:119.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%< .%
+%%%%%
+Score: -1
+ newPos:(1, 1) ::Ghost: (x,y)=(2, 7), Stop
+ NextScore:-1.0 foodScore:63.0
+DEBUG:ghostScore:49
+DEBUG:OverallScore:Stop:111.0
+DEBUG:***ChosenIndex:1=East***
+
+DEBUG:legalMoves:['North', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFTF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+% v %
+%  .%
+%%%%%
+Score: -2
+ newPos:(2, 2) ::Ghost: (x,y)=(1.0, 7.0), West
+ NextScore:-2.0 foodScore:63.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:97.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%  <%
+%%%%%
+Score: 8
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 7.0), West
+ NextScore:8.0 foodScore:84.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:East:156.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%> .%
+%%%%%
+Score: -2
+ newPos:(1, 1) ::Ghost: (x,y)=(1.0, 7.0), West
+ NextScore:-2.0 foodScore:63.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:West:97.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+% <.%
+%%%%%
+Score: -2
+ newPos:(2, 1) ::Ghost: (x,y)=(1.0, 7.0), West
+ NextScore:-2.0 foodScore:84.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:131.0
+DEBUG:***ChosenIndex:1=East***
+
+DEBUG:legalMoves:['North', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  .%
+%  v%
+%   %
+%%%%%
+Score: 7
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:7.0 foodScore:86.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:129.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  .%
+%   %
+% > %
+%%%%%
+Score: 7
+ newPos:(2, 1) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:7.0 foodScore:57.33333333333333
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:West:100.33333333333333
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  .%
+%   %
+%  <%
+%%%%%
+Score: 7
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:7.0 foodScore:64.5
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:120.5
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  v%
+%   %
+%   %
+%%%%%
+Score: 16
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:16.0 foodScore:86.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:North:118.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  .%
+%   %
+%  ^%
+%%%%%
+Score: 6
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:6.0 foodScore:64.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:106.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  .%
+% > %
+%   %
+%%%%%
+Score: 6
+ newPos:(2, 2) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:6.0 foodScore:64.5
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:West:86.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  .%
+%  v%
+%   %
+%%%%%
+Score: 6
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:6.0 foodScore:86.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:Stop:117.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G v%
+%   %
+%   %
+%   %
+%%%%%
+Score: 15
+ newPos:(3, 4) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:15.0 foodScore:88.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:107.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G  %
+%   %
+%  ^%
+%   %
+%%%%%
+Score: 15
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:15.0 foodScore:58.666666666666664
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:89.66666666666666
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G  %
+% > %
+%   %
+%   %
+%%%%%
+Score: 15
+ newPos:(2, 3) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:15.0 foodScore:58.666666666666664
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:77.66666666666666
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G  %
+%  v%
+%   %
+%   %
+%%%%%
+Score: 15
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:15.0 foodScore:66.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:90.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. v%
+% G %
+%   %
+%   %
+%   %
+%%%%%
+Score: 24
+ newPos:(3, 5) ::Ghost: (x,y)=(2.0, 4.0), East
+ NextScore:24.0 foodScore:88.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:116.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+% G %
+%  ^%
+%   %
+%   %
+%%%%%
+Score: 14
+ newPos:(3, 3) ::Ghost: (x,y)=(2.0, 4.0), East
+ NextScore:14.0 foodScore:66.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:84.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+% G %
+%   %
+%   %
+%   %
+%%%%%
+Score: -486
+ newPos:(2, 4) ::Ghost: (x,y)=(2.0, 4.0), East
+ NextScore:-486.0 foodScore:66.0
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:West:-420.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+% Gv%
+%   %
+%   %
+%   %
+%%%%%
+Score: 14
+ newPos:(3, 4) ::Ghost: (x,y)=(2.0, 4.0), East
+ NextScore:14.0 foodScore:88.0
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:103.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% .v%
+%.  %
+%  G%
+%   %
+%   %
+%   %
+%%%%%
+Score: 23
+ newPos:(3, 6) ::Ghost: (x,y)=(3.0, 4.0), East
+ NextScore:23.0 foodScore:90.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:117.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%.  %
+%  G%
+%   %
+%   %
+%   %
+%%%%%
+Score: -477
+ newPos:(3, 4) ::Ghost: (x,y)=(3.0, 4.0), East
+ NextScore:-477.0 foodScore:60.0
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:South:-417.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%.> %
+%  G%
+%   %
+%   %
+%   %
+%%%%%
+Score: 23
+ newPos:(2, 5) ::Ghost: (x,y)=(3.0, 4.0), East
+ NextScore:23.0 foodScore:90.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:117.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. v%
+%  G%
+%   %
+%   %
+%   %
+%%%%%
+Score: 23
+ newPos:(3, 5) ::Ghost: (x,y)=(3.0, 4.0), East
+ NextScore:23.0 foodScore:67.5
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:91.5
+DEBUG:***ChosenIndex:2=West***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% v %
+%. G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 32
+ newPos:(2, 6) ::Ghost: (x,y)=(3.0, 5.0), North
+ NextScore:32.0 foodScore:90.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:126.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. G%
+% ^ %
+%   %
+%   %
+%   %
+%%%%%
+Score: 22
+ newPos:(2, 4) ::Ghost: (x,y)=(3.0, 5.0), North
+ NextScore:22.0 foodScore:67.5
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:93.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: -478
+ newPos:(3, 5) ::Ghost: (x,y)=(3.0, 5.0), North
+ NextScore:-478.0 foodScore:67.5
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:East:-410.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%> G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 32
+ newPos:(1, 5) ::Ghost: (x,y)=(3.0, 5.0), North
+ NextScore:32.0 foodScore:90.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:126.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%.>G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 22
+ newPos:(2, 5) ::Ghost: (x,y)=(3.0, 5.0), North
+ NextScore:22.0 foodScore:90.0
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:113.0
+DEBUG:***ChosenIndex:3=West***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%v.G%
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 31
+ newPos:(1, 6) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:31.0 foodScore:92.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:127.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% .G%
+%   %
+%^  %
+%   %
+%   %
+%   %
+%%%%%
+Score: 31
+ newPos:(1, 4) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:31.0 foodScore:61.33333333333333
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:108.33333333333333
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% .G%
+% < %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 31
+ newPos:(2, 5) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:31.0 foodScore:92.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:East:127.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% .G%
+%>  %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 31
+ newPos:(1, 5) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:31.0 foodScore:69.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:109.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%v .%
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 40
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:40.0 foodScore:92.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:136.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% G %
+%^  %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 30
+ newPos:(1, 5) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:30.0 foodScore:69.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:103.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: -460
+ newPos:(2, 6) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:-460.0 foodScore:92.0
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:East:-368.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%vG %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 30
+ newPos:(1, 6) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:30.0 foodScore:92.0
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:123.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FFFTF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%v. %
+%  .%
+%G. %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 39
+ newPos:(1, 8) ::Ghost: (x,y)=(1.0, 6.0), West
+ NextScore:39.0 foodScore:94.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:137.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%  .%
+%G. %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: -461
+ newPos:(1, 6) ::Ghost: (x,y)=(1.0, 6.0), West
+ NextScore:-461.0 foodScore:94.0
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:South:-367.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+% <.%
+%G. %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 39
+ newPos:(2, 7) ::Ghost: (x,y)=(1.0, 6.0), West
+ NextScore:39.0 foodScore:94.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:East:137.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%v .%
+%G. %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 39
+ newPos:(1, 7) ::Ghost: (x,y)=(1.0, 6.0), West
+ NextScore:39.0 foodScore:70.5
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:110.5
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FFFTF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%^ .%
+% . %
+%G  %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 38
+ newPos:(1, 7) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:38.0 foodScore:70.5
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:112.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%  .%
+% . %
+%G  %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 48
+ newPos:(2, 8) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:48.0 foodScore:94.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:East:158.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%v. %
+%  .%
+% . %
+%G  %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 38
+ newPos:(1, 8) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:38.0 foodScore:94.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:141.0
+DEBUG:***ChosenIndex:1=East***
+
+DEBUG:legalMoves:['South', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFTF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+% ^.%
+% . %
+% G %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 47
+ newPos:(2, 7) ::Ghost: (x,y)=(2.0, 5.0), East
+ NextScore:47.0 foodScore:96.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:147.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%  <%
+%  .%
+% . %
+% G %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 47
+ newPos:(3, 8) ::Ghost: (x,y)=(2.0, 5.0), East
+ NextScore:47.0 foodScore:96.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:East:159.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%  .%
+% . %
+% G %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 47
+ newPos:(1, 8) ::Ghost: (x,y)=(2.0, 5.0), East
+ NextScore:47.0 foodScore:64.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:West:127.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%  .%
+% . %
+% G %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 47
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 5.0), East
+ NextScore:47.0 foodScore:72.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:128.0
+DEBUG:***ChosenIndex:1=East***
+
+DEBUG:legalMoves:['South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFTF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%  ^%
+% . %
+%  G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 56
+ newPos:(3, 7) ::Ghost: (x,y)=(3.0, 5.0), East
+ NextScore:56.0 foodScore:96.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:156.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% > %
+%  .%
+% . %
+%  G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 46
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 5.0), East
+ NextScore:46.0 foodScore:72.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:West:134.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%  <%
+%  .%
+% . %
+%  G%
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 46
+ newPos:(3, 8) ::Ghost: (x,y)=(3.0, 5.0), East
+ NextScore:46.0 foodScore:96.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:151.0
+DEBUG:***ChosenIndex:0=South***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFFF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%  v%
+%   %
+% .G%
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 55
+ newPos:(3, 8) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:55.0 foodScore:65.33333333333333
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:124.33333333333333
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+% .G%
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: -445
+ newPos:(3, 6) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:-445.0 foodScore:98.0
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:South:-347.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+% > %
+% .G%
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 55
+ newPos:(2, 7) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:55.0 foodScore:98.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:157.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%  ^%
+% .G%
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 55
+ newPos:(3, 7) ::Ghost: (x,y)=(3.0, 6.0), North
+ NextScore:55.0 foodScore:73.5
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:129.5
+DEBUG:***ChosenIndex:2=West***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFFF
+FFTFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% v %
+%   %
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 54
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:54.0 foodScore:73.5
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:131.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 564
+ newPos:(2, 6) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:564.0 foodScore:98.0
+DEBUG:ghostScore:0.0
+DEBUG:OverallScore:South:662.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%  <%
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 54
+ newPos:(3, 7) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:54.0 foodScore:73.5
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:East:131.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%>  %
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 54
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:54.0 foodScore:73.5
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:131.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+% > %
+% G %
+%   %
+%   %
+%   %
+%   %
+%   %
+%%%%%
+Score: 54
+ newPos:(2, 7) ::Ghost: (x,y)=(2.0, 6.0), West
+ NextScore:54.0 foodScore:98.0
+DEBUG:ghostScore:1.0
+DEBUG:OverallScore:Stop:153.0
+DEBUG:***ChosenIndex:1=South***
+
+DEBUG:legalMoves:['North', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFTF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%   %
+%  .%
+%v  %
+%  .%
+%%%%%
+Score: -1
+ newPos:(1, 2) ::Ghost: (x,y)=(2, 7), Stop
+ NextScore:-1.0 foodScore:56.0
+DEBUG:ghostScore:36
+DEBUG:OverallScore:North:91.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+% <.%
+%%%%%
+Score: -1
+ newPos:(2, 1) ::Ghost: (x,y)=(2, 7), Stop
+ NextScore:-1.0 foodScore:84.0
+DEBUG:ghostScore:36
+DEBUG:OverallScore:East:119.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.G.%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%< .%
+%%%%%
+Score: -1
+ newPos:(1, 1) ::Ghost: (x,y)=(2, 7), Stop
+ NextScore:-1.0 foodScore:63.0
+DEBUG:ghostScore:49
+DEBUG:OverallScore:Stop:111.0
+DEBUG:***ChosenIndex:1=East***
+
+DEBUG:legalMoves:['North', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFTF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% G %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+% v %
+%  .%
+%%%%%
+Score: -2
+ newPos:(2, 2) ::Ghost: (x,y)=(2.0, 8.0), North
+ NextScore:-2.0 foodScore:63.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:97.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% G %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%  <%
+%%%%%
+Score: 8
+ newPos:(3, 1) ::Ghost: (x,y)=(2.0, 8.0), North
+ NextScore:8.0 foodScore:84.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:East:156.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% G %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%> .%
+%%%%%
+Score: -2
+ newPos:(1, 1) ::Ghost: (x,y)=(2.0, 8.0), North
+ NextScore:-2.0 foodScore:63.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:West:125.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% G %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+% <.%
+%%%%%
+Score: -2
+ newPos:(2, 1) ::Ghost: (x,y)=(2.0, 8.0), North
+ NextScore:-2.0 foodScore:84.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:131.0
+DEBUG:***ChosenIndex:1=East***
+
+DEBUG:legalMoves:['North', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%G. %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+%  v%
+%   %
+%%%%%
+Score: 7
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 8.0), West
+ NextScore:7.0 foodScore:86.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:North:157.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%G. %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+% > %
+%%%%%
+Score: 7
+ newPos:(2, 1) ::Ghost: (x,y)=(1.0, 8.0), West
+ NextScore:7.0 foodScore:57.33333333333333
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:West:128.33333333333331
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%G. %
+%. .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%  <%
+%%%%%
+Score: 7
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 8.0), West
+ NextScore:7.0 foodScore:64.5
+DEBUG:ghostScore:81.0
+DEBUG:OverallScore:Stop:152.5
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  v%
+%   %
+%   %
+%%%%%
+Score: 16
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 7.0), South
+ NextScore:16.0 foodScore:86.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:138.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+%   %
+%  ^%
+%%%%%
+Score: 6
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 7.0), South
+ NextScore:6.0 foodScore:64.5
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:South:134.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+% > %
+%   %
+%%%%%
+Score: 6
+ newPos:(2, 2) ::Ghost: (x,y)=(1.0, 7.0), South
+ NextScore:6.0 foodScore:64.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:West:106.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%G .%
+% . %
+%. .%
+%   %
+%  .%
+%  v%
+%   %
+%%%%%
+Score: 6
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 7.0), South
+ NextScore:6.0 foodScore:86.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:141.0
+DEBUG:***ChosenIndex:3=Stop***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  v%
+%   %
+%   %
+%%%%%
+Score: 15
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:15.0 foodScore:86.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:North:126.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  .%
+%   %
+%  ^%
+%%%%%
+Score: 5
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:5.0 foodScore:64.5
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:South:118.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  .%
+% > %
+%   %
+%%%%%
+Score: 5
+ newPos:(2, 2) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:5.0 foodScore:64.5
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:West:94.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+%G. %
+%. .%
+%   %
+%  .%
+%  v%
+%   %
+%%%%%
+Score: 5
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 6.0), South
+ NextScore:5.0 foodScore:86.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:Stop:127.0
+DEBUG:***ChosenIndex:3=Stop***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFTF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  v%
+%   %
+%   %
+%%%%%
+Score: 14
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:14.0 foodScore:86.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:North:116.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  .%
+%   %
+%  ^%
+%%%%%
+Score: 4
+ newPos:(3, 1) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:4.0 foodScore:64.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:104.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  .%
+% > %
+%   %
+%%%%%
+Score: 4
+ newPos:(2, 2) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:4.0 foodScore:64.5
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:West:84.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%G .%
+%   %
+%  .%
+%  v%
+%   %
+%%%%%
+Score: 4
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 5.0), South
+ NextScore:4.0 foodScore:86.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:Stop:115.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G v%
+%   %
+%   %
+%   %
+%%%%%
+Score: 13
+ newPos:(3, 4) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:13.0 foodScore:88.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:North:105.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G  %
+%   %
+%  ^%
+%   %
+%%%%%
+Score: 13
+ newPos:(3, 2) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:13.0 foodScore:58.666666666666664
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:87.66666666666666
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G  %
+% > %
+%   %
+%   %
+%%%%%
+Score: 13
+ newPos:(2, 3) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:13.0 foodScore:58.666666666666664
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:75.66666666666666
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%G  %
+%  v%
+%   %
+%   %
+%%%%%
+Score: 13
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 4.0), South
+ NextScore:13.0 foodScore:66.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:88.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFTF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. v%
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 22
+ newPos:(3, 5) ::Ghost: (x,y)=(1.0, 3.0), South
+ NextScore:22.0 foodScore:88.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:North:126.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%   %
+%G ^%
+%   %
+%   %
+%%%%%
+Score: 12
+ newPos:(3, 3) ::Ghost: (x,y)=(1.0, 3.0), South
+ NextScore:12.0 foodScore:66.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:82.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+% > %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 12
+ newPos:(2, 4) ::Ghost: (x,y)=(1.0, 3.0), South
+ NextScore:12.0 foodScore:66.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:West:82.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. .%
+%  v%
+%G  %
+%   %
+%   %
+%%%%%
+Score: 12
+ newPos:(3, 4) ::Ghost: (x,y)=(1.0, 3.0), South
+ NextScore:12.0 foodScore:88.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:109.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% .v%
+%.  %
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 21
+ newPos:(3, 6) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:21.0 foodScore:90.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:147.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%.  %
+%  ^%
+%   %
+%G  %
+%   %
+%%%%%
+Score: 21
+ newPos:(3, 4) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:21.0 foodScore:60.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:97.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%.> %
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 21
+ newPos:(2, 5) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:21.0 foodScore:90.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:West:127.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. v%
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 21
+ newPos:(3, 5) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:21.0 foodScore:67.5
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:Stop:113.5
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFTF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. v%
+% . %
+%.  %
+%   %
+%   %
+%   %
+%G  %
+%%%%%
+Score: 30
+ newPos:(3, 7) ::Ghost: (x,y)=(1.0, 1.0), South
+ NextScore:30.0 foodScore:90.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:North:184.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% . %
+%. ^%
+%   %
+%   %
+%   %
+%G  %
+%%%%%
+Score: 20
+ newPos:(3, 5) ::Ghost: (x,y)=(1.0, 1.0), South
+ NextScore:20.0 foodScore:67.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:123.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% > %
+%.  %
+%   %
+%   %
+%   %
+%G  %
+%%%%%
+Score: 30
+ newPos:(2, 6) ::Ghost: (x,y)=(1.0, 1.0), South
+ NextScore:30.0 foodScore:90.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:West:156.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. .%
+% .v%
+%.  %
+%   %
+%   %
+%   %
+%G  %
+%%%%%
+Score: 20
+ newPos:(3, 6) ::Ghost: (x,y)=(1.0, 1.0), South
+ NextScore:20.0 foodScore:90.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:159.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['North', 'South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% .v%
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 29
+ newPos:(3, 8) ::Ghost: (x,y)=(2.0, 1.0), East
+ NextScore:29.0 foodScore:92.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:North:185.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.  %
+% .^%
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 29
+ newPos:(3, 6) ::Ghost: (x,y)=(2.0, 1.0), East
+ NextScore:29.0 foodScore:92.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:157.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%.> %
+% . %
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 29
+ newPos:(2, 7) ::Ghost: (x,y)=(2.0, 1.0), East
+ NextScore:29.0 foodScore:92.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:West:157.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. v%
+% . %
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 29
+ newPos:(3, 7) ::Ghost: (x,y)=(2.0, 1.0), East
+ NextScore:29.0 foodScore:69.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:147.0
+DEBUG:***ChosenIndex:0=North***
+
+DEBUG:legalMoves:['South', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFTFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% . %
+%. ^%
+% . %
+%.  %
+%   %
+%   %
+%   %
+%  G%
+%%%%%
+Score: 28
+ newPos:(3, 7) ::Ghost: (x,y)=(3.0, 1.0), East
+ NextScore:28.0 foodScore:69.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:133.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% > %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+%  G%
+%%%%%
+Score: 38
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 1.0), East
+ NextScore:38.0 foodScore:92.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:West:194.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% .v%
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+%  G%
+%%%%%
+Score: 28
+ newPos:(3, 8) ::Ghost: (x,y)=(3.0, 1.0), East
+ NextScore:28.0 foodScore:92.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:169.0
+DEBUG:***ChosenIndex:1=West***
+
+DEBUG:legalMoves:['South', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%.^ %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 37
+ newPos:(2, 7) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:37.0 foodScore:94.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:167.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%  <%
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 37
+ newPos:(3, 8) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:37.0 foodScore:62.666666666666664
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:135.66666666666666
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 37
+ newPos:(1, 8) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:37.0 foodScore:94.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:West:195.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% > %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 37
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:37.0 foodScore:70.5
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:156.5
+DEBUG:***ChosenIndex:2=West***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%  G%
+%   %
+%   %
+%%%%%
+Score: 46
+ newPos:(1, 7) ::Ghost: (x,y)=(3.0, 3.0), North
+ NextScore:46.0 foodScore:94.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:176.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%  G%
+%   %
+%   %
+%%%%%
+Score: 36
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 3.0), North
+ NextScore:36.0 foodScore:70.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:142.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%  G%
+%   %
+%   %
+%%%%%
+Score: 36
+ newPos:(1, 8) ::Ghost: (x,y)=(3.0, 3.0), North
+ NextScore:36.0 foodScore:94.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:179.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 45
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 3.0), West
+ NextScore:45.0 foodScore:94.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:South:164.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 35
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 3.0), West
+ NextScore:35.0 foodScore:70.5
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:East:130.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 35
+ newPos:(1, 8) ::Ghost: (x,y)=(2.0, 3.0), West
+ NextScore:35.0 foodScore:94.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:Stop:165.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 44
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 2.0), South
+ NextScore:44.0 foodScore:94.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:174.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 34
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 2.0), South
+ NextScore:34.0 foodScore:70.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:140.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 34
+ newPos:(1, 8) ::Ghost: (x,y)=(2.0, 2.0), South
+ NextScore:34.0 foodScore:94.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:177.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 43
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 1.0), South
+ NextScore:43.0 foodScore:94.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:South:186.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 33
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 1.0), South
+ NextScore:33.0 foodScore:70.5
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:East:152.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+% G %
+%%%%%
+Score: 33
+ newPos:(1, 8) ::Ghost: (x,y)=(2.0, 1.0), South
+ NextScore:33.0 foodScore:94.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:Stop:191.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+%  G%
+%%%%%
+Score: 42
+ newPos:(1, 7) ::Ghost: (x,y)=(3.0, 1.0), East
+ NextScore:42.0 foodScore:94.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:South:200.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+%  G%
+%%%%%
+Score: 32
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 1.0), East
+ NextScore:32.0 foodScore:70.5
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:East:166.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%   %
+%  G%
+%%%%%
+Score: 32
+ newPos:(1, 8) ::Ghost: (x,y)=(3.0, 1.0), East
+ NextScore:32.0 foodScore:94.0
+DEBUG:ghostScore:81.0
+DEBUG:OverallScore:Stop:207.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 41
+ newPos:(1, 7) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:41.0 foodScore:94.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:South:184.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 31
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:31.0 foodScore:70.5
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:East:150.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%   %
+%  G%
+%   %
+%%%%%
+Score: 31
+ newPos:(1, 8) ::Ghost: (x,y)=(3.0, 2.0), North
+ NextScore:31.0 foodScore:94.0
+DEBUG:ghostScore:64.0
+DEBUG:OverallScore:Stop:189.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%  G%
+%   %
+%   %
+%%%%%
+Score: 40
+ newPos:(1, 7) ::Ghost: (x,y)=(3.0, 3.0), North
+ NextScore:40.0 foodScore:94.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:South:170.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%  G%
+%   %
+%   %
+%%%%%
+Score: 30
+ newPos:(2, 8) ::Ghost: (x,y)=(3.0, 3.0), North
+ NextScore:30.0 foodScore:70.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:136.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%  G%
+%   %
+%   %
+%%%%%
+Score: 30
+ newPos:(1, 8) ::Ghost: (x,y)=(3.0, 3.0), North
+ NextScore:30.0 foodScore:94.0
+DEBUG:ghostScore:49.0
+DEBUG:OverallScore:Stop:173.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 39
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 3.0), West
+ NextScore:39.0 foodScore:94.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:South:158.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 29
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 3.0), West
+ NextScore:29.0 foodScore:70.5
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:East:124.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 29
+ newPos:(1, 8) ::Ghost: (x,y)=(2.0, 3.0), West
+ NextScore:29.0 foodScore:94.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:Stop:159.0
+DEBUG:***ChosenIndex:2=Stop***
+
+DEBUG:legalMoves:['South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FTFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 38
+ newPos:(1, 7) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:38.0 foodScore:94.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:148.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% < %
+%.  %
+% . %
+%.  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 28
+ newPos:(2, 8) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:28.0 foodScore:70.5
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:134.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%>  %
+%.  %
+% . %
+%.  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 28
+ newPos:(1, 8) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:28.0 foodScore:94.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:Stop:147.0
+DEBUG:***ChosenIndex:0=South***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%v  %
+%   %
+% . %
+%.  %
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 37
+ newPos:(1, 8) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:37.0 foodScore:64.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:137.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+%^. %
+%.  %
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 37
+ newPos:(1, 6) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:37.0 foodScore:96.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:149.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+% < %
+% . %
+%.  %
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 37
+ newPos:(2, 7) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:37.0 foodScore:96.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:169.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%^  %
+% . %
+%.  %
+%   %
+%   %
+%G  %
+%   %
+%%%%%
+Score: 37
+ newPos:(1, 7) ::Ghost: (x,y)=(1.0, 2.0), South
+ NextScore:37.0 foodScore:72.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:Stop:134.0
+DEBUG:***ChosenIndex:2=East***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFFF
+FFTFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+% v %
+%   %
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 36
+ newPos:(2, 8) ::Ghost: (x,y)=(2.0, 2.0), East
+ NextScore:36.0 foodScore:72.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:North:144.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+% ^ %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 46
+ newPos:(2, 6) ::Ghost: (x,y)=(2.0, 2.0), East
+ NextScore:46.0 foodScore:96.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:South:158.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%  <%
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 36
+ newPos:(3, 7) ::Ghost: (x,y)=(2.0, 2.0), East
+ NextScore:36.0 foodScore:72.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:East:144.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%>  %
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 36
+ newPos:(1, 7) ::Ghost: (x,y)=(2.0, 2.0), East
+ NextScore:36.0 foodScore:72.0
+DEBUG:ghostScore:36.0
+DEBUG:OverallScore:West:144.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+% < %
+% . %
+%.  %
+%   %
+%   %
+% G %
+%   %
+%%%%%
+Score: 36
+ newPos:(2, 7) ::Ghost: (x,y)=(2.0, 2.0), East
+ NextScore:36.0 foodScore:96.0
+DEBUG:ghostScore:25.0
+DEBUG:OverallScore:Stop:157.0
+DEBUG:***ChosenIndex:1=South***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'West', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+% v %
+%   %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 45
+ newPos:(2, 7) ::Ghost: (x,y)=(2.0, 3.0), North
+ NextScore:45.0 foodScore:65.33333333333333
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:North:126.33333333333333
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+%   %
+%.^ %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 45
+ newPos:(2, 5) ::Ghost: (x,y)=(2.0, 3.0), North
+ NextScore:45.0 foodScore:98.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:147.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+%  <%
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 45
+ newPos:(3, 6) ::Ghost: (x,y)=(2.0, 3.0), North
+ NextScore:45.0 foodScore:65.33333333333333
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:East:126.33333333333333
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+%>  %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 45
+ newPos:(1, 6) ::Ghost: (x,y)=(2.0, 3.0), North
+ NextScore:45.0 foodScore:98.0
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:West:159.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+% ^ %
+%.  %
+%   %
+% G %
+%   %
+%   %
+%%%%%
+Score: 45
+ newPos:(2, 6) ::Ghost: (x,y)=(2.0, 3.0), North
+ NextScore:45.0 foodScore:73.5
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:127.5
+DEBUG:***ChosenIndex:3=West***
+
+DEBUG:legalMoves:['North', 'South', 'East', 'Stop']
+DEBUG:food:
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FTFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+FFFFF
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%v  %
+%   %
+%.  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 44
+ newPos:(1, 7) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:44.0 foodScore:73.5
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:North:133.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+%   %
+%^  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 554
+ newPos:(1, 5) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:554.0 foodScore:98.0
+DEBUG:ghostScore:4.0
+DEBUG:OverallScore:South:656.0
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+% < %
+%.  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 44
+ newPos:(2, 6) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:44.0 foodScore:73.5
+DEBUG:ghostScore:16.0
+DEBUG:OverallScore:East:133.5
+DEBUG:RefreshEvalOpts Successor:
+%%%%%
+%   %
+%   %
+%>  %
+%.  %
+%   %
+%G  %
+%   %
+%   %
+%%%%%
+Score: 44
+ newPos:(1, 6) ::Ghost: (x,y)=(1.0, 3.0), West
+ NextScore:44.0 foodScore:98.0
+DEBUG:ghostScore:9.0
+DEBUG:OverallScore:Stop:151.0
+DEBUG:***ChosenIndex:1=South***
+

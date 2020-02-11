@@ -1,12 +1,3 @@
-# Pac-Man-ai
-😾  👻  Artificial Intelligence with Pac-Man
-
-
-## Team Members:
-- Nigel Fong
-- Karan Grewal
-- Simon Wozny
-
 
 ## Quickstart; Run the Game
 

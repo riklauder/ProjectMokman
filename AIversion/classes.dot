@@ -1,0 +1,5 @@
+digraph "classes" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{SearchProblem|\l|getCostOfActions(actions)\lgetStartState()\lgetSuccessors(state)\lisGoalState(state)\l}", shape="record"];
+}

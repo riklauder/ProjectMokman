@@ -25,6 +25,7 @@ class Layout:
     self.height= len(layoutText)
     self.walls = Grid(self.width, self.height, False)
     self.food = Grid(self.width, self.height, False)
+    self.teleport = Grid(self.width, self.height, False)
     self.capsules = []
     self.agentPositions = []
     self.numGhosts = 0
@@ -44,7 +45,7 @@ class Layout:
       vis = Grid(self.width, self.height, {Directions.NORTH:set(), Directions.SOUTH:set(), Directions.EAST:set(), Directions.WEST:set(), Directions.STOP:set()})
       for x in range(self.width):
         for y in range(self.height):
-          if self.walls[x][y] == False:
+          if self.walls[x][y] == False and self.teleport[x][y] == False:
             for vec, direction in zip(vecs, dirs):
               dx, dy = vec
               nextx, nexty = x + dx, y + dy
@@ -58,7 +59,10 @@ class Layout:
       
   def isWall(self, pos):
     x, col = pos
-    return self.walls[x][col]
+    if self.teleport[x][col] == True:
+      return self.teleport[x][col]
+    else:
+      return self.walls[x][col]
   
   def getRandomLegalPosition(self):
     x = random.choice(range(self.width))
@@ -93,11 +97,12 @@ class Layout:
     
     The shape of the maze.  Each character  
     represents a different type of object.   
-     % - Wall                               
-     . - Food
-     o - Capsule
-     G - Ghost
-     P - Pacman
+      % - Wall
+      | - Teleport
+      . - Food
+      o - Capsule
+      G - Ghost
+      P - Pacman
     Other characters are ignored.
     """
     maxY = self.height - 1
@@ -112,7 +117,9 @@ class Layout:
     if layoutChar == '%':      
       self.walls[x][y] = True
     elif layoutChar == '.':
-      self.food[x][y] = True 
+      self.food[x][y] = True
+    elif layoutChar == '|':
+      self.teleport[x][y] = True 
     elif layoutChar == 'o':    
       self.capsules.append((x, y))   
     elif layoutChar == 'P':    

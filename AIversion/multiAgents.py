@@ -8,8 +8,6 @@
 
 from __future__ import print_function
 from game import Agent, Directions
-from pyswip.prolog import Prolog
-from pyswip.easy import *
 import random, util, logging, math, heapq
 import threading, multiprocessing, time
 
@@ -591,4 +589,3 @@ def expectimax(agent, agentList, state, depth, evalFunc):
 
 # Abbreviation
 better = betterEvaluationFunction
-prolog = Prolog()

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 846277c7b3218915371c17de6c3c004cf6fe3b6a
 ## Quickstart; Run the Game
 
 

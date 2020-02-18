@@ -15,9 +15,12 @@ from util import *
 import time, os
 import traceback
 import sys
-from io import StringIO
+import ctypes
+from io import StringIO, TextIOBase
 from multiprocessing import Process, current_process
 
+OLD_STDOUT = sys.stdout
+OLD_STDERR = sys.stderr
 
 #######################
 # Parts worth reading #

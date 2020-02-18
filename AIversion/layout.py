@@ -119,6 +119,7 @@ class Layout:
     elif layoutChar == '.':
       self.food[x][y] = True
     elif layoutChar == '|':
+      self.walls[x][y] = True
       self.teleport[x][y] = True 
     elif layoutChar == 'o':    
       self.capsules.append((x, y))   

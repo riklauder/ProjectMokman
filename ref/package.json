@@ -1,0 +1,3 @@
+"scripts": {
+   "mapgen": "node -e 'require(\"./mapgen\").Map()'"
+}

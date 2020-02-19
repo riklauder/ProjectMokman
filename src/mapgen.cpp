@@ -17,7 +17,7 @@
 #include <cstdio>
 #include <charconv>
 #include <cmath>
-#include "Map.h"
+
 
 using std::string;
 
@@ -29,7 +29,7 @@ using std::string;
 /*Structure to handle coords, dir, points and vector math*/
 struct Dir{
 	double x, y;
-	Dir& operator += (const Dir a) { x += a.x; y += a.y; return *this}
+	Dir& operator += (const Dir a) { x += a.x; y += a.y; return *this;}
 };
 bool operator==(const Dir a, const Dir b) { return a.x == b.x && a.y == b.y; }
 bool operator<(const Dir a, const Dir b) { return (a.x != b.x) ? (a.x < b.x) : (a.y < b.y); }
@@ -43,15 +43,14 @@ int getEnumFromDir (Dir &dir) {
 	if (dir.x==-1) return 3; //DIR_LEFT;  
 };
 // set direction vector from a direction enum
-const dir setDirFromEnum(Dir &dir, int &dirEnum){
+Dir setDirFromEnum(Dir &dir, int dirEnum){
   	if (dirEnum == 0)         { dir.x = 0; dir.y =-1; }
-    else if (dirEnum == 1)  { dir.x =1; dir.y = 0; }
+    else if (dirEnum == 1)  { dir.x =-1; dir.y = 0; }
     else if (dirEnum == 2)  { dir.x = 0; dir.y = 1; }
-    else if (dirEnum == 3) { dir.x = -1; dir.y = 0; }
+    else if (dirEnum == 3) { dir.x = 1; dir.y = 0; }
 };
 
-
-
+#include "Map.h"
 
 
 int main(){

@@ -27,6 +27,7 @@ void getData(std::vector<std::string>& data) {
 			s2.append(s1.substr((i*cols)+1, cols-2));
 			s2.append("%");	
 		}
+		std::replace(s2.begin(), s2.end(), '|', '%');
 		data.push_back(s2);
 			}
 	

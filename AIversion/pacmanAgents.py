@@ -26,6 +26,21 @@ class LeftTurnAgent(game.Agent):
     if Directions.LEFT[left] in legal: return Directions.LEFT[left]
     return Directions.STOP
 
+class RightTurnAgent(game.Agent):
+  """An agent that turns right at every opportunity"""
+  """Will be used to control ghost obstacle that circles map object"""
+  
+  def getAction(self, state):
+    legal = state.getLegalPacmanActions()
+    current = state.getPacmanState().configuration.direction
+    if current == Directions.STOP: current = Directions.NORTH
+    right = Directions.RIGHT[current]
+    if right in legal: return right
+    if current in legal: return current
+    if Directions.LEFT[current] in legal: return Directions.LEFT[current]
+    if Directions.RIGHT[right] in legal: return Directions.RIGHT[right]
+    return Directions.STOP
+
 
 class GreedyAgent(Agent):
   def __init__(self, evalFn="scoreEvaluation"):

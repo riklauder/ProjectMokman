@@ -22,7 +22,7 @@ Phase 2 focus
 
 
 # Code Details
-tbd - using pygame
+using pygame - https://github.com/riklauder/ProjectMokman/tree/master/src
 
 # Build/Play Instructions
 
@@ -32,4 +32,11 @@ Contains reference code and documents from other sources
 ## AIversion
 Conatins Berkely Pacman AI project (modified to work with Python 3 and project)
 Project that helped spark curiosity and deveop project idea
+Generate Random Map - 1. - cd into AIVersion directory 2. - run pacman.bat 
+creates random map and transforms strings using C++ to fit pygame framework *requires bash shell - implemented using WSL bash
+batch file will automatically start python game if in correct dir
+
+Camera and Movement Controls Implementation
+cd into src folder
+pytyhon pygamecam.py
 

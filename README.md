@@ -18,6 +18,6 @@ Phase 2 focus
 
 
 # Code Details
-tbd - using pygame
+using pygame - https://github.com/riklauder/ProjectMokman/tree/master/src
 
 # Build/Play Instructions

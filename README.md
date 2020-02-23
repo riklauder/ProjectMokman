@@ -3,6 +3,7 @@ CS4432 Game Project
 
 ## Project Ten Page PLan 
 https://1drv.ms/w/s!BC3kPYTrDe8AjeF9RJC0USLp8sFAeg?e=tSCDXQZf9E-M0kjkdhoAug&at=9
+
 Living document will be updated until project end
 
 ## Project Description
@@ -21,12 +22,13 @@ Phase 2 focus
 | Power Ups | More power-ups and combo(like 256 combo in pacman 356   |
 
 
-# Code Details
+# src
+Code Details
 using pygame - https://github.com/riklauder/ProjectMokman/tree/master/src
 
 # Build/Play Instructions
 
-## Ref
+## ref
 Contains reference code and documents from other sources
 
 ## AIversion

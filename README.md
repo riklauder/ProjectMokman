@@ -22,6 +22,16 @@ Conatins Berkely Pacman AI project (modified to work with Python 3 and this proj
 This is the project that helped spark curiosity and project idea.
 
 
+# design
+contains design documents - pdf UML - created using combination of Pylint and Pyreverse
+>Pylinkt can be installed with pip
+
+>pip install pylint
+
+# ref
+Contains reference code and documents from other sources
+
+
 # src
 Code Details
 using pygame - [src](https://github.com/riklauder/ProjectMokman/tree/master/src)
@@ -36,9 +46,6 @@ creates random map and transforms strings using C++ to fit python framework.
 
 *requires WSL bash shell with g++ installed.  
 *more details in README in src dir
-
-# ref
-Contains reference code and documents from other sources
 
 
 

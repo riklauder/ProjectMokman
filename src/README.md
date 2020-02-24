@@ -3,6 +3,7 @@
 # Required
 1. Python 3.8.1
 2. Pygame
+>pip install pygame
 3. WSL - Windows Subsystem for Linux with g++(should be installed by default)
 4. Powershell for running batch files in early project stage
 

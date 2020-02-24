@@ -11,9 +11,9 @@ GRAVITY = pygame.Vector2((0, 0))
 WALL_RADIUS = 24
 WALL_WIDTH=3
 DIR_UP = 0;
-DIR_LEFT = 1;
+DIR_RIGHT = 1;
 DIR_DOWN = 2;
-DIR_RIGHT = 3;
+DIR_LEFT = 3;
 
 #                 R    G    B
 BLACK =         (  0,   0,   0)
@@ -177,7 +177,7 @@ class Player(Entity):
         self.vel = pygame.Vector2((0, 0))
         self.stopped = True
         self.platforms = platforms
-        self.speed = 6
+        self.speed = 5
         #self.jump_strength = 10
 
     def getDir(self):
@@ -193,7 +193,6 @@ class Player(Entity):
         left = pressed[K_LEFT]
         right = pressed[K_RIGHT]
 
-        self.stopped = False;   
 
         if up:
             self.dir = 0
@@ -203,7 +202,7 @@ class Player(Entity):
             #self.vel.x = 0
             self.vel.y = -self.speed
         if left:
-            self.dir = 1
+            self.dir = 3
             # do x-y axis collisions
             self.collide(self.vel.x, 0, self.platforms)
             #if self.stopped == False:
@@ -217,7 +216,7 @@ class Player(Entity):
             #self.vel.x = 0
             self.vel.y = self.speed
         if right:
-            self.dir = 3
+            self.dir = 1
             # do x-y axis collisions
             self.collide(self.vel.x, 0, self.platforms)
             #if self.stopped == False:
@@ -225,7 +224,9 @@ class Player(Entity):
             #self.vel.y = 0
         # increment in x direction
         self.rect.left += int(self.vel.x)
+        self.stopped = False;
         self.collide(self.vel.x, 0, self.platforms)
+        self.stopped = False;
         # increment in y direction
         self.rect.top += int(self.vel.y)
         self.collide(0, self.vel.y, self.platforms)
@@ -271,9 +272,6 @@ class Player(Entity):
                     if curDir == DIR_UP:
                         #self.vel.y = 0
                         self.stopped = True
-
-
-
 
     def a(self):
         #axis of motion

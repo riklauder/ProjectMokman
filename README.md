@@ -6,6 +6,10 @@ Link to draft Ten Page Plan [Click Here!](https://1drv.ms/w/s!BC3kPYTrDe8AjeF9RJ
 
 Living document will be updated until project end
 
+Map Analysis [Click Here](https://1drv.ms/x/s!Ai3kPYTrDe8Aj4QXeZNKA7SK2G1UnA?e=kCqbm4)
+
+Project Scedule and Story Planning[click here](https://1drv.ms/x/s!Ai3kPYTrDe8Aj4VHUD1C-X5nfQ5vfA?e=CYuuac)
+
 ## Project Description
 Pacman Clone for undergrad game project
 Phase 1 focus

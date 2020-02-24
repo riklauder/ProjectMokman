@@ -1,9 +1,0 @@
-# Docs: https://docs.travis-ci.com/user/for-beginners
-
-language: python
-python:
-  - "3.7"
-# command to install dependencies
-install: "pip install nose"
-script: 
-  - nosetests tests

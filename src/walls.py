@@ -2,74 +2,40 @@
 
 """
 Running this script spits out a random Pac-Man maze
+ideas borrowed from Pac-Man Tribute Project - https://github.com/shaunew/Pac-Man
 
 example with extend phase off:
-||||||||||||||||||||||||||||
-|..........................|
-|.||||.||.||||||||.||.||||.|
-|.||||.||.||||||||.||.||||.|
-|.||||......||||......||||.|
-|.||||.||||..||..||||.||||.|
-|......|||||.||.|||||......|
-|.||||.|||||....|||||.||||.|
-|.||||.|||||.||.|||||.||||.|
-|.||||.|||||.||.|||||.||||.|
-|.........||.||.||.........|
-|.|||.|||..........|||.|||.|
-|.|||.|||.||||||||.|||.|||.|
-|.|||.....||||||||.....|||.|
-|.|||.|||.||||||||.|||.|||.|
-|.|||.|||.||||||||.|||.|||.|
-|.........||||||||.........|
-|.||||.||..........||.||||.|
-|.||||.||||.||||.||||.||||.|
-|........||.||||.||........|
-|.|||.||.||......||.||.|||.|
-|.|||.||.....||.....||.|||.|
-|......||.||.||.||.||......|
-|.||||.||.||.||.||.||.||||.|
-|.||||................||||.|
-|......||.||||||||.||......|
-|.||||.||.||||||||.||.||||.|
-|.||||.||.||||||||.||.||||.|
-|.||||.||.||||||||.||.||||.|
-|..........................|
-||||||||||||||||||||||||||||
-
-example with extend phase on:
-||||||||||||||||||||||||||||
-|..........................|
-|.|||.||||.||||||.||||.|||.|
-|.|||.||||.||||||.||||.|||.|
-|.|||......||||||......|||.|
-|.||||||||........||||||||.|
-|.||||||||.||..||.||||||||.|
-|..........||..||..........|
-|.|||||||.||....||.|||||||.|
-|.|||||||.||||||||.|||||||.|
-|....||||.||||||||.||||....|
-|.||.||||..........||||.||.|
-|.||.||||.||||||||.||||.||.|
-|.||......||||||||......||.|
-|.||..|||.||||||||.|||..||.|
-|.||..|||.||||||||.|||..||.|
-|.||.||||.||||||||.||||.||.|
-|.||.||..............||.||.|
-|.......||.||||||.||.......|
-|.||||||||.||||||.||||||||.|
-|.||||||||.||||||.||||||||.|
-|.......||.||||||.||.......|
-|.|||||.||.||||||.||.|||||.|
-|.|||||.||........||.|||||.|
-|...........||||...........|
-|.|||||.|||.||||.|||.|||||.|
-|.|||||.|||.||||.|||.|||||.|
-|.|||||.|||.||||.|||.|||||.|
-|.|||||.|||.||||.|||.|||||.|
-|..........................|
-||||||||||||||||||||||||||||
-
-OVERVIEW:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%..........................%
+%.%%%%.%%.%%%%%%%%.%%.%%%%.%
+%.%%%%.%%.%%%%%%%%.%%.%%%%.%
+%.%%%%......%%%%......%%%%.%
+%.%%%%.%%%%..%%..%%%%.%%%%.%
+%......%%%%%.%%.%%%%%......%
+%.%%%%.%%%%%....%%%%%.%%%%.%
+%.%%%%.%%%%%.%%.%%%%%.%%%%.%
+%.%%%%.%%%%%.%%.%%%%%.%%%%.%
+%.........%%.%%.%%.........%
+%.%%%.%%%..........%%%.%%%.%
+%.%%%.%%%.%%%%%%%%.%%%.%%%.%
+%.%%%.....%%%%%%%%.....%%%.%
+%.%%%.%%%.%%%%%%%%.%%%.%%%.%
+%.%%%.%%%.%%%%%%%%.%%%.%%%.%
+%.........%%%%%%%%.........%
+%.%%%%.%%..........%%.%%%%.%
+%.%%%%.%%%%.%%%%.%%%%.%%%%.%
+%........%%.%%%%.%%........%
+%.%%%.%%.%%......%%.%%.%%%.%
+%.%%%.%%.....%%.....%%.%%%.%
+%......%%.%%.%%.%%.%%......%
+%.%%%%.%%.%%.%%.%%.%%.%%%%.%
+%.%%%%................%%%%.%
+%......%%.%%%%%%%%.%%......%
+%.%%%%.%%.%%%%%%%%.%%.%%%%.%
+%.%%%%.%%.%%%%%%%%.%%.%%%%.%
+%.%%%%.%%.%%%%%%%%.%%.%%%%.%
+%..........................%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 This currently works by starting with an empty half map with a ghost
 house.
@@ -79,65 +45,40 @@ We add walls by placing 2x2 blocks in areas that allow for a one
 tile wide margin.
 
 ....   ....
-....   .||.
-.... > .||.
+....   .%%.
+.... > .%%.
 ....   ....
 
 GROW PHASE
-After placing a new wall piece, a gap-filling heuristic is used to grow the piece. 
-Basically, the wall is grown to fill in adjacent areas that cannot be filled by new pieces.
+After placing a new wall piece, gap-filling is used to grow the piece. 
 
 ...........   ...........   ...........
-...||......   ...||......   ...||......
-...||......   ...||......   ...||......
-........... > ........||. > ......||||.
-..||.......   ..||....||.   ..||.|||||.
-..||.......   ..||.......   ..||.||....
+...%%......   ...%%......   ...%%......
+...%%......   ...%%......   ...%%......
+........... > ........%%. > ......%%%%.
+..%%.......   ..%%....%%.   ..%%.%%%%%.
+..%%.......   ..%%.......   ..%%.%%....
 ...........   ...........   ...........
-
-  (start)     (new piece)  (after growth)
-
-EXTEND PHASE
-An additional extend phase is employed which applies contiguous blocks
-in a straight random direction, and starting again in the same direction
-but rotated 90 degrees.  The turning is triggered by a certain distance
-traveled or by a dead end.  Each block that is placed also undergoes
-its own grow phase to fill in gaps along the way.
-
 
 CURRENT PROBLEMS:
 
-Walls are very fragmented.  Make the pieces grow more by extending in a random direction after initial mandatory growing.
-We could alternatively do a post-process to join smaller pieces together:
+Walls are very fragmented. 
 .......   .......
-.||.||. > .|||||.
-.||.||.   .|||||.
+.%%.%%. > .%%%%%.
+.%%.%%.   .%%%%%.
 .......   .......
-(One solution is the extend phase mentioned above)
 
-Some gaps aren't filled, need to study them some more and add appropriate test cases.
+Some gaps aren't filled, need to analyze.
 
-There is currently a path around the entire border. 
-Could possibly extend some contiguous pieces to the border to fix this.
+There is currently a path around the entire border and no teleports. 
 
-Seems rare, but sometimes dead ends and single tile thick walls are formed.
-It could be easier to just throw out a map if this conditions are detected.
-
-Conditions:
 a 2x2 empty block => dead end
-a wall tile that is not part of a 2x2 wall block => single tile wall
 
 """
 
 import sys
 import random
 
-# TODO:
-# define an Obstacle class to represent a single group of contiguous wall tiles 
-# Obstacle class
-# Box Obstacle
-# Line Obstacle
-# map from tile to Obstacle
 
 def all(iter):
     for e in iter:
@@ -150,7 +91,7 @@ def any(iter):
     return False
 
 
-# takes multi-line map string, trims indentation, replaces newlines with given separator
+# takes map string, trims indentation, replaces nl 
 def format_map_str(tiles,sep):
     return sep.join(line.strip() for line in tiles.splitlines())
 
@@ -167,7 +108,7 @@ class Map:
         else:
             self.setMap(w,h,tile_str)
 
-        # sets logging verbosity (on|off)
+        # logging (on%off)
         self.verbose = False
 
     # create a map from a tile string
@@ -176,7 +117,7 @@ class Map:
         self.h = h
         self.tiles = list(format_map_str(tile_str,""))
 
-    # creates a string of the current map
+    # create string of the current map
     def __str__(self):
         s = "\n"
         i = 0
@@ -187,11 +128,11 @@ class Map:
             s += "\n"
         return s
 
-    # converts x,y to index
+    # x,y to index
     def xy_to_i(self,x,y):
         return x+y*self.w
 
-    # converts index to x,y
+    # index to x,y
     def i_to_xy(self,i):
         return i%self.w, i/self.w
 
@@ -208,10 +149,10 @@ class Map:
     # adds a single wall tile at x,y
     def add_wall_tile(self,x,y):
         if self.xy_valid(x,y):
-            self.tiles[x+y*self.w] = '|'
+            self.tiles[x+y*self.w] = '%'
 
     def is_wall_block_filled(self,x,y):
-        return all(self.get_tile(x+dx,y+dy) == '|' for dy in range(1,3) for dx in range(1,3))
+        return all(self.get_tile(x+dx,y+dy) == '%' for dy in range(1,3) for dx in range(1,3))
 
     # adds a 2x2 block inside the 4x4 block at the given x,y coordinate 
     def add_wall_block(self,x,y):
@@ -220,8 +161,7 @@ class Map:
         self.add_wall_tile(x+1,y+2)
         self.add_wall_tile(x+2,y+2)
 
-    # determines if a 2x2 block can fit inside the 4x4 block at the given x,y coordinate
-    # (the whole 4x4 block must be empty)
+    # determines if a 2x2 block can fit inside the 4x4 block at coordinate
     def can_new_block_fit(self,x,y):
         if not (self.xy_valid(x,y) and self.xy_valid(x+3,y+3)):
             return False
@@ -248,10 +188,10 @@ class Map:
         for y in range(self.h):
             for x in range(self.w):
                 if (x,y) in self.pos_list:
-                    if any(self.get_tile(x-1,y+y0)=='|' for y0 in range(4)): self.add_connection(x,y,1,0)
-                    if any(self.get_tile(x+4,y+y0)=='|' for y0 in range(4)): self.add_connection(x,y,-1,0)
-                    if any(self.get_tile(x+x0,y-1)=='|' for x0 in range(4)): self.add_connection(x,y,0,1)
-                    if any(self.get_tile(x+x0,y+4)=='|' for x0 in range(4)): self.add_connection(x,y,0,-1)
+                    if any(self.get_tile(x-1,y+y0)=='%' for y0 in range(4)): self.add_connection(x,y,1,0)
+                    if any(self.get_tile(x+4,y+y0)=='%' for y0 in range(4)): self.add_connection(x,y,-1,0)
+                    if any(self.get_tile(x+x0,y-1)=='%' for x0 in range(4)): self.add_connection(x,y,0,1)
+                    if any(self.get_tile(x+x0,y+4)=='%' for x0 in range(4)): self.add_connection(x,y,0,-1)
 
     # the block at x,y is against a wall, so make intersecting blocks in the direction of 
     # dx,dy fill the block at x,y if they are filled first.
@@ -339,7 +279,6 @@ class Map:
             # desired maximum block size
             max_blocks = 4
 
-            # 35% chance of forcing the block to turn
             # turn means the turn has been taken
             # turn_blocks is the number of blocks traveled before turning
             turn = False
@@ -372,7 +311,7 @@ class Map:
                 i += 1
             extend_lines = str(self).splitlines()
 
-        # print the map states after each phase for debugging
+        # print map states after each phase
         if self.verbose:
             print("added block at ",x,y)
             for a,b,c in zip(first_lines, grow_lines, extend_lines):
@@ -384,37 +323,37 @@ if __name__ == "__main__":
 
     # initial empty map with standard ghost house
     tileMap = Map(16,31,"""
-        ||||||||||||||||
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |.........||||||
-        |.........||||||
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        |...............
-        ||||||||||||||||
+        %%%%%%%%%%%%%%%%
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %.........%%%%%%
+        %.........%%%%%%
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %...............
+        %%%%%%%%%%%%%%%%
         """)
 
     # verbosity option (-v)

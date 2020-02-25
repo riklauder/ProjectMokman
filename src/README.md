@@ -9,6 +9,9 @@
 
 # Source Files
 
+-joystick.py
+>pygame code to implement controller support. This tests and ouputs input from all buttons and axes that can be mapped to game functions.
+
 -Map.h 
 >draft of class to help build random mazes
 

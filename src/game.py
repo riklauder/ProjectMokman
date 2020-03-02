@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 from util import *
-import time, os
+import time, os, types
 import traceback
 import sys
 import ctypes

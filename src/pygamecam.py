@@ -264,7 +264,6 @@ class Entity(pg.sprite.Sprite):
 
 class Player(Entity):
     def __init__(self, platforms, pos, *groups):
-        self.image = pg.Surface((TILE_SIZE-4, TILE_SIZE-4))
         super().__init__(Color("#ebef00"), pos)
         self.dir = 5
         self.vel = pg.Vector2((0, 0))

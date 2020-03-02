@@ -4,13 +4,17 @@
 1. Python 3.8.1
 2. Pygame
 >pip install pygame
-3. WSL - Windows Subsystem for Linux with g++(should be installed by default)
-4. Powershell for running batch files in early project stage
+3. WSL - Windows Subsystem for Linux (g++ is usually installed with deafult packages)
+4. Powershell for running batch script files in early project stage
 
 # Source Files
 
 -joystick.py
 >pygame code to implement controller support. This tests and ouputs input from all buttons and axes that can be mapped to game functions.
+
+-layout.py
+>python objects used to help build and populate mazes in pygamecam.pu
+
 
 -Map.h 
 >draft of class to help build random mazes
@@ -75,4 +79,22 @@ walls.py
 >likely to be thrown away python script that generates random map from half map - maps not consistent with style desired
 
 
+# Other project src files
+
+food.py
+
+>collision detection framework prototype  - will modify for food Mokman game
+
+game.py
+
+>game state and observer based classes - work in progress
+
+various Agent py files
+>may borrow some classes and functions from these
+
+util.py
+>some useful funtions data structures for python like manhattan distance, priority queue, etc
+
+data res and roundrects dir
+>experimental support files - will be cleaned up as project progresses
 

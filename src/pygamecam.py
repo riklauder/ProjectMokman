@@ -5,6 +5,7 @@ import pygame as pg
 import layout, util, pacmanrules, game
 from pygame.locals import *
 from pygame import *
+from pygame.compat import geterror
 from pacman import Directions
 from math import sqrt
 from pacmanrules import PacmanRules, GhostRules
@@ -17,7 +18,7 @@ from util import manhattanDistance
 import threading, multiprocessing
 from multiprocessing import Process, current_process
 
-DEBUG = False
+DEBUG = True
 WIN_WIDTH = 860
 WIN_HEIGHT = 800
 HALF_WIDTH = int(WIN_WIDTH / 2)
@@ -26,50 +27,50 @@ DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 DEPTH = 32
 FLAGS = 0
 CAMERA_SLACK = 30
-SCREEN_SIZE = pg.Rect((0, 0, 860, 800))
-TILE_SIZE = 32 
+SCREEN_SIZE = pg.Rect((0, 0, WIN_WIDTH, WIN_HEIGHT))
+TILE_SIZE = 32
 GRAVITY = pg.Vector2((0, 0))
 WALL_RADIUS = 24
-WALL_WIDTH=3
-DIR_UP = 0;
-DIR_RIGHT = 1;
-DIR_DOWN = 2;
-DIR_LEFT = 3;
-STOPPED = 4;
-SCRIPT_PATH=sys.path[0]
+WALL_WIDTH = 3
+DIR_UP = 0
+DIR_RIGHT = 1
+DIR_DOWN = 2
+DIR_LEFT = 3
+STOPPED = 4
+SCRIPT_PATH = sys.path[0]
 PAC_SPEED = 2
 TURNBOOST = 2
 
-#                 R    G    B
-BLACK =         (  0,   0,   0)
-WHITE =         (255, 255, 255)
-BRIGHTBLUE =    (  0,  50, 255)
-DARKTURQUOISE = (  3,  54,  73)
-GREEN =         (  0, 204,   0)
-YELLOW=         (255, 255,   0)
-PINK=           (255, 105, 180)
-LIGHTBLUE=      (135, 206, 250)
-RED=            (255,   0,   0)
-LIGHTPINK=      (255, 182, 193)
+#        R    G    B
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BRIGHTBLUE = (0, 50, 255)
+DARKTURQUOISE = (3,  54,  73)
+GREEN = (0, 204, 0)
+YELLOW = (255, 255,   0)
+PINK = (255, 105, 180)
+LIGHTBLUE = (135, 206, 250)
+RED = (255, 0, 0)
+LIGHTPINK = (255, 182, 193)
 
 GHOST_SHAPE = [
-    ( 0,    -0.3 ),
-    ( 0.25, -0.75 ),
-    ( 0.5,  -0.3 ),
-    ( 0.75, -0.75 ),
-    ( 0.75, 0.5 ),
-    ( 0.5,  0.75 ),
-    (-0.5,  0.75 ),
-    (-0.75, 0.5 ),
-    (-0.75, -0.75 ),
-    (-0.5,  -0.3 ),
-    (-0.25, -0.75 )
+    (0,    -0.3),
+    (0.25, -0.75),
+    (0.5,  -0.3),
+    (0.75, -0.75),
+    (0.75, 0.5),
+    (0.5,  0.75),
+    (-0.5,  0.75),
+    (-0.75, 0.5),
+    (-0.75, -0.75),
+    (-0.5,  -0.3),
+    (-0.25, -0.75)
     ]
-GHOST_SIZE=0.65
-GHOST_OFFSET=0.1*WALL_RADIUS
+GHOST_SIZE = 0.65
+GHOST_OFFSET = 0.1*WALL_RADIUS
 
 # Must come before pygame.init()
-pg.mixer.pre_init(22050,16,2,512)
+pg.mixer.pre_init(22050, 16, 2, 512)
 pg.mixer.init()
 
 pg.init()
@@ -87,6 +88,7 @@ snd_eatgh = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatgh2.wav")
 snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","fruitbounce.wav"))
 snd_eatfruit = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatfruit.wav"))
 snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
+
 
 def main():
 
@@ -115,9 +117,8 @@ def main():
         x=0
 
     while True:
-
         for e in pg.event.get():
-            if e.type == QUIT: 
+            if e.type == QUIT:
                 exit()
             if e.type == KEYDOWN and e.key == K_ESCAPE:
                 exit()
@@ -128,43 +129,45 @@ def main():
         entities.draw(screen)
         pg.display.update()
         timer.tick(60)
-        
 
-def  add(x, y):
+
+def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
+
 
 def getLegalActions(self):
     """
-    Returns the legal actions for the agent specified.
+    Returns the illegal actions for the agent specified.
     """
     # GameState.explored.add(self)
     #if self.isWin() or self.isLose(): return []
     illegal = []
     plats = self.platforms
-    velUL=-self.speed
-    velDR=self.speed
+    velUL= -self.speed
+    velDR= self.speed
     copys = self
     currDir = self.dir
-    if currDir == 4:
-        velUL = velDR = 0
-    #check RIGHT
-    if currDir != DIR_LEFT:
-        copys.rect.left += velDR
-        legalColl(plats, copys, velDR, 0, illegal)
+    #if currDir == 4:
+    #    velUL = velDR = 0
     #check LEFT
     if currDir != DIR_RIGHT:
         copys.rect.left += velUL
         legalColl(plats, copys, velUL, 0, illegal)
+    #check RIGHT
+    if currDir != DIR_LEFT:
+        copys.rect.left += velDR
+        legalColl(plats, copys, velDR, 0, illegal)
     #check DOWN
     if currDir != DIR_UP:
-        copys.rect.top += velDR 
+        copys.rect.top += velDR
         legalColl(plats, copys, 0, velDR, illegal)
     #check UP
     if currDir != DIR_DOWN:
         copys.rect.top += velUL
         legalColl(plats, copys, 0, velUL, illegal)
-    
+
     return illegal
+
 
 def legalColl(plts, cpys, xvel, yvel, legal):
     for p in plts:
@@ -183,6 +186,7 @@ def legalColl(plts, cpys, xvel, yvel, legal):
                 legal.append(DIR_UP)
 #DIR_UP = 0   #DIR_RIGHT = 1
 #DIR_DOWN = 2 #DIR_LEFT = 3 #STOPPED=4
+
 
 class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
@@ -221,7 +225,8 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
                     dirty_append(newrect)
                     dirty_append(rec)
             spritedict[spr] = newrect
-        return dirty            
+        return dirty
+
 
 def getObjectPos(level, char ,coord):
     '''
@@ -241,6 +246,7 @@ def getObjectPos(level, char ,coord):
         y+=TILE_SIZE
         x=0
 
+
 def getObjectCoord(self, char):
     '''
     returns x or y pos based on rect pos
@@ -251,9 +257,11 @@ def getObjectCoord(self, char):
     if char == 'y':
         return math.ceil(self.rect.top / TILE_SIZE)
 
+
 def exit():
     pg.quit()
     sys.exit()
+
 
 class Entity(pg.sprite.Sprite):
     def __init__(self, color, pos, *groups):
@@ -261,6 +269,7 @@ class Entity(pg.sprite.Sprite):
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft=pos)
+
 
 class Player(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -295,7 +304,7 @@ class Player(Entity):
             print("currVselfVLastDir:", currDir, self.dir, self.lastDir)
             print("illegalMoves", illegalMoves)
         self.lastDir = currDir
-        if self.stopped == True:
+        if self.stopped:
             self.dir = 4
             self.vel.x = 0
             self.vel.y = 0
@@ -305,28 +314,28 @@ class Player(Entity):
                 self.vel.y = 0
                 self.vel.x = self.speed
                 self.change_x += self.vel.x
-                self.stopped = False;
+                self.stopped = False
         if left or self.dir == 3:
             self.dir = 3
             if self.dir not in illegalMoves:
                 self.vel.y = 0
                 self.vel.x = -self.speed
                 self.change_x += self.vel.x
-                self.stopped = False;
+                self.stopped = False
         if up or self.dir == 0:
             self.dir = 0
             if self.dir not in illegalMoves:
                 self.vel.x = 0
                 self.vel.y = -self.speed
                 self.change_y += self.vel.y
-                self.stopped = False;
+                self.stopped = False
         if down or self.dir == 2:
             self.dir = 2
             if self.dir not in illegalMoves:
                 self.vel.x = 0
                 self.vel.y = self.speed
                 self.change_y += self.vel.y
-                self.stopped = False;
+                self.stopped = False
         # increment in x direction
         self.rect.left += int(self.vel.x)
         if self.vel.x != 0:
@@ -340,7 +349,7 @@ class Player(Entity):
 
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
-            if pg.sprite.collide_rect(self, p):       
+            if pg.sprite.collide_rect(self, p):
                 curDir = self.getDir()
                 if isinstance(p, ExitBlock):
                     pg.event.post(pg.event.Event(QUIT))
@@ -411,68 +420,71 @@ class Player(Entity):
         pg.draw.circle(surf, BLACK, leftPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
         pg.draw.circle(surf, BLACK, rightPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
 
+
 class Platform(Entity):
     def __init__(self, pos, *groups):
         super().__init__(Color("#0000FF"), pos, *groups)
+
 
 class ExitBlock(Platform):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
 
-class pacman ():
-	
-	def __init__ (self):
-		self.x = 0
-		self.y = 0
-		self.velX = 0
-		self.velY = 0
-		self.speed = 2
-		
-		self.nearestRow = 0
-		self.nearestCol = 0
-		
-		self.homeX = 0
-		self.homeY = 0
-		
-		self.anim_pacmanL = {}
-		self.anim_pacmanR = {}
-		self.anim_pacmanU = {}
-		self.anim_pacmanD = {}
-		self.anim_pacmanS = {}
-		self.anim_pacmanCurrent = {}
-		
-		for i in range(1, 9, 1):
-			self.anim_pacmanL[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-l " + str(i) + ".gif")).convert()
-			self.anim_pacmanR[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-r " + str(i) + ".gif")).convert()
-			self.anim_pacmanU[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-u " + str(i) + ".gif")).convert()
-			self.anim_pacmanD[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-d " + str(i) + ".gif")).convert()
-			self.anim_pacmanS[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman.gif")).convert()
 
-		self.pelletSndNum = 0
-		
-	def Draw (self):
-				
-		# set the current frame array to match the direction pacman is facing
-		if self.velX > 0:
-			self.anim_pacmanCurrent = self.anim_pacmanR
-		elif self.velX < 0:
-			self.anim_pacmanCurrent = self.anim_pacmanL
-		elif self.velY > 0:
-			self.anim_pacmanCurrent = self.anim_pacmanD
-		elif self.velY < 0:
-			self.anim_pacmanCurrent = self.anim_pacmanU
-			
-		screenp.blit (self.anim_pacmanCurrent[ self.animFrame ], (self.x - thisGame.screenPixelPos[0], self.y - thisGame.screenPixelPos[1]))
-		
-		if thisGame.mode == 1:
-			if not self.velX == 0 or not self.velY == 0:
-				# only Move mouth when pacman is moving
-				self.animFrame += 1	
-			
-			if self.animFrame == 9:
-				# wrap to beginning
-				self.animFrame = 1
-			
+class pacman ():
+
+    def __init__ (self):
+        self.x = 0
+        self.y = 0
+        self.velX = 0
+        self.velY = 0
+        self.speed = 2
+
+        self.nearestRow = 0
+        self.nearestCol = 0
+
+        self.homeX = 0
+        self.homeY = 0
+
+        self.anim_pacmanL = {}
+        self.anim_pacmanR = {}
+        self.anim_pacmanU = {}
+        self.anim_pacmanD = {}
+        self.anim_pacmanS = {}
+        self.anim_pacmanCurrent = {}
+
+        for i in range(1, 9, 1):
+            self.anim_pacmanL[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-l " + str(i) + ".gif")).convert()
+            self.anim_pacmanR[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-r " + str(i) + ".gif")).convert()
+            self.anim_pacmanU[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-u " + str(i) + ".gif")).convert()
+            self.anim_pacmanD[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-d " + str(i) + ".gif")).convert()
+            self.anim_pacmanS[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman.gif")).convert()
+
+        self.pelletSndNum = 0
+
+    def Draw (self):
+
+        # set the current frame array to match the direction pacman is facing
+        if self.velX > 0:
+            self.anim_pacmanCurrent = self.anim_pacmanR
+        elif self.velX < 0:
+            self.anim_pacmanCurrent = self.anim_pacmanL
+        elif self.velY > 0:
+            self.anim_pacmanCurrent = self.anim_pacmanD
+        elif self.velY < 0:
+            self.anim_pacmanCurrent = self.anim_pacmanU
+
+        screenp.blit (self.anim_pacmanCurrent[ self.animFrame ], (self.x - thisGame.screenPixelPos[0], self.y - thisGame.screenPixelPos[1]))
+
+        if thisGame.mode == 1:
+            if not self.velX == 0 or not self.velY == 0:
+                # only Move mouth when pacman is moving
+                self.animFrame += 1
+
+            if self.animFrame == 9:
+                # wrap to beginning
+                self.animFrame = 1
+
 
 if __name__ == "__main__":
     main()

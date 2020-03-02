@@ -1,13 +1,15 @@
 #! /usr/bin/python
 
-import sys, os, pygame
+import sys, os
+import pygame as pg
 import random
+import layout, util
 from pygame import *
 from math import sqrt
 
-SCREEN_SIZE = pygame.Rect((0, 0, 740, 800))
+SCREEN_SIZE = pg.Rect((0, 0, 860, 800))
 TILE_SIZE = 32 
-GRAVITY = pygame.Vector2((0, 0))
+GRAVITY = pg.Vector2((0, 0))
 WALL_RADIUS = 24
 WALL_WIDTH=3
 DIR_UP = 0;
@@ -47,11 +49,11 @@ def  add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
 
-class CameraAwareLayeredUpdates(pygame.sprite.LayeredUpdates):
+class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
         super().__init__()
         self.target = target
-        self.cam = pygame.Vector2(0, 0)
+        self.cam = pg.Vector2(0, 0)
         self.world_size = world_size
         if self.target:
             self.add(target)
@@ -61,7 +63,7 @@ class CameraAwareLayeredUpdates(pygame.sprite.LayeredUpdates):
         if self.target:
             x = -self.target.rect.center[0] + SCREEN_SIZE.width/2
             y = -self.target.rect.center[1] + SCREEN_SIZE.height/2
-            self.cam += (pygame.Vector2((x, y)) - self.cam) * 0.05
+            self.cam += (pg.Vector2((x, y)) - self.cam) * 0.05
             self.cam.x = max(-(self.world_size.width-SCREEN_SIZE.width), min(0, self.cam.x))
             self.cam.y = max(-(self.world_size.height-SCREEN_SIZE.height), min(0, self.cam.y))
 
@@ -86,71 +88,60 @@ class CameraAwareLayeredUpdates(pygame.sprite.LayeredUpdates):
             spritedict[spr] = newrect
         return dirty            
 
-def exit():
-    pygame.quit()
-    sys.exit()
-
-def main():
-    pygame.init()
-    screen = pygame.display.set_mode(SCREEN_SIZE.size)
-    pygame.display.set_caption("Use arrows to move!")
-    timer = pygame.time.Clock()
-
-    level = [
-		"%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
-		"%      %%          %%      %",
-		"% %%%% %% %%%%%%%% %% %%%% %",
-		"% %%%% %% %%%%%%%% %% %%%% %",
-		"%                          %",
-		"%%% %% %%%%% %% %%%%% %% %%%",
-		"%%% %% %%%%% %% %%%%% %% %%%",
-		"%%% %% %%%%% %% %%%%% %% %%%",
-		"    %%       %%       %%    ",
-		"%%% %%%%% %%%%%%%% %%%%% %%%",
-		"%%% %%%%% %%%%%%%% %%%%% %%%",
-		"%%%                      %%%",
-		"%%% %%%%% %%%  %%% %%%%% %%%",
-		"%%% %%%%% %      % %%%%% %%%",
-		"%%% %%    %      %    %% %%%",
-		"%%% %% %% %%%%%%%% %% %% %%%",
-		"       %%          %%       ",
-		"%%% %%%%%%%% %% %%%%%%%% %%%",
-		"%%% %%%%%%%% %% %%%%%%%% %%%",
-		"%%%          %%          %%%",
-		"%%% %%%%% %%%%%%%% %%%%% %%%",
-		"%%% %%%%% %%%%%%%% %%%%% %%%",
-		"%                          %",
-		"% %%%% %%%%% %% %%%%% %%%% %",
-		"% %%%% %%%%% %% %%%%% %%%% %",
-		"% %%%% %%    %%    %% %%%% %",
-		"% %%%% %% %%%%%%%% %% %%%% %",
-		"% %%%% %% %%%%%%%% %% %%%% %",
-		"%                          %",
-		"%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
-		]
-
-
-    platforms = pygame.sprite.Group()
-    player = Player(platforms, (TILE_SIZE, TILE_SIZE))
-    level_width  = len(level[0])*TILE_SIZE
-    level_height = len(level)*TILE_SIZE
-    entities = CameraAwareLayeredUpdates(player, pygame.Rect(0, -level_height, level_width, level_height))
-
-    # build the level
+def getObjectPos(level, coord):
+    '''
+    returns x or y pos based on 
+    coord: of 'x' or 'y' 
+    x or y * TILE_SIZE
+    '''
     x = y = 0
     for row in level:
         for col in row:
-            if col == "%":
+            if col == 'P':
+                if coord == 'x':
+                    return x
+                if coord == 'y':
+                    return y
+            x+=TILE_SIZE
+        y+=TILE_SIZE
+        x=0
+
+def exit():
+    pg.quit()
+    sys.exit()
+
+def main():
+    pg.init()
+    screen = pg.display.set_mode(SCREEN_SIZE.size)
+    pg.display.set_caption("Use arrows to move!")
+    timer = pg.time.Clock()
+
+    maplay = 'randomfMap'
+    level = layout.getLayout(maplay)
+    levelt = level.layoutText
+    platforms = pg.sprite.Group()
+    playerX = getObjectPos(levelt, 'x')
+    playerY = getObjectPos(levelt, 'y')
+    player = Player(platforms, (playerX, playerY))
+    level_width  = level.width*TILE_SIZE
+    level_height = level.height*TILE_SIZE
+    entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
+
+    # build the level    
+    x = y = 0
+    for row in levelt:
+        for col in row:
+            if col == '%':
                 Platform((x, y), platforms, entities)
-            if col == "E":
-                ExitBlock((x, y), platforms, entities)
-            x += TILE_SIZE
-        y += TILE_SIZE
-        x = 0
+            if col == 'P':
+                player = Player(platforms, (x, y))
+            x+=TILE_SIZE
+        y+=TILE_SIZE
+        x=0
 
     while 1:
 
-        for e in pygame.event.get():
+        for e in pg.event.get():
             if e.type == QUIT: 
                 exit()
             if e.type == KEYDOWN and e.key == K_ESCAPE:
@@ -160,13 +151,14 @@ def main():
 
         screen.fill((0, 0, 0))
         entities.draw(screen)
-        pygame.display.update()
+        pg.display.update()
         timer.tick(60)
 
-class Entity(pygame.sprite.Sprite):
+
+class Entity(pg.sprite.Sprite):
     def __init__(self, color, pos, *groups):
         super().__init__(*groups)
-        self.image = pygame.Surface((TILE_SIZE, TILE_SIZE))
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft=pos)
 
@@ -174,11 +166,10 @@ class Player(Entity):
     def __init__(self, platforms, pos, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 3
-        self.vel = pygame.Vector2((0, 0))
+        self.vel = pg.Vector2((0, 0))
         self.stopped = True
         self.platforms = platforms
         self.speed = 5
-        #self.jump_strength = 10
 
     def getDir(self):
         if (self.vel.x==-1): return DIR_LEFT
@@ -187,7 +178,7 @@ class Player(Entity):
         if (self.vel.y==1): return DIR_DOWN
 
     def update(self):
-        pressed = pygame.key.get_pressed()
+        pressed = pg.key.get_pressed()
         up = pressed[K_UP]
         down = pressed[K_DOWN]
         left = pressed[K_LEFT]
@@ -239,7 +230,7 @@ class Player(Entity):
 
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
-            if pygame.sprite.collide_rect(self, p):       
+            if pg.sprite.collide_rect(self, p):       
                 curDir = self.dir
                 #print("post:xvel:yvel",xvel, yvel)
                 #print("player.vel", self.vel)
@@ -247,7 +238,7 @@ class Player(Entity):
                 #print("P:top:bottom:left:right",p.rect.top,p.rect.bottom,p.rect.left,p.rect.right)
                 #print("CurDir:", curDir)
                 if isinstance(p, ExitBlock):
-                    pygame.event.post(pygame.event.Event(QUIT))
+                    pg.event.post(pg.event.Event(QUIT))
                 if xvel > 0:
                     self.rect.right = p.rect.left
                     self.xvel = 0
@@ -311,15 +302,15 @@ class Player(Entity):
         rightEye = (dx_right,dy)
         leftPupil = (dx_left_pupil,dy_pupil)
         rightPupil = (dx_right_pupil,dy_pupil)
-        pygame.draw.polygon(surf, self.color, coords)
-        pygame.draw.circle(surf, WHITE, leftEye, int(WALL_RADIUS*GHOST_SIZE*.4), 0)
-        pygame.draw.circle(surf, WHITE, rightEye, int(WALL_RADIUS*GHOST_SIZE*.4), 0)
-        pygame.draw.circle(surf, BLACK, leftPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
-        pygame.draw.circle(surf, BLACK, rightPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
+        pg.draw.polygon(surf, self.color, coords)
+        pg.draw.circle(surf, WHITE, leftEye, int(WALL_RADIUS*GHOST_SIZE*.4), 0)
+        pg.draw.circle(surf, WHITE, rightEye, int(WALL_RADIUS*GHOST_SIZE*.4), 0)
+        pg.draw.circle(surf, BLACK, leftPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
+        pg.draw.circle(surf, BLACK, rightPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
 
 class Platform(Entity):
     def __init__(self, pos, *groups):
-        super().__init__(Color("#4876FF"), pos, *groups)
+        super().__init__(Color("#0000FF"), pos, *groups)
 
 class ExitBlock(Platform):
     def __init__(self, pos, *groups):

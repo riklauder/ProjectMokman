@@ -38,7 +38,7 @@ DIR_LEFT = 3;
 STOPPED = 4;
 SCRIPT_PATH=sys.path[0]
 PAC_SPEED = 2
-TURNBOOST = 6
+TURNBOOST = 2
 
 #                 R    G    B
 BLACK =         (  0,   0,   0)
@@ -172,13 +172,13 @@ def legalColl(plts, cpys, xvel, yvel, legal):
             if xvel > 0:
                 cpys.rect.right = p.rect.left
                 legal.append(DIR_RIGHT)
-            elif xvel < 0:
+            if xvel < 0:
                 cpys.rect.left = p.rect.right
                 legal.append(DIR_LEFT)
             if yvel > 0:
                 cpys.rect.bottom = p.rect.top
                 legal.append(DIR_DOWN)
-            elif yvel < 0:
+            if yvel < 0:
                 cpys.rect.top = p.rect.bottom
                 legal.append(DIR_UP)
 #DIR_UP = 0   #DIR_RIGHT = 1
@@ -266,13 +266,13 @@ class Player(Entity):
     def __init__(self, platforms, pos, *groups):
         self.image = pg.Surface((TILE_SIZE-4, TILE_SIZE-4))
         super().__init__(Color("#ebef00"), pos)
-        self.dir = None
+        self.dir = 5
         self.vel = pg.Vector2((0, 0))
         self.stopped = True
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = int(PAC_SPEED)
-        self.turning = False
+        self.speed = PAC_SPEED
+        self.turning = None
         self.change_x=0
         self.change_y=0
 
@@ -291,12 +291,10 @@ class Player(Entity):
         right = pressed[K_RIGHT]
 
         currDir = self.getDir()
-        self.isTurning(currDir)
-        self.setSpeed()
         illegalMoves = getLegalActions(self)
         if self.lastDir != STOPPED and DEBUG == True:
             print("currVselfVLastDir:", currDir, self.dir, self.lastDir)
-            print("illegalMoves self.speed", illegalMoves, self.speed)
+            print("illegalMoves", illegalMoves)
         self.lastDir = currDir
         if self.stopped == True:
             self.dir = 4
@@ -369,14 +367,6 @@ class Player(Entity):
                         self.stopped = True
         #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
-    def isTurning(self, cDir):
-        if (cDir != self.dir):
-            self.turning = True
-        else: self.turning = False
-    def setSpeed(self):
-        if self.turning == True:
-            self.speed = int(TURNBOOST)
-        else: self.speed = int(PAC_SPEED)
 
     def a(self):
         #axis of motion

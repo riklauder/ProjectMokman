@@ -1,113 +1,98 @@
-import pygame, sys, random
-from pygame.locals import *
+import pygame
+import random
+from blob import Blob
+import numpy as np
 
-# Set up pygame.
-pygame.init()
-mainClock = pygame.time.Clock()
+STARTING_BLUE_BLOBS = 15
+STARTING_RED_BLOBS = 15
+STARTING_GREEN_BLOBS = 15
 
-# Set up the window.
-WINDOWWIDTH = 400
-WINDOWHEIGHT = 400
-windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT),0,32)
-pygame.display.set_caption('Collision Detection')
-
-# Set up the colors.
-BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
+WIDTH = 800
+HEIGHT = 600
 WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
 
-# Set up the player and food data structures.
-foodCounter = 0
-NEWFOOD = 40
-FOODSIZE = 20
-player = pygame.Rect(300, 100, 50, 50)
-foods = []
-for i in range(20):
-	foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - FOODSIZE),
-	random.randint(0, WINDOWHEIGHT - FOODSIZE), FOODSIZE, FOODSIZE))
+game_display = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Blob World")
+clock = pygame.time.Clock()
 
-# Set up movement variables.
-moveLeft = False
-moveRight = False
-moveUp = False
-moveDown = False
+class BlueBlob(Blob):
+    
+    def __init__(self, x_boundary, y_boundary):
+        Blob.__init__(self, (0, 0, 255), x_boundary, y_boundary)
 
-MOVESPEED = 6
+    def __add__(self, other_blob):
+        if other_blob.color == (255, 0, 0):
+            self.size -= other_blob.size
+            other_blob.size -= self.size
+            
+        elif other_blob.color == (0, 255, 0):
+            self.size += other_blob.size
+            other_blob.size = 0
+            
+        elif other_blob.color == (0, 0, 255):
+            pass
+        else:
+            raise Exception('Tried to combine one or multiple blobs of unsupported colors!')
+            
+        
+class RedBlob(Blob):
+    def __init__(self, x_boundary, y_boundary):
+        Blob.__init__(self, (255, 0, 0), x_boundary, y_boundary)
 
 
-# Run the game loop.
-while True:
-	# Check for events.
-	for event in pygame.event.get():
-		if event.type == QUIT:
-			pygame.quit()
-			sys.exit()
-		if event.type == KEYDOWN:
-			# Change the keyboard variables.
-			if event.key == K_LEFT or event.key == K_a:
-				moveRight = False
-				moveLeft = True
-			if event.key == K_RIGHT or event.key == K_d:
-				moveLeft = False
-				moveRight = True
-			if event.key == K_UP or event.key == K_w:
-				moveDown = False
-				moveUp = True
-			if event.key == K_DOWN or event.key == K_s:
-				moveUp = False
-				moveDown = True
-		if event.type == KEYUP:
-			if event.key == K_ESCAPE:
-				pygame.quit()
-				sys.exit()
-			if event.key == K_LEFT or event.key == K_a:
-				moveLeft = False
-			if event.key == K_RIGHT or event.key == K_d:
-				moveRight = False
-			if event.key == K_UP or event.key == K_w:
-				moveUp = False
-			if event.key == K_DOWN or event.key == K_s:
-				moveDown = False
-			if event.key == K_x:
-				player.top = random.randint(0, WINDOWHEIGHT - player.height)
-				player.left = random.randint(0, WINDOWWIDTH - player.width)
+class GreenBlob(Blob):
+    def __init__(self, x_boundary, y_boundary):
+        Blob.__init__(self, (0, 255, 0), x_boundary, y_boundary)
 
-		if event.type == MOUSEBUTTONUP:
-			foods.append(pygame.Rect(event.pos[0], event.pos[1],FOODSIZE,FOODSIZE))
 
-	foodCounter += 1
-	if foodCounter >= NEWFOOD:
-		# Add new food.
-		foodCounter = 0
-		foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH -
-		FOODSIZE), random.randint(0, WINDOWHEIGHT-FOODSIZE),
-		FOODSIZE,FOODSIZE))
+def is_touching(b1,b2):
+    return np.linalg.norm(np.array([b1.x,b1.y])-np.array([b2.x,b2.y])) < (b1.size + b2.size)
 
-	# Draw the white background onto the surface.
-	windowSurface.fill(WHITE)
+def handle_collisions(blob_list):
+    blues, reds, greens = blob_list
+    for blue_id, blue_blob in blues.copy().items():
+        for other_blobs in blues, reds, greens:
+            for other_blob_id, other_blob in other_blobs.copy().items():
+                if blue_blob == other_blob:
+                    pass
+                else:
+                    if is_touching(blue_blob, other_blob):
+                        blue_blob + other_blob
+                        if other_blob.size <= 0:
+                            del other_blobs[other_blob_id]
+                        if blue_blob.size <= 0:
+                            del blues[blue_id]
+                            
+    return blues, reds, greens
+                     
+def draw_environment(blob_list):
+    game_display.fill(WHITE)
+    blues, reds, greens = handle_collisions(blob_list)
+    for blob_dict in blob_list:
+        for blob_id in blob_dict:
+            blob = blob_dict[blob_id]
+            pygame.draw.circle(game_display, blob.color, [blob.x, blob.y], blob.size)
+            blob.move()
+            blob.check_bounds()
 
-	# Move the player.
-	if moveDown and player.bottom < WINDOWHEIGHT:
-		player.top += MOVESPEED
-	if moveUp and player.top > 0:
-		player.top -= MOVESPEED
-	if moveLeft and player.left > 0:
-		player.left -= MOVESPEED
-	if moveRight and player.right < WINDOWWIDTH:
-		player.right += MOVESPEED
+    pygame.display.update()
+    return blues, reds, greens
 
-	# Draw the player onto the surface.
-	pygame.draw.rect(windowSurface, BLACK, player)
+def main():
+    blue_blobs = dict(enumerate([BlueBlob(WIDTH,HEIGHT) for i in range(STARTING_BLUE_BLOBS)]))
+    red_blobs = dict(enumerate([RedBlob(WIDTH,HEIGHT) for i in range(STARTING_RED_BLOBS)]))
+    green_blobs = dict(enumerate([GreenBlob(WIDTH,HEIGHT) for i in range(STARTING_GREEN_BLOBS)]))
 
-	# Check whether the player has intersected with any food squares.
-	for food in foods[:]:
-		if player.colliderect(food):
-			foods.remove(food)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        blue_blobs, red_blobs, green_blobs = draw_environment([blue_blobs,red_blobs,green_blobs])
+        clock.tick(60)
 
-	# Draw the food.
-	for i in range(len(foods)):
-		pygame.draw.rect(windowSurface, GREEN, foods[i])
 
-	# Draw the window onto the screen.
-	pygame.display.update()
-	mainClock.tick(40)
+if __name__ == '__main__':
+    main()

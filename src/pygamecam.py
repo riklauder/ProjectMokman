@@ -17,7 +17,7 @@ from util import manhattanDistance
 import threading, multiprocessing
 from multiprocessing import Process, current_process
 
-DEBUG = True
+DEBUG = False
 WIN_WIDTH = 860
 WIN_HEIGHT = 800
 HALF_WIDTH = int(WIN_WIDTH / 2)
@@ -37,6 +37,8 @@ DIR_DOWN = 2;
 DIR_LEFT = 3;
 STOPPED = 4;
 SCRIPT_PATH=sys.path[0]
+PAC_SPEED = 2
+TURNBOOST = 6
 
 #                 R    G    B
 BLACK =         (  0,   0,   0)
@@ -239,6 +241,16 @@ def getObjectPos(level, char ,coord):
         y+=TILE_SIZE
         x=0
 
+def getObjectCoord(self, char):
+    '''
+    returns x or y pos based on rect pos
+    char: of 'x' or 'y' for return
+    '''
+    if char == 'x':
+        return math.ceil(self.rect.left / TILE_SIZE)
+    if char == 'y':
+        return math.ceil(self.rect.top / TILE_SIZE)
+
 def exit():
     pg.quit()
     sys.exit()
@@ -259,7 +271,8 @@ class Player(Entity):
         self.stopped = True
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = 2
+        self.speed = int(PAC_SPEED)
+        self.turning = False
         self.change_x=0
         self.change_y=0
 
@@ -278,10 +291,12 @@ class Player(Entity):
         right = pressed[K_RIGHT]
 
         currDir = self.getDir()
+        self.isTurning(currDir)
+        self.setSpeed()
         illegalMoves = getLegalActions(self)
         if self.lastDir != STOPPED and DEBUG == True:
             print("currVselfVLastDir:", currDir, self.dir, self.lastDir)
-            print("illegalMoves left:top", illegalMoves, self.rect.left, self.rect.top)
+            print("illegalMoves self.speed", illegalMoves, self.speed)
         self.lastDir = currDir
         if self.stopped == True:
             self.dir = 4
@@ -325,6 +340,7 @@ class Player(Entity):
             self.collide(0, self.vel.y, self.platforms)
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
+
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
             if pg.sprite.collide_rect(self, p):       
@@ -351,9 +367,17 @@ class Player(Entity):
                     #self.yvel = 0
                     if curDir == 0:
                         self.stopped = True
-        #DIR_UP = 0    #DIR_RIGHT = 1
-        #DIR_DOWN = 2  #DIR_LEFT = 3
+        #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
+    def isTurning(self, cDir):
+        if (cDir != self.dir):
+            self.turning = True
+        else: self.turning = False
+    def setSpeed(self):
+        if self.turning == True:
+            self.speed = int(TURNBOOST)
+        else: self.speed = int(PAC_SPEED)
+
     def a(self):
         #axis of motion
         if self.dir.x != 0:

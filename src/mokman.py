@@ -135,6 +135,19 @@ def main():
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
+def drawEllipse():
+    sizeh = (TILE_SIZE*2, TILE_SIZE)
+    sizev = (TILE_SIZE, TILE_SIZE*2)
+
+    roundPlatforms = pg.sprite.Group()
+    
+    ellipseh = pg.Surface(sizeh)
+    ellipsev = pg.Surface(sizev)
+    pg.draw.ellipse(ellipseh, randomMapColours[pickint], ellipseh.get_rect())
+    pg.draw.ellipse(ellipsev, randomMapColours[pickint], ellipsev.get_rect())
+
+
+
 def getlayoutActions(coods):
     legals = []
     #check L
@@ -474,27 +487,6 @@ pickint = random.randint(0, 9)
 class Platform(Entity):
     def __init__(self, pos, *groups):
         super().__init__(Color(randomMapColours[pickint]), pos, *groups)
-
-
-def getRandomMapColor():
-    picki = random.randint(0, 6)
-    purp = "#800080"
-    blu = "#0000FF"
-    fush = "#FF00FF"
-    fgrn = "#228B22"
-    midblu = "#191970"
-    aqua = "#7FFFD4"
-    dpnk = "#FF1493"
-    mapcols = []
-    mapcols.append(purp)
-    mapcols.append(blu)
-    mapcols.append(fush)
-    mapcols.append(fgrn)
-    mapcols.append(midblu)
-    mapcols.append(aqua)
-    mapcols.append(dpnk)
-
-    return mapcols[picki]
 
 
 

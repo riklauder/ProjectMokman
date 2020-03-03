@@ -402,8 +402,8 @@ class Player(Entity):
                     if curDir == 2:
                         self.stopped = True
                 elif yvel < 0:
-                    self.rect.top = p.rect.bottom
                     self.yvel = 0
+                    self.rect.top = p.rect.bottom
                     if curDir == 0:
                         self.stopped = True
         #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  #DIR_LEFT = 3

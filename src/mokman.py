@@ -94,12 +94,19 @@ snd_pellet = {}
 snd_pellet[0] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet1.wav"))
 snd_pellet[1] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet2.wav"))
 snd_powerpellet = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","powerpellet.wav"))
-snd_eatgh = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatgh2.wav"))
+snd_eatgh = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatghost.wav"))
+snd_eatg2 = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatgh2.wav"))
 snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","fruitbounce.wav"))
 snd_eatfruit = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatfruit.wav"))
 snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
+snd_die = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","die.wav"))
+snd_begin = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "begin.wav"))
+snd_chomp = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "chomp.wav"))
+snd_wakka = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "wakka.wav"))
+snd_wakka.set_volume(.3)
 
-font_name = pg.font.match_font('arial')
+
+font_name = pg.font.match_font('roboto', bold=True)
 score = SCORE
 
 def draw_text(surf, text, size, x, y):
@@ -120,6 +127,7 @@ class Entity(pg.sprite.Sprite):
 
 def main():
 
+    snd_begin.play()
     platforms = pg.sprite.Group()
     foods = pg.sprite.Group()
     teleports = pg.sprite.Group()
@@ -130,6 +138,7 @@ def main():
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
+
 
     # build the level    
     x = y = 0
@@ -162,7 +171,7 @@ def main():
         entities.draw(screen)
         draw_text(screen, str(entities.target.score), 20, HALF_WIDTH, 10)
         pg.display.update()
-        timer.tick(60)
+        timer.tick(120)
 
 
 def add(x, y):
@@ -492,8 +501,9 @@ class Player(Entity):
         for f in foods:
             if pg.sprite.collide_rect(self, f):
                 f.kill()
-                snd_pellet[self.score%2].play()
                 self.score += 1
+                snd_wakka.play()
+                #snd_pellet[self.score%2].play()
 
                 
     def teleport(self, teleports):

@@ -14,7 +14,9 @@ To run:
 
 *from src dir:
 
-> python pygamecam.py
+> python mokman.py
+
+will run with static test random map
 
 
 mapTransform.cpp - transforms final map for pygame and adds Pacman/Ghost spawns.

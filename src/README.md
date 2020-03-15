@@ -1,8 +1,8 @@
 # SRC
 
 # Required
-1. Python 3.8.1
-2. Pygame
+1. Python 3.8.1 or higher
+2. Pygame 1.9.6
 >pip install pygame
 3. WSL - Windows Subsystem for Linux (g++ is usually installed with deafult packages)
 4. Powershell for running batch script files in early project stage
@@ -53,14 +53,24 @@ mapgen.js
 >script used to generate random maps in JS modified slightly to accomodate project.  Most transformation happens in mapTransform.cpp*
 
 
-pacman.bat
+mokman.bat
 
->batch file to help creaate radnom map, add pacman and ghost spawns then transform it.  Same file exists in AIVersion game to test with full working framework.
+>batch file to run full game. Creaates radnom map, pacman and ghost spawns then transforms it for pygame. This will autostart the game after levels created. Same file pacman.bat exists in AIVersion game to test with full working framework.
 
+>./mokman
 
-*pacman.bat will generate random map using most current method and store it in* 
+or double click in directory
+
+*mokman.bat will generate random map using most current method and store it in* 
 
 -    layouts/randomfMap.lay
+
+
+mokman.py
+
+>core code including main loop for mokman game.  Can run independently using last random map generated using 
+
+>python3 mokman.py
 
 
 pycollide.py

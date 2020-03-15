@@ -12,17 +12,15 @@
 #include <limits>
 #include <iterator>
 
-void getData(std::vector<std::string>& data) {
+void getData(std::vector<std::string>& data, std::string fname) {
 	std::string s1;
 	int rows=31;
 	int cols=28;
-	std::ifstream file("layouts/randomMap.lay");
+	std::ifstream file(fname);
 	getline(file, s1);
-	for (int i=0; i < rows;i++) {
+	for (int i=1; i < rows-1;i++) {
 		std::string s2 ="";
-		if (i==0 || i == rows-1)
-			s2.append("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		else{
+		
 			if (s1.substr(i*cols,1) == " ")
 				s2.append("T");
 			else 
@@ -32,7 +30,7 @@ void getData(std::vector<std::string>& data) {
 				s2.append("T");
 			else
 				s2.append("%");	
-		}
+
 		std::replace(s2.begin(), s2.end(), '|', '%');
 		std::replace(s2.begin(), s2.end(), '_', ' ');
 		std::replace(s2.begin(), s2.end(), '-', ' ');
@@ -41,21 +39,33 @@ void getData(std::vector<std::string>& data) {
 	
 	}
 
+std::string filename(int n){
+	std::stringstream str;
+	str << n;
+	std::string fname = "layouts/randomMap";
+	fname += str.str();
+	fname += ".lay";
+	return fname;
+}
 
 
 int main(){
-	std::vector<std::string> map;
+	std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+	for (int i=0; i < 15; i++){
+		std::vector<std::string> map;
+		std::string file = filename(i);
+		getData(map, file);
 
-	getData(map);
-
-	map[23][14]='P';
-	map[14][13]='G';//one ghost always spawn in house
-	/*2 ghosts spawn on north side of map*/
-	map[1][3]='G';
-	map[1][24]='G';
-	/*random L R spawn south end*/
-	map[29][1]='G';
-	for (auto x : map)
-		std::cout << x << std::endl;
-
+		if (i == 14)
+			map[22][14]='P';
+		map[13][13]='G';//one ghost always spawn in house
+		/*2 ghosts spawn on north side of map*/
+		map[0][3]='G';
+		map[0][24]='G';
+		/*random L R spawn south end*/
+		map.resize(27);
+		for (auto x : map)
+			std::cout << x << std::endl;
+	}
+	std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
 }

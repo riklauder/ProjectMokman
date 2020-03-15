@@ -86,7 +86,7 @@ screenp = pg.display.get_surface()
 timer = pg.time.Clock()
 
 up = down = left = right = running = False
-maplay = 'randomInfmap'
+maplay = 'randomfMap'
 level = layout.getLayout(maplay)
 levelt = level.layoutText
 

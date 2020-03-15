@@ -23,9 +23,15 @@ void getData(std::vector<std::string>& data) {
 		if (i==0 || i == rows-1)
 			s2.append("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		else{
-			s2.append("%");
+			if (s1.substr(i*cols,1) == " ")
+				s2.append("T");
+			else 
+				s2.append("%");
 			s2.append(s1.substr((i*cols)+1, cols-2));
-			s2.append("%");	
+			if (s1.substr(i*cols,1) == " ")
+				s2.append("T");
+			else
+				s2.append("%");	
 		}
 		std::replace(s2.begin(), s2.end(), '|', '%');
 		std::replace(s2.begin(), s2.end(), '_', ' ');

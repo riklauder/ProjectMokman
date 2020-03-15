@@ -24,7 +24,7 @@ class PlayerController(Entity):
 
     *startY - y coordinate for staring position
     '''
-    def __init__(self, platforms, pos, foods, teleports, *groups):
+    def __init__(self, platforms, pos, foods, teleports, powerups, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)

@@ -123,9 +123,10 @@ def main():
     platforms = pg.sprite.Group()
     foods = pg.sprite.Group()
     teleports = pg.sprite.Group()
+    powerups = pg.sprite.Group()
     playerX = getObjectPos(levelt, 'P', 'x')
     playerY = getObjectPos(levelt, 'P', 'y')
-    player = Player(platforms, (playerX, playerY), foods, teleports)
+    player = Player(platforms, (playerX, playerY), foods, teleports, powerups)
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
@@ -140,8 +141,10 @@ def main():
                 Teleport((x, y), teleports, entities)
             if col == '.':
                 Pacfood((x+15, y+15), foods, entities)
+            if col == 'o':
+                Pacpower((x+13, y+13), powerups, entities)
             if col == 'P':
-                player = Player(platforms, (x, y), foods, teleports)
+                player = Player(platforms, (x, y), foods, teleports, powerups)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
@@ -176,6 +179,12 @@ def drawEllipse():
     pg.draw.ellipse(ellipseh, Color(randomMapColours[pickint]), ellipseh.get_rect())
     pg.draw.ellipse(ellipsev, Color(randomMapColours[pickint]), ellipsev.get_rect())
 
+def getDir(self):
+    if (self.vel.x>=1): return DIR_RIGHT
+    if (self.vel.x<=-1): return DIR_LEFT
+    if (self.vel.y<=-1): return DIR_UP
+    if (self.vel.y>=1): return DIR_DOWN
+    if (self.vel.y == 0 and self.vel.x == 0): return STOPPED
 
 def getlayoutActions(self):
     x = self.laycoods.x
@@ -348,7 +357,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, foods, teleports, *groups):
+    def __init__(self, platforms, pos, foods, teleports, powerups, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -359,18 +368,13 @@ class Player(Entity):
         self.platforms = platforms
         self.foods = foods
         self.teleports = teleports
+        self.powerups = powerups
         self.speed = PAC_SPEED
         self.turning = None
         self.change_x=0
         self.change_y=0
         self.score=1
 
-    def getDir(self):
-        if (self.vel.x>=1): return DIR_RIGHT
-        if (self.vel.x<=-1): return DIR_LEFT
-        if (self.vel.y<=-1): return DIR_UP
-        if (self.vel.y>=1): return DIR_DOWN
-        if (self.vel.y == 0 and self.vel.x == 0): return STOPPED
 
     def update(self):
         pressed = pg.key.get_pressed()
@@ -379,7 +383,7 @@ class Player(Entity):
         left = pressed[K_LEFT]
         right = pressed[K_RIGHT]
         
-        self.currDir = self.getDir()
+        self.currDir = getDir(self)
         self.isTurning()
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
@@ -426,18 +430,19 @@ class Player(Entity):
         # increment in x direction
         self.rect.left += int(self.vel.x)
         if self.vel.x != 0:
-            if self.turning and abs(self.vel.x) < PAC_SPEED+TURNBOOST:
-                self.vel.x = PAC_SPEED+TURNBOOST
+            if self.turning and abs(self.vel.x) < PAC_SPEED*TURNBOOST:
+                self.vel.x *= TURNBOOST
             self.collide(self.vel.x, 0, self.platforms)
         # increment in y direction
         self.rect.top += int(self.vel.y)
         if self.vel.y != 0:
-            if self.turning and abs(self.vel.y) < PAC_SPEED+TURNBOOST:
-                self.vel.y = PAC_SPEED+TURNBOOST
+            if self.turning and abs(self.vel.y) < PAC_SPEED*TURNBOOST:
+                self.vel.y *= TURNBOOST
             self.collide(0, self.vel.y, self.platforms)
         self.foodCollide(self.foods)
         score = self.score
         self.teleport(self.teleports)
+        self.powerup(self.powerups)
         if DEBUG == True:
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
@@ -447,7 +452,7 @@ class Player(Entity):
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
             if pg.sprite.collide_rect(self, p):
-                curDir = self.getDir()
+                curDir = getDir(self)
                 if isinstance(p, ExitBlock):
                     pg.event.post(pg.event.Event(QUIT))
                 if xvel > 0:
@@ -476,11 +481,11 @@ class Player(Entity):
         #STOPPED = 4
 
     def isTurning(self):
-        if self.getDir() != self.dir:
+        if getDir(self) != self.dir:
             self.turning = True
-            self.speed = PAC_SPEED+TURNBOOST
+            self.speed = PAC_SPEED*TURNBOOST
         else: 
-            self.speed = PAC_SPEED+TURNBOOST
+            self.speed = PAC_SPEED*TURNBOOST
             self.turning = False
 
     def foodCollide(self, foods):
@@ -489,6 +494,7 @@ class Player(Entity):
                 f.kill()
                 snd_pellet[self.score%2].play()
                 self.score += 1
+
                 
     def teleport(self, teleports):
         for t in teleports:
@@ -498,6 +504,12 @@ class Player(Entity):
                 elif self.rect.left < 2*TILE_SIZE:
                     self.rect.left = WIN_WIDTH-TILE_SIZE
 
+    def powerup(self, powerups):
+        for p in powerups:
+            if pg.sprite.collide_rect(self, p):
+                p.kill()
+                self.score += 100
+                snd_powerpellet.play()
 
 
     def a(self):
@@ -579,6 +591,16 @@ class Pacfood(FoodEntity):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
 
+class PowerEntity(pg.sprite.Sprite):
+    def __init__(self, color, pos, *groups):
+        super().__init__(*groups)
+        self.image = pg.Surface((6, 6))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=pos)
+
+class Pacpower(PowerEntity):
+    def __init__(self, pos, *groups):
+        super().__init__(Color("white"), pos, *groups)
 
 
 

@@ -51,6 +51,12 @@ or double click in directory
 -    layouts/randomfMap.lay
 
 
+mokmanw.bat
+
+>created sript for windows only that doesn't require WSL
+
+>./mokmanw
+
 mokman.py
 
 >core code including main loop for mokman game.  Can run independently using last random map generated using 

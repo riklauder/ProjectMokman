@@ -63,13 +63,15 @@ Built mostly using pygame but also used JS and C++
 
 2.  run ./mokman from that dir
 
->./pacman
+>./mokman
 
 ### creates random map for Pygame based game. Transformation of maps is done using C++ .
 
 *pacman batch file will execute required scripts, run code then automatically start pygame. MUST BE run from correct dir
 
-*used WSL bash shell in Windows with g++ installed although mapTransform.cpp could be compiled as mapt.exe using VS cl or other Windows c++ compiler  
+*used WSL bash shell in Windows with g++ although mapTransform.cpp could be compiled as mapt.exe using VS cl or other Windows c++ compiler 
+*included mapTransform.exe - run mokmanw.bat if WSL is not installed
+
 
 
 ## Build/Play Instructions for prototype

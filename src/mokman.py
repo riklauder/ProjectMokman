@@ -42,6 +42,9 @@ STOPPED = 4
 SCRIPT_PATH = sys.path[0]
 PAC_SPEED = 2
 TURNBOOST = 2
+SCORE_XOFFSET=14 # pixels from left edge
+SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
+SCORE = 0
 
 #        R    G    B
 BLACK = (0, 0, 0)
@@ -96,6 +99,16 @@ snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","fruitb
 snd_eatfruit = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatfruit.wav"))
 snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
 
+font_name = pg.font.match_font('arial')
+score = SCORE
+
+def draw_text(surf, text, size, x, y):
+    font = pg.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
 class Entity(pg.sprite.Sprite):
     def __init__(self, color, pos, *groups):
         super().__init__(*groups)
@@ -108,10 +121,10 @@ class Entity(pg.sprite.Sprite):
 def main():
 
     platforms = pg.sprite.Group()
-    food = pg.sprite.Group()
+    foods = pg.sprite.Group()
     playerX = getObjectPos(levelt, 'P', 'x')
     playerY = getObjectPos(levelt, 'P', 'y')
-    player = Player(platforms, (playerX, playerY), food)
+    player = Player(platforms, (playerX, playerY), foods)
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
@@ -122,10 +135,10 @@ def main():
         for col in row:
             if col == '%':
                 Platform((x, y), platforms, entities)
-            if col == 'P':
-                player = Player(platforms, (x, y))
             if col == '.':
-                Pacfood((x+15, y+15), food, entities)
+                Pacfood((x+15, y+15), foods, entities)
+            if col == 'P':
+                player = Player(platforms, (x, y), foods)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
@@ -139,9 +152,9 @@ def main():
                 exit()
 
         entities.update()
-
         screen.fill((0, 0, 0))
         entities.draw(screen)
+        draw_text(screen, str(entities.target.score), 20, HALF_WIDTH, 10)
         pg.display.update()
         timer.tick(60)
 
@@ -159,7 +172,6 @@ def drawEllipse():
     ellipsev = pg.Surface(sizev)
     pg.draw.ellipse(ellipseh, Color(randomMapColours[pickint]), ellipseh.get_rect())
     pg.draw.ellipse(ellipsev, Color(randomMapColours[pickint]), ellipsev.get_rect())
-
 
 
 def getlayoutActions(self):
@@ -333,7 +345,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, *groups):
+    def __init__(self, platforms, pos, foods, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -342,10 +354,12 @@ class Player(Entity):
         self.currDir = 3
         self.lastDir = 4
         self.platforms = platforms
+        self.foods = foods
         self.speed = PAC_SPEED
         self.turning = None
         self.change_x=0
         self.change_y=0
+        self.score=1
 
     def getDir(self):
         if (self.vel.x>=1): return DIR_RIGHT
@@ -417,10 +431,13 @@ class Player(Entity):
             if self.turning and abs(self.vel.y) < PAC_SPEED+TURNBOOST:
                 self.vel.y = PAC_SPEED+TURNBOOST
             self.collide(0, self.vel.y, self.platforms)
+        self.foodCollide(self.foods)
+        score = self.score
         if DEBUG == True:
-            print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)
+            print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
+
 
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
@@ -452,6 +469,7 @@ class Player(Entity):
                         self.stopped = True
         #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
+
     def isTurning(self):
         if self.getDir() != self.dir:
             self.turning = True
@@ -459,6 +477,14 @@ class Player(Entity):
         else: 
             self.speed = PAC_SPEED+TURNBOOST
             self.turning = False
+
+    def foodCollide(self, foods):
+        for f in foods:
+            if pg.sprite.collide_rect(self, f):
+                f.kill()
+                self.score += 1
+
+
 
 
 
@@ -542,6 +568,7 @@ class Pacfood(FoodEntity):
 class ExitBlock(Platform):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
+
 
 
 class pacman ():

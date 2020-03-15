@@ -430,6 +430,17 @@ class ExitBlock(Platform):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
 
+def drawEllipse():
+    sizeh = (TILE_SIZE*2, TILE_SIZE)
+    sizev = (TILE_SIZE, TILE_SIZE*2)
+
+    roundPlatforms = pg.sprite.Group()
+    
+    ellipseh = pg.Surface(sizeh)
+    ellipsev = pg.Surface(sizev)
+    pg.draw.ellipse(ellipseh, randomMapColours[pickint], ellipseh.get_rect())
+    pg.draw.ellipse(ellipsev, randomMapColours[pickint], ellipsev.get_rect())
+
 
 class pacman ():
 

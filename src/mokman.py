@@ -20,6 +20,8 @@ import threading, multiprocessing
 from multiprocessing import Process, current_process
 
 DEBUG = False
+TRUE = True
+FALSE = False
 WIN_WIDTH = 860
 WIN_HEIGHT = 800
 HALF_WIDTH = int(WIN_WIDTH / 2)
@@ -30,7 +32,7 @@ FLAGS = 0
 SCREEN_SIZE = pg.Rect((0, 0, WIN_WIDTH, WIN_HEIGHT))
 TILE_SIZE = 32
 GRAVITY = pg.Vector2((0, 0))
-WALL_RADIUS = 24
+WALL_RADIUS = 16
 WALL_WIDTH = 3
 DIR_UP = 0
 DIR_RIGHT = 1
@@ -94,13 +96,22 @@ snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","fruitb
 snd_eatfruit = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatfruit.wav"))
 snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
 
+class Entity(pg.sprite.Sprite):
+    def __init__(self, color, pos, *groups):
+        super().__init__(*groups)
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=pos)
+#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
+
 
 def main():
 
     platforms = pg.sprite.Group()
+    food = pg.sprite.Group()
     playerX = getObjectPos(levelt, 'P', 'x')
     playerY = getObjectPos(levelt, 'P', 'y')
-    player = Player(platforms, (playerX, playerY))
+    player = Player(platforms, (playerX, playerY), food)
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
@@ -113,9 +124,12 @@ def main():
                 Platform((x, y), platforms, entities)
             if col == 'P':
                 player = Player(platforms, (x, y))
+            if col == '.':
+                Pacfood((x+15, y+15), food, entities)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
+    
 
     while True:
         for e in pg.event.get():
@@ -129,38 +143,43 @@ def main():
         screen.fill((0, 0, 0))
         entities.draw(screen)
         pg.display.update()
-        timer.tick(120)
+        timer.tick(60)
 
 
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
 def drawEllipse():
-    sizeh = (TILE_SIZE*2, TILE_SIZE)
-    sizev = (TILE_SIZE, TILE_SIZE*2)
+    sizeh = (TILE_SIZE*2, TILE_SIZE*2)
+    sizev = (TILE_SIZE, TILE_SIZE)
 
     roundPlatforms = pg.sprite.Group()
     
     ellipseh = pg.Surface(sizeh)
     ellipsev = pg.Surface(sizev)
-    pg.draw.ellipse(ellipseh, randomMapColours[pickint], ellipseh.get_rect())
-    pg.draw.ellipse(ellipsev, randomMapColours[pickint], ellipsev.get_rect())
+    pg.draw.ellipse(ellipseh, Color(randomMapColours[pickint]), ellipseh.get_rect())
+    pg.draw.ellipse(ellipsev, Color(randomMapColours[pickint]), ellipsev.get_rect())
 
 
 
-def getlayoutActions(coods):
+def getlayoutActions(self):
+    x = self.laycoods.x
+    y = self.laycoods.y
+    #if self.currDir == DIR_DOWN or DIR_RIGHT:
+    #    x -= 1
+    #    y -= 1
     legals = []
     #check L
-    if not isWall(coods.x-1, coods.y):
+    if not isWall(x-1, y):
         legals.append(DIR_LEFT)
     #check R
-    if not isWall(coods.x+1, coods.y):
+    if not isWall(x+1, y):
         legals.append(DIR_RIGHT)
     #check D
-    if not isWall(coods.x, coods.y+1):
+    if not isWall(x, y+1):
         legals.append(DIR_DOWN)
     #check U
-    if not isWall(coods.x, coods.y-1):
+    if not isWall(x, y-1):
         legals.append(DIR_UP)
     
     return legals
@@ -287,9 +306,15 @@ def getObjectCoord(self, char):
     char: of 'x' or 'y' for return
     '''
     if char == 'x':
-        return ceil(self.rect.left / TILE_SIZE)
+        if self.currDir == DIR_RIGHT:
+            return floor(self.rect.left/TILE_SIZE)
+        else:
+            return ceil(self.rect.left / TILE_SIZE)
     if char == 'y':
-        return ceil(self.rect.top / TILE_SIZE)
+        if self.currDir == DIR_DOWN:
+            return floor(self.rect.top/TILE_SIZE)
+        else:
+            return ceil(self.rect.top / TILE_SIZE)
 
 
 def exit():
@@ -297,22 +322,24 @@ def exit():
     sys.exit()
 
 
-class Entity(pg.sprite.Sprite):
-    def __init__(self, color, pos, *groups):
-        super().__init__(*groups)
-        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
-        self.image.fill(color)
-        self.rect = self.image.get_rect(topleft=pos)
-
-#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
-#STOPPED = 4
 class Player(Entity):
+    '''
+    Player class - initialize with = Player(mapsprite,*(startX, startY))
+
+    *mapsprite - master sprite object representing game world
+
+    *startX - x coordinate for staring position
+
+    *startY - y coordinate for staring position
+
+    '''
     def __init__(self, platforms, pos, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
         self.vel = pg.Vector2(0, 0)
         self.stopped = True
+        self.currDir = 3
         self.lastDir = 4
         self.platforms = platforms
         self.speed = PAC_SPEED
@@ -334,17 +361,17 @@ class Player(Entity):
         left = pressed[K_LEFT]
         right = pressed[K_RIGHT]
         
+        self.currDir = self.getDir()
+        self.isTurning()
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
-        self.isTurning()
-        legals = getlayoutActions(self.laycoods)
+        legals = getlayoutActions(self)
         if self.stopped == True:
             legals.append(STOPPED)
-        currDir = self.getDir()
         if self.lastDir != STOPPED and DEBUG == True:
-            print("currVselfVLastDir:", currDir, self.dir, self.lastDir)
+            print("currVselfVLastDir:", self.currDir, self.dir, self.lastDir)
             print("legals, l.x l.y", legals, self.laycoods.x, self.laycoods.y)
-        self.lastDir = currDir
+        self.lastDir = self.currDir
         if self.stopped:
             self.dir = 4
             if self.dir in legals:
@@ -353,41 +380,45 @@ class Player(Entity):
         if right or self.dir == 1:
             self.dir = 1
             if self.dir in legals:
-                self.vel.y = 0
                 self.vel.x = self.speed
                 self.change_x += self.vel.x
+                self.vel.y = 0
                 self.stopped = False
         if left or self.dir == 3:
             self.dir = 3
             if self.dir in legals:
-                self.vel.y = 0
                 self.vel.x = -self.speed
                 self.change_x += self.vel.x
+                self.vel.y = 0
                 self.stopped = False
         if up or self.dir == 0:
             self.dir = 0
             if self.dir in legals:
-                self.vel.x = 0
                 self.vel.y = -self.speed
                 self.change_y += self.vel.y
+                self.vel.x = 0  
                 self.stopped = False
         if down or self.dir == 2:
             self.dir = 2
             if self.dir in legals:
-                self.vel.x = 0
                 self.vel.y = self.speed
                 self.change_y += self.vel.y
+                self.vel.x = 0
                 self.stopped = False
         # increment in x direction
         self.rect.left += int(self.vel.x)
         if self.vel.x != 0:
-            if DEBUG == True:
-                print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)
+            if self.turning and abs(self.vel.x) < PAC_SPEED+TURNBOOST:
+                self.vel.x = PAC_SPEED+TURNBOOST
             self.collide(self.vel.x, 0, self.platforms)
         # increment in y direction
         self.rect.top += int(self.vel.y)
         if self.vel.y != 0:
+            if self.turning and abs(self.vel.y) < PAC_SPEED+TURNBOOST:
+                self.vel.y = PAC_SPEED+TURNBOOST
             self.collide(0, self.vel.y, self.platforms)
+        if DEBUG == True:
+            print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
 
@@ -423,8 +454,12 @@ class Player(Entity):
         #STOPPED = 4
     def isTurning(self):
         if self.getDir() != self.dir:
+            self.turning = True
             self.speed = PAC_SPEED+TURNBOOST
-        else: self.speed == PAC_SPEED
+        else: 
+            self.speed = PAC_SPEED+TURNBOOST
+            self.turning = False
+
 
 
     def a(self):
@@ -484,9 +519,23 @@ randomMapColours.append("#FF69B4")
 randomMapColours.append("#000080")
 pickint = random.randint(0, 9)
 
+
 class Platform(Entity):
     def __init__(self, pos, *groups):
         super().__init__(Color(randomMapColours[pickint]), pos, *groups)
+
+
+class FoodEntity(pg.sprite.Sprite):
+    def __init__(self, color, pos, *groups):
+        super().__init__(*groups)
+        self.image = pg.Surface((2, 2))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=pos)
+
+class Pacfood(FoodEntity):
+    def __init__(self, pos, *groups):
+        super().__init__(Color("#ebef00"), pos, *groups)
+
 
 
 

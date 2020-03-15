@@ -1,3 +1,4 @@
+@echo off
 node mapgen.js > layouts/randomMap0.lay
 node mapgen.js > layouts/randomMap1.lay
 node mapgen.js > layouts/randomMap2.lay

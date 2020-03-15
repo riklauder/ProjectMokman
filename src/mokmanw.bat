@@ -1,3 +1,4 @@
+@echo off
 node mapgen.js > layouts/randomMap0.lay
 node mapgen.js > layouts/randomMap1.lay
 node mapgen.js > layouts/randomMap2.lay
@@ -13,5 +14,4 @@ node mapgen.js > layouts/randomMap11.lay
 node mapgen.js > layouts/randomMap12.lay
 node mapgen.js > layouts/randomMap13.lay
 node mapgen.js > layouts/randomMap14.lay
-./mapTransform > layouts/randomfMap.lay
 python mokman.py

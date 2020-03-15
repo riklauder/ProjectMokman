@@ -21,7 +21,7 @@ Pacman Clone for undergrad game project
 | Power Ups | Power-ups and 256-combo(like in pacman 356 )  |
 
 
-# AIversion
+## AIversion
 [AIversion](https://github.com/riklauder/ProjectMokman/tree/master/AIversion)
 Conatins Berkely Pacman AI project (modified to work with Python 3 and this project).  This framework was used for AI project last year.
 This is the project that helped spark curiosity and project idea.
@@ -42,15 +42,37 @@ Contains reference code and documents from other sources
 # src
 [src](https://github.com/riklauder/ProjectMokman/tree/master/src)
 
-Main Source Code for project - see README in [src](https://github.com/riklauder/ProjectMokman/tree/master/src) dir for more details and how to run
+Main Source Code for project - see additional README in [src](https://github.com/riklauder/ProjectMokman/tree/master/src) dir for more details and how to run
 
 
-Built mostly using pygame but also some JS, C++ and maybe others
+Built mostly using pygame but also used JS and C++
 
 >pip install pygame
 
 
-# Build/Play Instructions for Current prototype
+
+# Build/Play Instructions for Latest Build
+*Generates random endless map consistent to OG Pacman and Ms Pacman level style*
+
+*Will spawn Ghosts and Pacman Map, Food, Power Ups and Teleports*
+
+
+1.  cd into src directory from PowerShell(Admin)
+
+>cd src
+
+2.  run ./mokman from that dir
+
+>./pacman
+
+### creates random map for Pygame based game. Transformation of maps is done using C++ .
+
+*pacman batch file will execute required scripts, run code then automatically start pygame. MUST BE run from correct dir
+
+*used WSL bash shell in Windows with g++ installed although mapTransform.cpp could be compiled as mapt.exe using VS cl or other Windows c++ compiler  
+
+
+## Build/Play Instructions for prototype
 *Generates random map consistent to OG Pacman and Ms Pacman level style*
 
 *Will spawn Ghosts and Pacman using tkinter framework found in AIversion*

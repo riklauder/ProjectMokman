@@ -9,21 +9,7 @@
 
 # Source Files
 
--joystick.py
->pygame code to implement controller support. This tests and ouputs input from all buttons and axes that can be mapped to game functions.
 
--layout.py
->python objects used to help build and populate mazes in pygamecam.pu
-
-
--Map.h 
->draft of class to help build random mazes
-
--Map.py  
->attempt to recreate mapgen.js in python - likely to be discarded as seems to be more effort than it's worth
-
--pygamecam.py 
->prototype for movemement controls and camera in pygame.
 To run:
 
 *from src dir:
@@ -45,12 +31,11 @@ mapTransform.cpp - transforms final map for pygame and adds Pacman/Ghost spawns.
 
 >* relies on running node mapgen.js > randommap.lay to output a template map 
 
-mapgen.cpp
->initial draft with Map.h to manage random map creation
+
 
 
 mapgen.js 
->script used to generate random maps in JS modified slightly to accomodate project.  Most transformation happens in mapTransform.cpp*
+>script used to generate random maps. modified to accomodate project.  Output is then transformed using mapTransform.cpp compiled as mapt*
 
 
 mokman.bat
@@ -73,11 +58,48 @@ mokman.py
 >python3 mokman.py
 
 
-pycollide.py
+
+
+# Other project src files - from prototype - not used in final build
+
+-food.py
+
+>collision detection framework prototype  - will modify for food Mokman game
+
+-game.py
+
+>game state and observer based classes - work in progress
+
+-various Agent py files
+>may borrow some classes and functions from these
+
+-util.py
+>some useful funtions data structures for python like manhattan distance, priority queue, etc
+
+data res and roundrects dir
+>experimental support files - will be cleaned up as project progresses
+
+-joystick.py
+>pygame code to implement controller support. This tests and ouputs input from all buttons and axes that can be mapped to game functions.
+
+-layout.py
+>python objects used to help build and populate mazes in pygamecam.pu
+
+-mapgen.cpp
+
+>initial draft with Map.h to manage random map creation
+
+-Map.h 
+>draft of class to help build random mazes
+
+-Map.py  
+>attempt to recreate mapgen.js in python - likely to be discarded as seems to be more effort than it's worth
+
+-pycollide.py
 
 >initial prototype to test Pygame collisions and movement
 
-pygamecam.py
+-pygamecam.py
 
 >initial prototype for game camera to be implemented in endless gameplay mode.  Camera follow pacman.
 
@@ -85,26 +107,5 @@ pygamecam.py
 
 >python pygamecam.py
 
-walls.py
->likely to be thrown away python script that generates random map from half map - maps not consistent with style desired
-
-
-# Other project src files
-
-food.py
-
->collision detection framework prototype  - will modify for food Mokman game
-
-game.py
-
->game state and observer based classes - work in progress
-
-various Agent py files
->may borrow some classes and functions from these
-
-util.py
->some useful funtions data structures for python like manhattan distance, priority queue, etc
-
-data res and roundrects dir
->experimental support files - will be cleaned up as project progresses
-
+-walls.py
+>python code that generates random maps from half map - maps are not consistent with desired authentic pacman style.  Was used in prototype phase only

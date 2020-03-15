@@ -122,9 +122,10 @@ def main():
 
     platforms = pg.sprite.Group()
     foods = pg.sprite.Group()
+    teleports = pg.sprite.Group()
     playerX = getObjectPos(levelt, 'P', 'x')
     playerY = getObjectPos(levelt, 'P', 'y')
-    player = Player(platforms, (playerX, playerY), foods)
+    player = Player(platforms, (playerX, playerY), foods, teleports)
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
@@ -135,10 +136,12 @@ def main():
         for col in row:
             if col == '%':
                 Platform((x, y), platforms, entities)
+            if col == 'T':
+                Teleport((x, y), teleports, entities)
             if col == '.':
                 Pacfood((x+15, y+15), foods, entities)
             if col == 'P':
-                player = Player(platforms, (x, y), foods)
+                player = Player(platforms, (x, y), foods, teleports)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
@@ -345,7 +348,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, foods, *groups):
+    def __init__(self, platforms, pos, foods, teleports, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -355,6 +358,7 @@ class Player(Entity):
         self.lastDir = 4
         self.platforms = platforms
         self.foods = foods
+        self.teleports = teleports
         self.speed = PAC_SPEED
         self.turning = None
         self.change_x=0
@@ -433,6 +437,7 @@ class Player(Entity):
             self.collide(0, self.vel.y, self.platforms)
         self.foodCollide(self.foods)
         score = self.score
+        self.teleport(self.teleports)
         if DEBUG == True:
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
@@ -482,9 +487,16 @@ class Player(Entity):
         for f in foods:
             if pg.sprite.collide_rect(self, f):
                 f.kill()
+                snd_pellet[self.score%2].play()
                 self.score += 1
-
-
+                
+    def teleport(self, teleports):
+        for t in teleports:
+            if pg.sprite.collide_rect(self, t):
+                if self.rect.left > 2*TILE_SIZE:
+                    self.rect.left = TILE_SIZE
+                elif self.rect.left < 2*TILE_SIZE:
+                    self.rect.left = WIN_WIDTH-TILE_SIZE
 
 
 
@@ -549,6 +561,11 @@ pickint = random.randint(0, 9)
 class Platform(Entity):
     def __init__(self, pos, *groups):
         super().__init__(Color(randomMapColours[pickint]), pos, *groups)
+
+
+class Teleport(Entity):
+    def __init__(self, pos, *groups):
+        super().__init__(Color("black"), pos, *groups)
 
 
 class FoodEntity(pg.sprite.Sprite):

@@ -2,7 +2,7 @@
 
 import sys, types, os, random, time, math, heapq, itertools
 import pygame as pg
-import layout, util, pacmanrules, game
+import layout, util, pacmanrules, game, ghosts
 from pygame import rect
 from pygame.compat import geterror
 from pygame.locals import *
@@ -16,6 +16,7 @@ from game import Agent, Directions
 from game import Actions
 from util import nearestPoint
 from util import manhattanDistance
+from ghosts import *
 import threading, multiprocessing
 from multiprocessing import Process, current_process
 
@@ -51,27 +52,15 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BRIGHTBLUE = (0, 50, 255)
 DARKTURQUOISE = (3,  54,  73)
-GREEN = (0, 204, 0)
+GREEN = "#32CD32"
 YELLOW = (255, 255,   0)
-PINK = (255, 105, 180)
-LIGHTBLUE = (135, 206, 250)
-RED = (255, 0, 0)
+PINK = "#FF1493"
+LIGHTBLUE = "#00BFFF"
+RED = "#FF0000"
 LIGHTPINK = (255, 182, 193)
+ORANGE = "#FFA500"
+PURPLE = "#EE82EE"
 
-GHOST_SHAPE = [
-    (0,    -0.3),
-    (0.25, -0.75),
-    (0.5,  -0.3),
-    (0.75, -0.75),
-    (0.75, 0.5),
-    (0.5,  0.75),
-    (-0.5,  0.75),
-    (-0.75, 0.5),
-    (-0.75, -0.75),
-    (-0.5,  -0.3),
-    (-0.25, -0.75)
-    ]
-GHOST_SIZE = 0.65
 GHOST_OFFSET = 0.1*WALL_RADIUS
 
 # Must come before pygame.init()
@@ -109,13 +98,6 @@ snd_wakka.set_volume(.3)
 font_name = pg.font.match_font('roboto', bold=True)
 score = SCORE
 
-def draw_text(surf, text, size, x, y):
-    font = pg.font.Font(font_name, size)
-    text_surface = font.render(text, True, WHITE)
-    text_rect = text_surface.get_rect()
-    text_rect.midtop = (x, y)
-    surf.blit(text_surface, text_rect)
-
 class Entity(pg.sprite.Sprite):
     def __init__(self, color, pos, *groups):
         super().__init__(*groups)
@@ -134,7 +116,8 @@ def main():
     powerups = pg.sprite.Group()
     playerX = getObjectPos(levelt, 'P', 'x')
     playerY = getObjectPos(levelt, 'P', 'y')
-    player = Player(platforms, (playerX, playerY), foods, teleports, powerups)
+    ghosts = pg.sprite.Group()
+    player = Player(platforms, (playerX, playerY), foods, teleports, powerups, ghosts)
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
@@ -152,8 +135,10 @@ def main():
                 Pacfood((x+15, y+15), foods, entities)
             if col == 'o':
                 Pacpower((x+13, y+13), powerups, entities)
+            if col == 'B':
+                BlinkyGhosts(platforms, (x, y), ghosts, entities)
             if col == 'P':
-                player = Player(platforms, (x, y), foods, teleports, powerups)
+                player = Player(platforms, (x, y), foods, teleports, powerups, ghosts)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
@@ -174,19 +159,17 @@ def main():
         timer.tick(120)
 
 
+def draw_text(surf, text, size, x, y):
+    font = pg.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
-def drawEllipse():
-    sizeh = (TILE_SIZE*2, TILE_SIZE*2)
-    sizev = (TILE_SIZE, TILE_SIZE)
-
-    roundPlatforms = pg.sprite.Group()
-    
-    ellipseh = pg.Surface(sizeh)
-    ellipsev = pg.Surface(sizev)
-    pg.draw.ellipse(ellipseh, Color(randomMapColours[pickint]), ellipseh.get_rect())
-    pg.draw.ellipse(ellipsev, Color(randomMapColours[pickint]), ellipsev.get_rect())
+   
 
 def getDir(self):
     if (self.vel.x>=1): return DIR_RIGHT
@@ -366,7 +349,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, foods, teleports, powerups, *groups):
+    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -378,6 +361,7 @@ class Player(Entity):
         self.foods = foods
         self.teleports = teleports
         self.powerups = powerups
+        self.ghosts = ghosts
         self.speed = PAC_SPEED
         self.turning = None
         self.change_x=0
@@ -536,35 +520,6 @@ class Player(Entity):
         else:
             return 'x'
 
-    def drawGhost(self, surf, direction=None, index=0):
-        (x,y)=add(self.game.ghostPos[0],(.5,.5))
-        coords=[]
-        w_r=WALL_RADIUS*GHOST_SIZE
-        offset=WALL_RADIUS*(1-GHOST_SIZE)
-        for (x1, y1) in GHOST_SHAPE:
-            offsetX=x*offset
-            offsetY=y*offset
-            screen_x=int((x-x1)*w_r+offsetX)
-            screen_y=int((y-y1)*w_r+offsetY)
-            coords.append((screen_x,screen_y))
-
-        offsetX=x*offset
-        offsetY=y*offset
-        dx_left=int((x-.3/1.5)*w_r+offsetX)
-        dx_right=int((x+.5/1.5)*w_r+offsetX)
-        dy=int((y-.3/1.5)*w_r+offsetY)
-        dx_left_pupil = int((x-.35/1.5) * w_r+offsetX)
-        dx_right_pupil = int((x+.55/1.5) * w_r+offsetX)
-        dy_pupil = int((y-.25/1.5) * w_r+offsetY)
-        leftEye = (dx_left,dy)
-        rightEye = (dx_right,dy)
-        leftPupil = (dx_left_pupil,dy_pupil)
-        rightPupil = (dx_right_pupil,dy_pupil)
-        pg.draw.polygon(surf, self.color, coords)
-        pg.draw.circle(surf, WHITE, leftEye, int(WALL_RADIUS*GHOST_SIZE*.4), 0)
-        pg.draw.circle(surf, WHITE, rightEye, int(WALL_RADIUS*GHOST_SIZE*.4), 0)
-        pg.draw.circle(surf, BLACK, leftPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
-        pg.draw.circle(surf, BLACK, rightPupil, int(WALL_RADIUS*GHOST_SIZE*.22), 0)
 
 randomMapColours = []
 randomMapColours.append("#800080")
@@ -589,7 +544,6 @@ class Teleport(Entity):
     def __init__(self, pos, *groups):
         super().__init__(Color("black"), pos, *groups)
 
-
 class FoodEntity(pg.sprite.Sprite):
     def __init__(self, color, pos, *groups):
         super().__init__(*groups)
@@ -613,66 +567,9 @@ class Pacpower(PowerEntity):
         super().__init__(Color("white"), pos, *groups)
 
 
-
 class ExitBlock(Platform):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
-
-
-
-class pacman ():
-
-    def __init__ (self):
-        self.x = 0
-        self.y = 0
-        self.velX = 0
-        self.velY = 0
-        self.speed = 2
-
-        self.nearestRow = 0
-        self.nearestCol = 0
-
-        self.homeX = 0
-        self.homeY = 0
-
-        self.anim_pacmanL = {}
-        self.anim_pacmanR = {}
-        self.anim_pacmanU = {}
-        self.anim_pacmanD = {}
-        self.anim_pacmanS = {}
-        self.anim_pacmanCurrent = {}
-
-        for i in range(1, 9, 1):
-            self.anim_pacmanL[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-l " + str(i) + ".gif")).convert()
-            self.anim_pacmanR[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-r " + str(i) + ".gif")).convert()
-            self.anim_pacmanU[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-u " + str(i) + ".gif")).convert()
-            self.anim_pacmanD[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman-d " + str(i) + ".gif")).convert()
-            self.anim_pacmanS[i] = pg.image.load(os.path.join(SCRIPT_PATH,"res","sprite","pacman.gif")).convert()
-
-        self.pelletSndNum = 0
-
-    def Draw (self):
-
-        # set the current frame array to match the direction pacman is facing
-        if self.velX > 0:
-            self.anim_pacmanCurrent = self.anim_pacmanR
-        elif self.velX < 0:
-            self.anim_pacmanCurrent = self.anim_pacmanL
-        elif self.velY > 0:
-            self.anim_pacmanCurrent = self.anim_pacmanD
-        elif self.velY < 0:
-            self.anim_pacmanCurrent = self.anim_pacmanU
-
-        screenp.blit (self.anim_pacmanCurrent[ self.animFrame ], (self.x - thisGame.screenPixelPos[0], self.y - thisGame.screenPixelPos[1]))
-
-        if thisGame.mode == 1:
-            if not self.velX == 0 or not self.velY == 0:
-                # only Move mouth when pacman is moving
-                self.animFrame += 1
-
-            if self.animFrame == 9:
-                # wrap to beginning
-                self.animFrame = 1
 
 
 if __name__ == "__main__":

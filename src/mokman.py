@@ -47,6 +47,12 @@ SCORE_XOFFSET=14 # pixels from left edge
 SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
 SCORE = 0
 
+JS_DEVNUM=0 # device 0 (pygame joysticks always start at 0). if JS_DEVNUM is not a valid device, will use 0
+JS_XAXIS=0 # axis 0 for left/right (default for most joysticks)
+JS_YAXIS=1 # axis 1 for up/down (default for most joysticks)
+JS_STARTBUTTON=9 # button number to start the game. this is a matter of personal preference, and will vary from device to device
+
+
 #        R    G    B
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -66,9 +72,10 @@ GHOST_OFFSET = 0.1*WALL_RADIUS
 # Must come before pygame.init()
 pg.mixer.pre_init(22050, 16, 2, 512)
 pg.mixer.init()
-
+flags = DOUBLEBUF | HWACCEL
 pg.init()
 #screen = pg.display.set_mode(SCREEN_SIZE.size)
+clock = pg.time.Clock()
 screen = pg.display.set_mode(DISPLAY, FLAGS, DEPTH)
 pg.display.set_caption("Mokman! Use arrows to move!")
 screenp = pg.display.get_surface()
@@ -78,6 +85,7 @@ up = down = left = right = running = False
 maplay = 'randomfMap'
 level = layout.getLayout(maplay)
 levelt = level.layoutText
+
 
 snd_pellet = {}
 snd_pellet[0] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet1.wav"))
@@ -106,6 +114,22 @@ class Entity(pg.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
 
+def CheckInputs():
+    if js!=None and js.get_axis(JS_XAXIS)>0.5:
+        return DIR_RIGHT
+    elif js!=None and js.get_axis(JS_XAXIS)<-0.5:
+        return DIR_LEFT
+    elif js!=None and js.get_axis(JS_YAXIS)>0.5:
+        return DIR_DOWN
+    elif js!=None and js.get_axis(JS_YAXIS)<-0.5:
+        return DIR_UP
+
+# initialise the joystick
+if pg.joystick.get_count()>0:
+    if JS_DEVNUM<pg.joystick.get_count(): js=pg.joystick.Joystick(JS_DEVNUM)
+    else: js=pg.joystick.Joystick(0)
+    js.init()
+else: js=None
 
 def main():
 
@@ -121,7 +145,7 @@ def main():
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
-
+ 
 
     # build the level    
     x = y = 0
@@ -137,6 +161,8 @@ def main():
                 Pacpower((x+13, y+13), powerups, entities)
             if col == 'B':
                 BlinkyGhosts(platforms, (x, y), ghosts, entities)
+            if col == 'S':
+                SlyderGhosts(platforms, (x, y), ghosts, entities)
             if col == 'P':
                 player = Player(platforms, (x, y), foods, teleports, powerups, ghosts)
             x+=TILE_SIZE
@@ -150,13 +176,18 @@ def main():
                 exit()
             if e.type == KEYDOWN and e.key == K_ESCAPE:
                 exit()
+            elif e.type == pg.JOYBUTTONDOWN:
+                if e.button == 6:
+                    return False
+        
+        CheckInputs()
 
         entities.update()
         screen.fill((0, 0, 0))
         entities.draw(screen)
         draw_text(screen, str(entities.target.score), 20, HALF_WIDTH, 10)
         pg.display.update()
-        timer.tick(120)
+        timer.tick(60)
 
 
 def draw_text(surf, text, size, x, y):
@@ -169,7 +200,6 @@ def draw_text(surf, text, size, x, y):
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
-   
 
 def getDir(self):
     if (self.vel.x>=1): return DIR_RIGHT
@@ -336,6 +366,7 @@ def getObjectCoord(self, char):
 def exit():
     pg.quit()
     sys.exit()
+    return False
 
 
 class Player(Entity):
@@ -375,7 +406,23 @@ class Player(Entity):
         down = pressed[K_DOWN]
         left = pressed[K_LEFT]
         right = pressed[K_RIGHT]
-        
+        joyp = CheckInputs() 
+        #== DIR_UP or DIR_DOWN or DIR_LEFT or DIR_RIGHT:
+        #    joyp = CheckInputs
+        if joyp==DIR_UP:
+            up = True
+            #self.dir=joyp
+        if joyp==DIR_DOWN:
+            down=True
+            #self.dir=joyp
+        if joyp==DIR_LEFT:
+            left=True
+            #self.dir=joyp
+        if joyp==DIR_RIGHT:
+            right=True
+            #self.dir=joyp
+        print("dir, joyp", self.dir, joyp)
+
         self.currDir = getDir(self)
         self.isTurning()
         self.laycoods.x = getObjectCoord(self, 'x')

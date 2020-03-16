@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-import sys, types, os, random, time, math, heapq, itertools
+import os, sys, types, random, time, math, queue, heapq, itertools, collections, Cython
 import pygame as pg
 import layout, util, pacmanrules, game, ghosts
 from pygame import rect
@@ -18,7 +18,8 @@ from util import nearestPoint
 from util import manhattanDistance
 from ghosts import *
 import threading, multiprocessing
-from multiprocessing import Process, current_process
+from multiprocessing import Process, Pool, current_process
+from collections import defaultdict
 
 DEBUG = False
 TRUE = True
@@ -29,7 +30,7 @@ HALF_WIDTH = int(WIN_WIDTH / 2)
 HALF_HEIGHT = int(WIN_HEIGHT / 2)
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 DEPTH = 32
-FLAGS = 0
+#FLAGS = 0
 SCREEN_SIZE = pg.Rect((0, 0, WIN_WIDTH, WIN_HEIGHT))
 TILE_SIZE = 32
 GRAVITY = pg.Vector2((0, 0))
@@ -42,7 +43,7 @@ DIR_LEFT = 3
 STOPPED = 4
 SCRIPT_PATH = sys.path[0]
 PAC_SPEED = 2
-TURNBOOST = 2
+TURNBOOST = 4
 SCORE_XOFFSET=14 # pixels from left edge
 SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
 SCORE = 0
@@ -72,10 +73,13 @@ GHOST_OFFSET = 0.1*WALL_RADIUS
 # Must come before pygame.init()
 pg.mixer.pre_init(22050, 16, 2, 512)
 pg.mixer.init()
-flags = DOUBLEBUF | HWACCEL
+FLAGS = DOUBLEBUF | HWACCEL
 pg.init()
 #screen = pg.display.set_mode(SCREEN_SIZE.size)
 clock = pg.time.Clock()
+pg.display.init()
+info = pg.display.Info()
+print(info)
 screen = pg.display.set_mode(DISPLAY, FLAGS, DEPTH)
 pg.display.set_caption("Mokman! Use arrows to move!")
 screenp = pg.display.get_surface()
@@ -90,7 +94,7 @@ levelt = level.layoutText
 snd_pellet = {}
 snd_pellet[0] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet1.wav"))
 snd_pellet[1] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet2.wav"))
-snd_powerpellet = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","powerpellet.wav"))
+snd_powerpellet = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","PowerPill.wav"))
 snd_eatgh = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatghost.wav"))
 snd_eatg2 = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatgh2.wav"))
 snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","fruitbounce.wav"))
@@ -99,8 +103,9 @@ snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralif
 snd_die = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","die.wav"))
 snd_begin = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "begin.wav"))
 snd_chomp = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "chomp.wav"))
-snd_wakka = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "wakka.wav"))
-snd_wakka.set_volume(.3)
+snd_combo = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "combo.wav"))
+snd_wakka = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "wakawakam.wav"))
+snd_wakka.set_volume(.8)
 
 
 font_name = pg.font.match_font('roboto', bold=True)
@@ -179,7 +184,7 @@ def main():
             elif e.type == pg.JOYBUTTONDOWN:
                 if e.button == 6:
                     return False
-        
+
         CheckInputs()
 
         entities.update()
@@ -187,7 +192,8 @@ def main():
         entities.draw(screen)
         draw_text(screen, str(entities.target.score), 20, HALF_WIDTH, 10)
         pg.display.update()
-        timer.tick(60)
+        timedelta = timer.tick(60)
+        timedelta /= 1000
 
 
 def draw_text(surf, text, size, x, y):
@@ -421,7 +427,6 @@ class Player(Entity):
         if joyp==DIR_RIGHT:
             right=True
             #self.dir=joyp
-        print("dir, joyp", self.dir, joyp)
 
         self.currDir = getDir(self)
         self.isTurning()

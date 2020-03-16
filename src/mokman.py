@@ -1,6 +1,6 @@
 #! /usr/bin/python
-
-import os, sys, types, random, time, math, queue, heapq, itertools, collections, Cython
+# Main game loop and core fuctions
+import os, sys, types, random, time, math, queue, heapq, itertools, collections
 import pygame as pg
 import layout, util, pacmanrules, game, ghosts
 from pygame import rect
@@ -53,7 +53,6 @@ JS_XAXIS=0 # axis 0 for left/right (default for most joysticks)
 JS_YAXIS=1 # axis 1 for up/down (default for most joysticks)
 JS_STARTBUTTON=9 # button number to start the game. this is a matter of personal preference, and will vary from device to device
 
-
 #        R    G    B
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -68,7 +67,9 @@ LIGHTPINK = (255, 182, 193)
 ORANGE = "#FFA500"
 PURPLE = "#EE82EE"
 
-GHOST_OFFSET = 0.1*WALL_RADIUS
+file = open("hiscore.t", "r")
+hiscore = file.read()
+hiscoreint = int(hiscore)
 
 # Must come before pygame.init()
 pg.mixer.pre_init(22050, 16, 2, 512)
@@ -111,14 +112,6 @@ snd_wakka.set_volume(.8)
 font_name = pg.font.match_font('roboto', bold=True)
 score = SCORE
 
-class Entity(pg.sprite.Sprite):
-    def __init__(self, color, pos, *groups):
-        super().__init__(*groups)
-        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
-        self.image.fill(color)
-        self.rect = self.image.get_rect(topleft=pos)
-#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
-
 def CheckInputs():
     if js!=None and js.get_axis(JS_XAXIS)>0.5:
         return DIR_RIGHT
@@ -136,6 +129,16 @@ if pg.joystick.get_count()>0:
     js.init()
 else: js=None
 
+class Entity(pg.sprite.Sprite):
+    def __init__(self, color, pos, *groups):
+        super().__init__(*groups)
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=pos)
+#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
+
+
+#--------------------This is the main game loop-------------------------------#
 def main():
 
     snd_begin.play()
@@ -150,7 +153,7 @@ def main():
     level_width  = level.width*TILE_SIZE
     level_height = level.height*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
- 
+
 
     # build the level    
     x = y = 0
@@ -190,12 +193,14 @@ def main():
         entities.update()
         screen.fill((0, 0, 0))
         entities.draw(screen)
-        draw_text(screen, str(entities.target.score), 20, HALF_WIDTH, 10)
+        draw_text(screen, "Score: " + str(entities.target.score), 24, HALF_WIDTH, 10)
+        draw_text(screen, "HISCORE: " + hiscore, 26, WIN_WIDTH-128, 10)
         pg.display.update()
         timedelta = timer.tick(60)
         timedelta /= 1000
 
-
+#-----------end loop-------------------------------#
+#----core functions----------------------------#
 def draw_text(surf, text, size, x, y):
     font = pg.font.Font(font_name, size)
     text_surface = font.render(text, True, WHITE)
@@ -205,7 +210,6 @@ def draw_text(surf, text, size, x, y):
 
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
-
 
 def getDir(self):
     if (self.vel.x>=1): return DIR_RIGHT
@@ -293,6 +297,42 @@ def legalColl(plts, cpys, xvel, yvel, legal):
 #DIR_DOWN = 2 #DIR_LEFT = 3 #STOPPED=4
 
 
+def getObjectPos(level, char ,coord):
+    '''
+    returns x or y pos based on 
+    coord: of 'x' or 'y' 
+    x or y * TILE_SIZE
+    '''
+    x = y = 0
+    for row in level:
+        for col in row:
+            if col == char:
+                if coord == 'x':
+                    return x
+                if coord == 'y':
+                    return y
+            x+=TILE_SIZE
+        y+=TILE_SIZE
+        x=0
+
+
+def getObjectCoord(self, char):
+    '''
+    returns x or y pos based on rect pos
+    char: of 'x' or 'y' for return
+    '''
+    if char == 'x':
+        if self.currDir == DIR_RIGHT:
+            return floor(self.rect.left/TILE_SIZE)
+        else:
+            return ceil(self.rect.left / TILE_SIZE)
+    if char == 'y':
+        if self.currDir == DIR_DOWN:
+            return floor(self.rect.top/TILE_SIZE)
+        else:
+            return ceil(self.rect.top / TILE_SIZE)
+
+#-----------Main Game Helper Classes-------------#
 class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
         super().__init__()
@@ -331,48 +371,6 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
                     dirty_append(rec)
             spritedict[spr] = newrect
         return dirty
-
-
-def getObjectPos(level, char ,coord):
-    '''
-    returns x or y pos based on 
-    coord: of 'x' or 'y' 
-    x or y * TILE_SIZE
-    '''
-    x = y = 0
-    for row in level:
-        for col in row:
-            if col == char:
-                if coord == 'x':
-                    return x
-                if coord == 'y':
-                    return y
-            x+=TILE_SIZE
-        y+=TILE_SIZE
-        x=0
-
-
-def getObjectCoord(self, char):
-    '''
-    returns x or y pos based on rect pos
-    char: of 'x' or 'y' for return
-    '''
-    if char == 'x':
-        if self.currDir == DIR_RIGHT:
-            return floor(self.rect.left/TILE_SIZE)
-        else:
-            return ceil(self.rect.left / TILE_SIZE)
-    if char == 'y':
-        if self.currDir == DIR_DOWN:
-            return floor(self.rect.top/TILE_SIZE)
-        else:
-            return ceil(self.rect.top / TILE_SIZE)
-
-
-def exit():
-    pg.quit()
-    sys.exit()
-    return False
 
 
 class Player(Entity):
@@ -557,7 +555,6 @@ class Player(Entity):
                 self.score += 100
                 snd_powerpellet.play()
 
-
     def a(self):
         #axis of motion
         if self.dir.x != 0:
@@ -572,7 +569,6 @@ class Player(Entity):
         else:
             return 'x'
 
-
 randomMapColours = []
 randomMapColours.append("#800080")
 randomMapColours.append("#0000FF")
@@ -586,11 +582,9 @@ randomMapColours.append("#FF69B4")
 randomMapColours.append("#000080")
 pickint = random.randint(0, 9)
 
-
 class Platform(Entity):
     def __init__(self, pos, *groups):
         super().__init__(Color(randomMapColours[pickint]), pos, *groups)
-
 
 class Teleport(Entity):
     def __init__(self, pos, *groups):
@@ -622,6 +616,11 @@ class Pacpower(PowerEntity):
 class ExitBlock(Platform):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
+
+def exit():
+    pg.quit()
+    sys.exit()
+    return False
 
 
 if __name__ == "__main__":

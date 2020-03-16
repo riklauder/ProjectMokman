@@ -298,6 +298,47 @@ class Player(Entity):
         left = pressed[K_LEFT]
         right = pressed[K_RIGHT]
 
+
+        # Get count of joysticks.
+        joystick_count = pg.joystick.get_count()
+        # For each joystick:
+        for i in range(joystick_count):
+            joystick = pg.joystick.Joystick(i)
+            joystick.init()
+
+            axes = joystick.get_numaxes()
+            for i in range(axes):
+                axis = joystick.get_axis(i)
+                print("axis", axis)
+    
+            jud = "{:>6.3f}".format(1, axis)
+            #print("jud",jud)
+            jlr = "{:>6.3f}".format(0, axis)
+            #print("jlr",jlr)
+            if float(jud) < -0.1:
+                up
+            if float(jlr) > 0.1:
+                right
+            if float(jlr) < -0.1:
+                left
+            if float(jud) > 0.1:
+                down
+
+            hats = joystick.get_numhats()
+            for i in range(hats):
+                hat = joystick.get_hat(i)
+                print("hat", hat)
+            hu = "{}".format(hats)
+            #print("hu", hu)
+            if hu == "(0,1)":
+                up
+            if hu == "(-1,0)":
+                right
+            if hu == "(1,0)":
+                left
+            if hu == "(0,-1)":
+                down
+
         currDir = self.getDir()
         illegalMoves = getLegalActions(self)
         if self.lastDir != STOPPED and DEBUG == True:

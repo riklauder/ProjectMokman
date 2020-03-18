@@ -288,7 +288,7 @@ def main():
     SHADE_MASK = pg.image.load("data/shader.png").convert_alpha()
     App().main_loop()
     pg.quit()
-    sys.exit()
+    sys.exit(0)
     
 
 if __name__ == "__main__":

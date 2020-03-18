@@ -51,18 +51,24 @@ std::string filename(int n){
 
 int main(){
 	std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
-	for (int i=0; i < 15; i++){
+	for (int i=0; i <= 12; i++){
 		std::vector<std::string> map;
 		std::string file = filename(i);
 		getData(map, file);
 
-		if (i == 14)
+		if (i == 11){
+			map[16][18]='W';
+			map[16][9]='W';
+		}
+		if (i == 12){
 			map[22][14]='P';
-		map[13][13]='G';//one ghost always spawn in house
-		/*2 ghosts spawn on north side of map*/
-		map[0][3]='G';
-		map[0][24]='G';
-		/*random L R spawn south end*/
+			map[10][18]='B';//one ghost always spawn in house
+			/*2 ghosts spawn on north side of map*/
+			map[16][9]='C';
+			map[0][3]='S';
+			map[0][24]='S';
+			/*random L R spawn south end*/
+		}
 		map.resize(27);
 		for (auto x : map)
 			std::cout << x << std::endl;

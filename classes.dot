@@ -1,0 +1,20 @@
+digraph "classes" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{CameraAwareLayeredUpdates|cam\llostsprites : list\ltarget\lworld_size\l|draw(surface)\lupdate()\l}", shape="record"];
+"1" [label="{Entity|image\lrect\l|}", shape="record"];
+"2" [label="{ExitBlock|\l|}", shape="record"];
+"3" [label="{FoodEntity|image\lrect\l|}", shape="record"];
+"4" [label="{Pacfood|\l|}", shape="record"];
+"5" [label="{Pacpower|\l|}", shape="record"];
+"6" [label="{Platform|\l|}", shape="record"];
+"7" [label="{Player|change_x : int\lchange_y : int\lcombobegin : bool\lcurrDir : int\ldir : int\lfoods\lghostCount : int\lghostLimit : int\lghosts\lhscore : str\llastDir : int\llaycoods\lplatforms\lpowerups\lscore : int\lstopped : bool\lteleports\lturning : bool, NoneType\lvel\lxvel : int\lyvel : int\l|a()\lb()\lcollide(xvel, yvel, platforms)\lfoodCollide()\lisTurning()\lpowerup()\lspawnRandomGhost()\lupdate()\l}", shape="record"];
+"8" [label="{PowerEntity|image\lrect\l|}", shape="record"];
+"9" [label="{Teleport|\l|}", shape="record"];
+"2" -> "6" [arrowhead="empty", arrowtail="none"];
+"4" -> "3" [arrowhead="empty", arrowtail="none"];
+"5" -> "8" [arrowhead="empty", arrowtail="none"];
+"6" -> "1" [arrowhead="empty", arrowtail="none"];
+"7" -> "1" [arrowhead="empty", arrowtail="none"];
+"9" -> "1" [arrowhead="empty", arrowtail="none"];
+}

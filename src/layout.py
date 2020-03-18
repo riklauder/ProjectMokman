@@ -3,7 +3,7 @@
 
 import os, sys
 import random
-import functools
+#import functools
 import util
 import game
 from functools import reduce
@@ -95,7 +95,7 @@ class Layout:
     The shape of the maze.  Each character  
     represents a different type of object.   
       % - Wall
-      | - Teleport
+      T - Teleport
       . - Food
       o - Capsule
       G - Ghost
@@ -115,7 +115,7 @@ class Layout:
       self.walls[x][y] = True
     elif layoutChar == '.':
       self.food[x][y] = True
-    elif layoutChar == '|':
+    elif layoutChar == 'T':
       self.walls[x][y] = True
       self.teleport[x][y] = True 
     elif layoutChar == 'o':    

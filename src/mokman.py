@@ -377,7 +377,10 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
 #--------PPPPPPPLAAAAAYERRRR----------------------------#
 class Player(Entity):
     '''
-    Player class - initialize with = Player(mapsprite,*(startX, startY))
+    Player class - initialize with player sprite and all other game
+    elements
+    
+    Player(mapsprite,*(startX, startY), food, etc.)
 
     *mapsprite - master sprite object representing game world
 
@@ -399,7 +402,7 @@ class Player(Entity):
         self.teleports = teleports
         self.powerups = powerups
         self.ghosts = ghosts
-        self.speed = PAC_SPEED
+        self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
         self.change_x=0
         self.change_y=0
@@ -445,8 +448,8 @@ class Player(Entity):
             self.spawnRandomGhost()
 
         self.currDir = getDir(self)
-        if getDir(self) != self.dir:
-            self.isTurning()
+        #if getDir(self) != self.dir:
+        #    self.isTurning()
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
@@ -510,8 +513,8 @@ class Player(Entity):
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
-        #if self.score > self.hscore:
-        #    self.hscore = str(self.score)
+        if self.score > int(self.hscore):
+            self.hscore = str(self.score)
 
 
     def collide(self, xvel, yvel, platforms):

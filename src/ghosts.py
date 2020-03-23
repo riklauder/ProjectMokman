@@ -58,7 +58,7 @@ class BlinkyGhosts(Entity):
         self.currDir = 1
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = PAC_SPEED
+        self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
         self.state=0
 
@@ -110,7 +110,7 @@ class PinkyGhosts(Entity):
         self.currDir = 3
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = PAC_SPEED
+        self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
         self.state=0
 
@@ -215,7 +215,7 @@ class ClydeGhosts(Entity):
         self.currDir = 3
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = PAC_SPEED
+        self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
         self.state=0
 

@@ -1,104 +1,64 @@
 #! /usr/bin/python
 # Main game loop and core fuctions
-import os, sys, types, random, time, math, queue, heapq, itertools, collections
+from settings import *
+import random, ctypes, math, heapq, itertools, time, collections, cython
 import pygame as pg
-import layout, util, pacmanrules, game, ghosts
-from pygame import rect
+import layout, pacmanrules, game, ghosts, roundrects
+import pygame.rect as rect
 from pygame.compat import geterror
-from pygame.locals import *
+from pygame import mixer
+import pygame.display as display
 from pygame import *
-from pacman import Directions
+import pygame.surface as surface
 from math import sqrt, ceil, floor
 from pacmanrules import PacmanRules, GhostRules
-from game import GameStateData
-from game import Game
-from game import Agent, Directions
-from game import Actions
 from util import nearestPoint
 from util import manhattanDistance
 from ghosts import *
 import threading, multiprocessing
 from multiprocessing import Process, Pool, current_process
 from collections import defaultdict
+from roundrects import aa_round_rect
 
-DEBUG = False
-TRUE = True
-FALSE = False
-WIN_WIDTH = 860
-WIN_HEIGHT = 800
-HALF_WIDTH = int(WIN_WIDTH / 2)
-HALF_HEIGHT = int(WIN_HEIGHT / 2)
-DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
-DEPTH = 32
-#FLAGS = 0
-SCREEN_SIZE = pg.Rect((0, 0, WIN_WIDTH, WIN_HEIGHT))
-TILE_SIZE = 32
-GRAVITY = pg.Vector2((0, 0))
-WALL_RADIUS = 16
-WALL_WIDTH = 3
-DIR_UP = 0
-DIR_RIGHT = 1
-DIR_DOWN = 2
-DIR_LEFT = 3
-STOPPED = 4
-SCRIPT_PATH = sys.path[0]
-PAC_SPEED = 2
-TURNBOOST = 4
-SCORE_XOFFSET=14 # pixels from left edge
-SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
-SCORE = 0
-
-JS_DEVNUM=0 # device 0 (pygame joysticks always start at 0). if JS_DEVNUM is not a valid device, will use 0
-JS_XAXIS=0 # axis 0 for left/right (default for most joysticks)
-JS_YAXIS=1 # axis 1 for up/down (default for most joysticks)
-JS_STARTBUTTON=9 # button number to start the game. this is a matter of personal preference, and will vary from device to device
-
-#        R    G    B
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-BRIGHTBLUE = (0, 50, 255)
-DARKTURQUOISE = (3,  54,  73)
-GREEN = "#32CD32"
-YELLOW = (255, 255,   0)
-PINK = "#FF1493"
-LIGHTBLUE = "#00BFFF"
-RED = "#FF0000"
-LIGHTPINK = (255, 182, 193)
-ORANGE = "#FFA500"
-PURPLE = "#EE82EE"
 
 file = open("hiscore.t", "r")
 hiscore = file.read()
-hiscoreint = int(hiscore)
+file.close()
 
 # Must come before pygame.init()
 pg.mixer.pre_init(22050, 16, 2, 512)
 pg.mixer.init()
-FLAGS = DOUBLEBUF | HWACCEL
+
 pg.init()
 #screen = pg.display.set_mode(SCREEN_SIZE.size)
 clock = pg.time.Clock()
 pg.display.init()
-info = pg.display.Info()
-print(info)
+if DEBUG:
+    info = pg.display.Info()
+    print(info)
 screen = pg.display.set_mode(DISPLAY, FLAGS, DEPTH)
-pg.display.set_caption("Mokman! Use arrows to move!")
+pg.display.set_caption("Mokman! Use arrows or Controller Stick to move!")
 screenp = pg.display.get_surface()
 timer = pg.time.Clock()
+global seconds
+seconds = 0
 
 up = down = left = right = running = False
 maplay = 'randomfMap'
 level = layout.getLayout(maplay)
+global levelt
 levelt = level.layoutText
 
 
-snd_pellet = {}
-snd_pellet[0] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet1.wav"))
-snd_pellet[1] = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","pellet2.wav"))
-snd_powerpellet = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","PowerPill.wav"))
+snd_pellet = {0: pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", 
+    "pellet1.wav")),1: pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res",
+    "sounds", "pellet2.wav"))}
+snd_powerpellet = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds",
+    "PowerPill.wav"))
 snd_eatgh = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatghost.wav"))
 snd_eatg2 = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatgh2.wav"))
-snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","fruitbounce.wav"))
+snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds",
+    "fruitbounce.wav"))
 snd_eatfruit = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatfruit.wav"))
 snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
 snd_die = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","die.wav"))
@@ -106,7 +66,9 @@ snd_begin = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "begin.wav
 snd_chomp = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "chomp.wav"))
 snd_combo = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "combo.wav"))
 snd_wakka = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "wakawakam.wav"))
-snd_wakka.set_volume(.8)
+snd_shep = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "Sheptone.ogg"))
+snd_wakka.set_volume(.9)
+snd_shep.set_volume(.8)
 
 
 font_name = pg.font.match_font('roboto', bold=True)
@@ -137,11 +99,11 @@ class Entity(pg.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
 
-
-#--------------------This is the main game loop-------------------------------#
+#-----------------------------------------------------------------------------#
+#----------O---O-----This is the main game loop-----O--------O----------------#
 def main():
-
     snd_begin.play()
+    hscore = hiscore
     platforms = pg.sprite.Group()
     foods = pg.sprite.Group()
     teleports = pg.sprite.Group()
@@ -149,10 +111,17 @@ def main():
     playerX = getObjectPos(levelt, 'P', 'x')
     playerY = getObjectPos(levelt, 'P', 'y')
     ghosts = pg.sprite.Group()
-    player = Player(platforms, (playerX, playerY), foods, teleports, powerups, ghosts)
+    hscore = hiscore
+    player = Player(platforms, (playerX, playerY), foods, teleports, powerups,
+        ghosts, hscore)
+    #all_sprites = pg.sprite.Group(platforms, player, ghosts, foods, teleports, powerups)
     level_width  = level.width*TILE_SIZE
-    level_height = level.height*TILE_SIZE
-    entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width, level_height))
+    level_height = 999*TILE_SIZE
+    entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width,
+        level_height))
+    frame_count = 0
+    frame_rate = 30
+    start_time = 90
 
 
     # build the level    
@@ -171,35 +140,59 @@ def main():
                 BlinkyGhosts(platforms, (x, y), ghosts, entities)
             if col == 'S':
                 SlyderGhosts(platforms, (x, y), ghosts, entities)
+            if col == 'W':
+                WelchGhosts(platforms, (x, y), ghosts, entities)
+            if col == 'C':
+                ClydeGhosts(platforms, (x, y), ghosts, entities)
             if col == 'P':
-                player = Player(platforms, (x, y), foods, teleports, powerups, ghosts)
+                player = Player(platforms, (x, y), foods, teleports, powerups, ghosts, hscore)
+                PinkyGhosts(platforms, (x-TILE_SIZE, y-(27*TILE_SIZE)), ghosts,  entities)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
+
+    
     
 
     while True:
         for e in pg.event.get():
-            if e.type == QUIT:
-                exit()
+            if e.type == pg.QUIT:
+                exit(entities.target.hscore)
             if e.type == KEYDOWN and e.key == K_ESCAPE:
-                exit()
+                exit(entities.target.hscore)
             elif e.type == pg.JOYBUTTONDOWN:
                 if e.button == 6:
-                    return False
+                        f = open("hiscore.t", "w")
+                        f.write(entities.target.hscore)
+                        f.close()
+                        return False
 
         CheckInputs()
 
         entities.update()
         screen.fill((0, 0, 0))
+        total_seconds = frame_count // frame_rate
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
         entities.draw(screen)
+        draw_text(screen, "Time: {0:02}:{1:02}".format(minutes, seconds), 22, 128, 10)
         draw_text(screen, "Score: " + str(entities.target.score), 24, HALF_WIDTH, 10)
-        draw_text(screen, "HISCORE: " + hiscore, 26, WIN_WIDTH-128, 10)
+        draw_text(screen, "HISCORE: " + entities.target.hscore, 26, WIN_WIDTH-128, 10)
+
+        # Calculate total seconds
+        total_seconds = start_time - (frame_count // frame_rate)
+        if total_seconds < 0:
+            total_seconds = 0
+        # Divide by 60 to get total minutes
+        minutes = total_seconds // 60
+        # Use modulus (remainder) to get seconds
+        seconds = total_seconds % 60
         pg.display.update()
+        frame_count += 1
         timedelta = timer.tick(60)
         timedelta /= 1000
-
-#-----------end loop-------------------------------#
+#-------------------------------------------------#
+#--0--0---0--end loop------O--O----O----------------#
 #----core functions----------------------------#
 def draw_text(surf, text, size, x, y):
     font = pg.font.Font(font_name, size)
@@ -239,6 +232,15 @@ def getlayoutActions(self):
         legals.append(DIR_UP)
     
     return legals
+
+
+def teleport(self, teleports):
+    for t in teleports:
+        if pg.sprite.collide_rect(self, t):
+            if self.rect.left > 2*TILE_SIZE:
+                self.rect.left = TILE_SIZE
+            elif self.rect.left < 2*TILE_SIZE:
+                self.rect.left = WIN_WIDTH-TILE_SIZE
 
 def isWall(x, y):
     if levelt[int(y)][int(x)] == '%':
@@ -372,7 +374,7 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
             spritedict[spr] = newrect
         return dirty
 
-
+#--------PPPPPPPLAAAAAYERRRR----------------------------#
 class Player(Entity):
     '''
     Player class - initialize with = Player(mapsprite,*(startX, startY))
@@ -384,7 +386,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, *groups):
+    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, hscore, *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -401,7 +403,12 @@ class Player(Entity):
         self.turning = None
         self.change_x=0
         self.change_y=0
+        self.ghostLimit=7
+        self.ghostCount=0
         self.score=1
+        self.combobegin= False
+        self.hscore = hscore
+
 
 
     def update(self):
@@ -426,8 +433,20 @@ class Player(Entity):
             right=True
             #self.dir=joyp
 
+
+        self.ghostCount=0
+        for gh in self.ghosts:
+            self.ghostCount+=1
+        
+        if self.combobegin > 100:
+            snd_shep.play()
+
+        if self.ghostCount < self.ghostLimit:
+            self.spawnRandomGhost()
+
         self.currDir = getDir(self)
-        self.isTurning()
+        if getDir(self) != self.dir:
+            self.isTurning()
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
@@ -482,14 +501,17 @@ class Player(Entity):
             if self.turning and abs(self.vel.y) < PAC_SPEED*TURNBOOST:
                 self.vel.y *= TURNBOOST
             self.collide(0, self.vel.y, self.platforms)
-        self.foodCollide(self.foods)
+        #self.foodCollide(self.foods)
+        #self.teleport(self.teleports)
+        #self.powerup(self.powerups)
+        ghostsMove(self.ghosts, self.teleports)
         score = self.score
-        self.teleport(self.teleports)
-        self.powerup(self.powerups)
         if DEBUG == True:
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
+        #if self.score > self.hscore:
+        #    self.hscore = str(self.score)
 
 
     def collide(self, xvel, yvel, platforms):
@@ -522,34 +544,36 @@ class Player(Entity):
                         self.stopped = True
         #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
+        self.foodCollide()
+        teleport(self, self.teleports)
+        self.powerup()
+
+
+    def spawnRandomGhost(self):
+        newghosts = pg.sprite.Group()
+        SlyderGhosts(self.platforms, (18*TILE_SIZE, self.rect.top-(22*TILE_SIZE)), self.ghosts)
+        BlinkyGhosts(self.platforms, (6*TILE_SIZE, self.rect.top-(24*TILE_SIZE)), self.ghosts)
+
 
     def isTurning(self):
         if getDir(self) != self.dir:
             self.turning = True
             self.speed = PAC_SPEED*TURNBOOST
-        else: 
+        else:
             self.speed = PAC_SPEED*TURNBOOST
             self.turning = False
 
-    def foodCollide(self, foods):
-        for f in foods:
+    def foodCollide(self):
+        for f in self.foods:
             if pg.sprite.collide_rect(self, f):
                 f.kill()
                 self.score += 1
                 snd_wakka.play()
                 #snd_pellet[self.score%2].play()
 
-                
-    def teleport(self, teleports):
-        for t in teleports:
-            if pg.sprite.collide_rect(self, t):
-                if self.rect.left > 2*TILE_SIZE:
-                    self.rect.left = TILE_SIZE
-                elif self.rect.left < 2*TILE_SIZE:
-                    self.rect.left = WIN_WIDTH-TILE_SIZE
 
-    def powerup(self, powerups):
-        for p in powerups:
+    def powerup(self):
+        for p in self.powerups:
             if pg.sprite.collide_rect(self, p):
                 p.kill()
                 self.score += 100
@@ -569,6 +593,7 @@ class Player(Entity):
         else:
             return 'x'
 
+
 randomMapColours = []
 randomMapColours.append("#800080")
 randomMapColours.append("#0000FF")
@@ -580,7 +605,9 @@ randomMapColours.append("#FF1493")
 randomMapColours.append("#DC143C")
 randomMapColours.append("#FF69B4")
 randomMapColours.append("#000080")
-pickint = random.randint(0, 9)
+randomMapColours.append("#B22222")
+randomMapColours.append("#DA70D6")
+pickint = random.randint(0, 11)
 
 class Platform(Entity):
     def __init__(self, pos, *groups):
@@ -617,11 +644,13 @@ class ExitBlock(Platform):
     def __init__(self, pos, *groups):
         super().__init__(Color("#ebef00"), pos, *groups)
 
-def exit():
+def exit(hscore):
+    f = open("hiscore.t", "w")
+    f.write(hscore)
+    f.close()
     pg.quit()
-    sys.exit()
-    return False
-
+    sys.exit(0)
+    
 
 if __name__ == "__main__":
     main()

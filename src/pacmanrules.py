@@ -1,3 +1,4 @@
+from settings import *
 from game import GameStateData
 from game import Game
 from game import Directions
@@ -10,8 +11,7 @@ import multiprocessing
 from multiprocessing import Process, current_process
 
 
-SCARED_TIME = 40    # Moves ghosts are scared
-COLLISION_TOLERANCE = 0.7 # How close ghosts must be to Pacman to kill
+SCARED_TIME = 20    # Seconds ghosts are scared
 TIME_PENALTY = 1 # Number of points lost each round
 
 class PacmanRules:
@@ -19,7 +19,7 @@ class PacmanRules:
     These functions govern how pacman interacts with his environment under
     the classic game rules.
     """
-    PACMAN_SPEED=1
+    PAC_SPEED = 2
 
     @staticmethod
     def getLegalActions(state):
@@ -40,7 +40,7 @@ class PacmanRules:
         pacmanState = state.data.agentStates[0]
 
         # Update Configuration
-        vector = Actions.directionToVector(action, PacmanRules.PACMAN_SPEED)
+        vector = Actions.directionToVector(action, PacmanRules.PAC_SPEED)
         pacmanState.configuration = pacmanState.configuration.generateSuccessor(vector)
 
         # Eat

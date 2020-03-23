@@ -1,24 +1,65 @@
 #! /usr/bin/python
 
-import sys, types, os, random, time, math
 import mokman
+from settings import *
 from mokman import *
+from mokman import Entity
+from roundrects import aa_round_rect
 
+
+def ghostsMove(ghosts, teleports):
+    for g in ghosts:
+        #increment in x direction
+        if g.vel.x != 0:
+            g.rect.left += int(g.vel.x)
+            ghostcollide(g, g.vel.x, 0, teleports)
+        # increment in y direction
+        if g.vel.y != 0:
+            g.rect.top += int(g.vel.y)
+            ghostcollide(g, 0, g.vel.y, teleports)
+
+def ghostcollide(self, xvel, yvel, teleports):
+    for g in self.platforms:
+        if pg.sprite.collide_rect(self, g):
+            curDir = self.dir
+            if isinstance(g, ExitBlock):
+                pg.event.post(pg.event.Event(QUIT))
+            if xvel > 0:
+                self.rect.right = g.rect.left
+                self.xvel = 0
+                if curDir == 1:
+                    self.stopped = True
+            elif xvel < 0:
+                if DEBUG == True:
+                    print("s.lf p.rt", self.rect.left, g.rect.right)
+                self.rect.left = g.rect.right
+                self.xvel = 0
+                if curDir == 3:
+                    self.stopped = True
+            if yvel > 0:
+                self.rect.bottom = g.rect.top
+                self.yvel = 0
+                if curDir == 2:
+                    self.stopped = True
+            elif yvel < 0:
+                self.yvel = 0
+                self.rect.top = g.rect.bottom
+                if curDir == 0:
+                    self.stopped = True
+    teleport(self, teleports)
 
 class BlinkyGhosts(Entity):
     def __init__(self, platforms, pos, *groups):
         super().__init__(Color("#ff0000"), pos, *groups)
-        self.dir = 1
+        self.dir = 2
         self.laycoods = pg.Vector2(0, 0)
         self.vel = pg.Vector2(0, 0)
         self.stopped = False
-        self.currDir = 3
+        self.currDir = 1
         self.lastDir = 4
         self.platforms = platforms
         self.speed = PAC_SPEED
         self.turning = None
-        self.change_x=0
-        self.change_y=0
         self.state=0
 
     def update(self):
@@ -32,64 +73,32 @@ class BlinkyGhosts(Entity):
         if self.dir == 1:
             if self.dir in legals:
                 self.vel.x = self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 3:
             if self.dir in legals:
                 self.vel.x = -self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 0:
             if self.dir in legals:
                 self.vel.y = -self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0  
                 self.stopped = False
         if self.dir == 2:
             if self.dir in legals:
                 self.vel.y = self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
         #increment in x direction
-        self.rect.left += int(self.vel.x)
-        if self.vel.x != 0:
-            self.collide(self.vel.x, 0, self.platforms)
+        #self.rect.left += int(self.vel.x)
+        #if self.vel.x != 0:
+        #    ghostcollide(self, self.vel.x, 0)
         # increment in y direction
-        self.rect.top += int(self.vel.y)
-        if self.vel.y != 0:
-            self.collide(0, self.vel.y, self.platforms)
+        #self.rect.top += int(self.vel.y)
+        #if self.vel.y != 0:
+        #   ghostcollide(self, 0, self.vel.y)
 
-    def collide(self, xvel, yvel, platforms):
-        for g in platforms:
-            if pg.sprite.collide_rect(self, g):
-                curDir = getDir(self)
-                if isinstance(g, ExitBlock):
-                    pg.event.post(pg.event.Event(QUIT))
-                if xvel > 0:
-                    self.rect.right = g.rect.left
-                    self.xvel = 0
-                    if curDir == 1:
-                        self.stopped = True
-                elif xvel < 0:
-                    if DEBUG == True:
-                        print("s.lf p.rt", self.rect.left, g.rect.right)
-                    self.rect.left = g.rect.right
-                    self.xvel = 0
-                    if curDir == 3:
-                        self.stopped = True
-                if yvel > 0:
-                    self.rect.bottom = g.rect.top
-                    self.yvel = 0
-                    if curDir == 2:
-                        self.stopped = True
-                elif yvel < 0:
-                    self.yvel = 0
-                    self.rect.top = g.rect.bottom
-                    if curDir == 0:
-                        self.stopped = True
 
 class PinkyGhosts(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -103,8 +112,6 @@ class PinkyGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED
         self.turning = None
-        self.change_x=0
-        self.change_y=0
         self.state=0
 
     def update(self):
@@ -118,64 +125,32 @@ class PinkyGhosts(Entity):
         if self.dir == 1:
             if self.dir in legals:
                 self.vel.x = self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 3:
             if self.dir in legals:
                 self.vel.x = -self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 0:
             if self.dir in legals:
                 self.vel.y = -self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0  
                 self.stopped = False
         if self.dir == 2:
             if self.dir in legals:
                 self.vel.y = self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
         #increment in x direction
-        self.rect.left += int(self.vel.x)
-        if self.vel.x != 0:
-            self.collide(self.vel.x, 0, self.platforms)
+        #self.rect.left += int(self.vel.x)
+        #if self.vel.x != 0:
+        #    ghostcollide(self, self.vel.x, 0)
         # increment in y direction
-        self.rect.top += int(self.vel.y)
-        if self.vel.y != 0:
-            self.collide(0, self.vel.y, self.platforms)
+        #self.rect.top += int(self.vel.y)
+        #if self.vel.y != 0:
+        #    ghostcollide(self, 0, self.vel.y)
 
-    def collide(self, xvel, yvel, platforms):
-        for g in platforms:
-            if pg.sprite.collide_rect(self, g):
-                curDir = getDir(self)
-                if isinstance(g, ExitBlock):
-                    pg.event.post(pg.event.Event(QUIT))
-                if xvel > 0:
-                    self.rect.right = g.rect.left
-                    self.xvel = 0
-                    if curDir == 1:
-                        self.stopped = True
-                elif xvel < 0:
-                    if DEBUG == True:
-                        print("s.lf p.rt", self.rect.left, g.rect.right)
-                    self.rect.left = g.rect.right
-                    self.xvel = 0
-                    if curDir == 3:
-                        self.stopped = True
-                if yvel > 0:
-                    self.rect.bottom = g.rect.top
-                    self.yvel = 0
-                    if curDir == 2:
-                        self.stopped = True
-                elif yvel < 0:
-                    self.yvel = 0
-                    self.rect.top = g.rect.bottom
-                    if curDir == 0:
-                        self.stopped = True
 
 class InkyGhosts(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -189,8 +164,6 @@ class InkyGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED
         self.turning = None
-        self.change_x=0
-        self.change_y=0
         self.state=0
 
     def update(self):
@@ -204,64 +177,32 @@ class InkyGhosts(Entity):
         if self.dir == 1:
             if self.dir in legals:
                 self.vel.x = self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 3:
             if self.dir in legals:
                 self.vel.x = -self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 0:
             if self.dir in legals:
                 self.vel.y = -self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0  
                 self.stopped = False
         if self.dir == 2:
             if self.dir in legals:
                 self.vel.y = self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
         #increment in x direction
-        self.rect.left += int(self.vel.x)
-        if self.vel.x != 0:
-            self.collide(self.vel.x, 0, self.platforms)
+        #self.rect.left += int(self.vel.x)
+        #if self.vel.x != 0:
+        #    ghostcollide(self, self.vel.x, 0)
         # increment in y direction
-        self.rect.top += int(self.vel.y)
-        if self.vel.y != 0:
-            self.collide(0, self.vel.y, self.platforms)
+        #self.rect.top += int(self.vel.y)
+        #if self.vel.y != 0:
+        #    ghostcollide(self, 0, self.vel.y)
 
-    def collide(self, xvel, yvel, platforms):
-        for g in platforms:
-            if pg.sprite.collide_rect(self, g):
-                curDir = getDir(self)
-                if isinstance(g, ExitBlock):
-                    pg.event.post(pg.event.Event(QUIT))
-                if xvel > 0:
-                    self.rect.right = g.rect.left
-                    self.xvel = 0
-                    if curDir == 1:
-                        self.stopped = True
-                elif xvel < 0:
-                    if DEBUG == True:
-                        print("s.lf p.rt", self.rect.left, g.rect.right)
-                    self.rect.left = g.rect.right
-                    self.xvel = 0
-                    if curDir == 3:
-                        self.stopped = True
-                if yvel > 0:
-                    self.rect.bottom = g.rect.top
-                    self.yvel = 0
-                    if curDir == 2:
-                        self.stopped = True
-                elif yvel < 0:
-                    self.yvel = 0
-                    self.rect.top = g.rect.bottom
-                    if curDir == 0:
-                        self.stopped = True
 
 
 class ClydeGhosts(Entity):
@@ -276,8 +217,6 @@ class ClydeGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED
         self.turning = None
-        self.change_x=0
-        self.change_y=0
         self.state=0
 
     def update(self):
@@ -291,64 +230,32 @@ class ClydeGhosts(Entity):
         if self.dir == 1:
             if self.dir in legals:
                 self.vel.x = self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 3:
             if self.dir in legals:
                 self.vel.x = -self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 0:
             if self.dir in legals:
                 self.vel.y = -self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0  
                 self.stopped = False
         if self.dir == 2:
             if self.dir in legals:
                 self.vel.y = self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
         #increment in x direction
-        self.rect.left += int(self.vel.x)
-        if self.vel.x != 0:
-            self.collide(self.vel.x, 0, self.platforms)
+        #self.rect.left += int(self.vel.x)
+        #if self.vel.x != 0:
+        #    ghostcollide(self, self.vel.x, 0)
         # increment in y direction
-        self.rect.top += int(self.vel.y)
-        if self.vel.y != 0:
-            self.collide(0, self.vel.y, self.platforms)
+        #self.rect.top += int(self.vel.y)
+        #if self.vel.y != 0:
+        #    ghostcollide(self, 0, self.vel.y)
 
-    def collide(self, xvel, yvel, platforms):
-        for g in platforms:
-            if pg.sprite.collide_rect(self, g):
-                curDir = getDir(self)
-                if isinstance(g, ExitBlock):
-                    pg.event.post(pg.event.Event(QUIT))
-                if xvel > 0:
-                    self.rect.right = g.rect.left
-                    self.xvel = 0
-                    if curDir == 1:
-                        self.stopped = True
-                elif xvel < 0:
-                    if DEBUG == True:
-                        print("s.lf p.rt", self.rect.left, g.rect.right)
-                    self.rect.left = g.rect.right
-                    self.xvel = 0
-                    if curDir == 3:
-                        self.stopped = True
-                if yvel > 0:
-                    self.rect.bottom = g.rect.top
-                    self.yvel = 0
-                    if curDir == 2:
-                        self.stopped = True
-                elif yvel < 0:
-                    self.yvel = 0
-                    self.rect.top = g.rect.bottom
-                    if curDir == 0:
-                        self.stopped = True
 
 class SlyderGhosts(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -363,8 +270,6 @@ class SlyderGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED
         self.turning = None
-        self.change_x=0
-        self.change_y=0
         self.state=0
 
     def update(self):
@@ -382,80 +287,46 @@ class SlyderGhosts(Entity):
         if self.dir == 1:
             if self.dir in legals:
                 self.vel.x = self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 3:
             if self.dir in legals:
                 self.vel.x = -self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 0:
             if self.dir in legals:
                 self.vel.y = -self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0  
                 self.stopped = False
         if self.dir == 2:
             if self.dir in legals:
                 self.vel.y = self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
         #increment in x direction
-        self.rect.left += int(self.vel.x)
-        if self.vel.x != 0:
-            self.collide(self.vel.x, 0, self.platforms)
+        #self.rect.left += int(self.vel.x)
+        #if self.vel.x != 0:
+        #    ghostcollide(self, self.vel.x, 0)
         # increment in y direction
-        self.rect.top += int(self.vel.y)
-        if self.vel.y != 0:
-            self.collide(0, self.vel.y, self.platforms)
-
-    def collide(self, xvel, yvel, platforms):
-        for g in platforms:
-            if pg.sprite.collide_rect(self, g):
-                curDir = getDir(self)
-                if isinstance(g, ExitBlock):
-                    pg.event.post(pg.event.Event(QUIT))
-                if xvel > 0:
-                    self.rect.right = g.rect.left
-                    self.xvel = 0
-                    if curDir == 1:
-                        self.stopped = True
-                elif xvel < 0:
-                    if DEBUG == True:
-                        print("s.lf p.rt", self.rect.left, g.rect.right)
-                    self.rect.left = g.rect.right
-                    self.xvel = 0
-                    if curDir == 3:
-                        self.stopped = True
-                if yvel > 0:
-                    self.rect.bottom = g.rect.top
-                    self.yvel = 0
-                    if curDir == 2:
-                        self.stopped = True
-                elif yvel < 0:
-                    self.yvel = 0
-                    self.rect.top = g.rect.bottom
-                    if curDir == 0:
-                        self.stopped = True
+        #self.rect.top += int(self.vel.y)
+        #if self.vel.y != 0:
+        #    ghostcollide(self, 0, self.vel.y)
 
 
 class WelchGhosts(Entity):
     def __init__(self, platforms, pos, *groups):
-        super().__init__(Color("#EE82EE"), pos, *groups)
-        self.dir = 1
+        super().__init__(Color("#800080"), pos, *groups)
+        self.dir = 0
         self.laycoods = pg.Vector2(0, 0)
         self.vel = pg.Vector2(0, 0)
         self.stopped = False
-        self.currDir = 3
-        self.lastDir = 4
+        self.currDir = 0
+        self.lastDir = 2
+        self.nextDir = 2
         self.platforms = platforms
         self.speed = PAC_SPEED
         self.turning = None
-        self.change_x=0
-        self.change_y=0
         self.state=0
 
     def update(self):
@@ -465,66 +336,118 @@ class WelchGhosts(Entity):
         legals = getlayoutActions(self)
         randmove = random.randint(0, len(legals)-1)
         if self.stopped:
-            self.dir = legals[randmove]
+            self.dir = self.nextDir
+            if self.nextDir == 2:
+                self.nextDir = 0
+            else:
+                self.nextDir = 2
         if self.dir == 1:
             if self.dir in legals:
                 self.vel.x = self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 3:
             if self.dir in legals:
                 self.vel.x = -self.speed
-                self.change_x += self.vel.x
                 self.vel.y = 0
                 self.stopped = False
         if self.dir == 0:
             if self.dir in legals:
                 self.vel.y = -self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0  
                 self.stopped = False
         if self.dir == 2:
             if self.dir in legals:
                 self.vel.y = self.speed
-                self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
         #increment in x direction
-        self.rect.left += int(self.vel.x)
-        if self.vel.x != 0:
-            self.collide(self.vel.x, 0, self.platforms)
+        #self.rect.left += int(self.vel.x)
+        #if self.vel.x != 0:
+        #    ghostcollide(self, self.vel.x, 0)
         # increment in y direction
-        self.rect.top += int(self.vel.y)
-        if self.vel.y != 0:
-            self.collide(0, self.vel.y, self.platforms)
+        #self.rect.top += int(self.vel.y)
+        #if self.vel.y != 0:
+        #    ghostcollide(self, 0, self.vel.y)
 
-    def collide(self, xvel, yvel, platforms):
-        for g in platforms:
-            if pg.sprite.collide_rect(self, g):
-                curDir = getDir(self)
-                if isinstance(g, ExitBlock):
-                    pg.event.post(pg.event.Event(QUIT))
-                if xvel > 0:
-                    self.rect.right = g.rect.left
-                    self.xvel = 0
-                    if curDir == 1:
-                        self.stopped = True
-                elif xvel < 0:
-                    if DEBUG == True:
-                        print("s.lf p.rt", self.rect.left, g.rect.right)
-                    self.rect.left = g.rect.right
-                    self.xvel = 0
-                    if curDir == 3:
-                        self.stopped = True
-                if yvel > 0:
-                    self.rect.bottom = g.rect.top
-                    self.yvel = 0
-                    if curDir == 2:
-                        self.stopped = True
-                elif yvel < 0:
-                    self.yvel = 0
-                    self.rect.top = g.rect.bottom
-                    if curDir == 0:
-                        self.stopped = True
+from game import Actions, Directions
+
+class GhostRules:
+    """
+    These functions dictate how ghosts interact with their environment.
+    """
+    GHOST_SPEED = PAC_SPEED
+
+    @staticmethod
+    def getLegalActions(state, ghostIndex):
+        """
+        Ghosts cannot stop, and cannot turn around unless they
+        reach a dead end, but can turn 90 degrees at intersections.
+        """
+        conf = state.getGhostState(ghostIndex).configuration
+        possibleActions = Actions.getPossibleActions(conf, state.data.layout.walls)
+        reverse = Actions.reverseDirection(conf.direction)
+        if Directions.STOP in possibleActions:
+            possibleActions.remove(Directions.STOP)
+        if reverse in possibleActions and len(possibleActions) > 1:
+            possibleActions.remove(reverse)
+        return possibleActions
+
+    @staticmethod
+    def applyAction(state, action, ghostIndex):
+        legal = GhostRules.getLegalActions(state, ghostIndex)
+        if action not in legal:
+            raise Exception("Illegal ghost action " + str(action))
+
+        ghostState = state.data.agentStates[ghostIndex]
+        speed = GhostRules.GHOST_SPEED
+        if ghostState.scaredTimer > 0: speed /= 2.0
+        vector = Actions.directionToVector(action, speed)
+        ghostState.configuration = ghostState.configuration.generateSuccessor(vector)
+
+    @staticmethod
+    def decrementTimer(ghostState):
+        timer = ghostState.scaredTimer
+        if timer == 1:
+            ghostState.configuration.pos = nearestPoint(ghostState.configuration.pos)
+        ghostState.scaredTimer = max(0, timer - 1)
+
+    @staticmethod
+    def checkDeath(state, agentIndex):
+        pacmanPosition = state.getPacmanPosition()
+        if agentIndex == 0: # Pacman just moved; Anyone can kill him
+            for index in range(1, len(state.data.agentStates)):
+                ghostState = state.data.agentStates[index]
+                ghostPosition = ghostState.configuration.getPosition()
+                if GhostRules.canKill(pacmanPosition, ghostPosition):
+                    GhostRules.collide(state, ghostState, index)
+        else:
+            ghostState = state.data.agentStates[agentIndex]
+            ghostPosition = ghostState.configuration.getPosition()
+            if GhostRules.canKill(pacmanPosition, ghostPosition):
+                GhostRules.collide(state, ghostState, agentIndex)
+
+    @staticmethod
+    def collide(state, ghostState, agentIndex):
+        if ghostState.scaredTimer > 0:
+            state.data.scoreChange += 200
+            GhostRules.placeGhost(state, ghostState)
+            ghostState.scaredTimer = 0
+            # Added for first-person
+            state.data._eaten[agentIndex] = True
+        else:
+            if not state.data._win:
+                state.data.scoreChange -= 500
+                state.data._lose = True
+
+    @staticmethod
+    def canKill(pacmanPosition, ghostPosition):
+        return manhattanDistance(ghostPosition, pacmanPosition) <= COLLISION_TOLERANCE
+
+    @staticmethod
+    def placeGhost(state, ghostState):
+        ghostState.configuration = ghostState.start
+
+
+
 

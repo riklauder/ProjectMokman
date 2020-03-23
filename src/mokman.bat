@@ -12,7 +12,6 @@ node mapgen.js > layouts/randomMap9.lay
 node mapgen.js > layouts/randomMap10.lay
 node mapgen.js > layouts/randomMap11.lay
 node mapgen.js > layouts/randomMap12.lay
-node mapgen.js > layouts/randomMap13.lay
-node mapgen.js > layouts/randomMap14.lay
+
 bash -c ./mapt > layouts/randomfMap.lay
 python mokman.py

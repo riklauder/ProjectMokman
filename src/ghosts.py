@@ -7,6 +7,9 @@ from mokman import Entity
 from roundrects import aa_round_rect
 
 
+def scaredTimer():
+    return int(140)
+
 def ghostsMove(ghosts, teleports):
     for g in ghosts:
         #increment in x direction
@@ -17,6 +20,17 @@ def ghostsMove(ghosts, teleports):
         if g.vel.y != 0:
             g.rect.top += int(g.vel.y)
             ghostcollide(g, 0, g.vel.y, teleports)
+
+def chgGhostState(ghosts, state):
+    for g in ghosts:
+        g.ghostState = state
+
+def sTimer(ghosts, gstime):
+    gstime += 1
+    if gstime >= scaredTimer():
+        chgGhostState(ghosts, 0)
+        return True
+
 
 def ghostcollide(self, xvel, yvel, teleports):
     for g in self.platforms:
@@ -60,7 +74,7 @@ class BlinkyGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
-        self.state=0
+        self.ghostState=0
 
     def update(self):
         self.currDir = getDir(self)
@@ -90,14 +104,10 @@ class BlinkyGhosts(Entity):
                 self.vel.y = self.speed
                 self.vel.x = 0
                 self.stopped = False
-        #increment in x direction
-        #self.rect.left += int(self.vel.x)
-        #if self.vel.x != 0:
-        #    ghostcollide(self, self.vel.x, 0)
-        # increment in y direction
-        #self.rect.top += int(self.vel.y)
-        #if self.vel.y != 0:
-        #   ghostcollide(self, 0, self.vel.y)
+        if self.ghostState == 3:
+            self.image.fill(Color("#0000ff"))
+        else: self.image.fill(Color("#ff0000")) 
+
 
 
 class PinkyGhosts(Entity):
@@ -112,7 +122,7 @@ class PinkyGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
-        self.state=0
+        self.ghostState=0
 
     def update(self):
         self.currDir = getDir(self)
@@ -142,14 +152,10 @@ class PinkyGhosts(Entity):
                 self.vel.y = self.speed
                 self.vel.x = 0
                 self.stopped = False
-        #increment in x direction
-        #self.rect.left += int(self.vel.x)
-        #if self.vel.x != 0:
-        #    ghostcollide(self, self.vel.x, 0)
-        # increment in y direction
-        #self.rect.top += int(self.vel.y)
-        #if self.vel.y != 0:
-        #    ghostcollide(self, 0, self.vel.y)
+        if self.ghostState == 3:
+            self.image.fill(Color("#0000ff"))
+        else: self.image.fill(Color("#FF1493"))       
+
 
 
 class InkyGhosts(Entity):
@@ -162,9 +168,9 @@ class InkyGhosts(Entity):
         self.currDir = 3
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = PAC_SPEED
+        self.speed = TURNBOOST
         self.turning = None
-        self.state=0
+        self.ghostState=0
 
     def update(self):
         self.currDir = getDir(self)
@@ -194,14 +200,10 @@ class InkyGhosts(Entity):
                 self.vel.y = self.speed
                 self.vel.x = 0
                 self.stopped = False
-        #increment in x direction
-        #self.rect.left += int(self.vel.x)
-        #if self.vel.x != 0:
-        #    ghostcollide(self, self.vel.x, 0)
-        # increment in y direction
-        #self.rect.top += int(self.vel.y)
-        #if self.vel.y != 0:
-        #    ghostcollide(self, 0, self.vel.y)
+        if self.ghostState == 3:
+            self.image.fill(Color("#0000ff"))
+        else: self.image.fill(Color("#00BFFF"))      
+
 
 
 
@@ -217,7 +219,7 @@ class ClydeGhosts(Entity):
         self.platforms = platforms
         self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
-        self.state=0
+        self.ghostState=0
 
     def update(self):
         self.currDir = getDir(self)
@@ -247,14 +249,10 @@ class ClydeGhosts(Entity):
                 self.vel.y = self.speed
                 self.vel.x = 0
                 self.stopped = False
-        #increment in x direction
-        #self.rect.left += int(self.vel.x)
-        #if self.vel.x != 0:
-        #    ghostcollide(self, self.vel.x, 0)
-        # increment in y direction
-        #self.rect.top += int(self.vel.y)
-        #if self.vel.y != 0:
-        #    ghostcollide(self, 0, self.vel.y)
+        if self.ghostState == 3:
+            self.image.fill(Color("#0000ff"))
+        else: self.image.fill(Color("#FFA500"))       
+
 
 
 class SlyderGhosts(Entity):
@@ -268,9 +266,9 @@ class SlyderGhosts(Entity):
         self.lastDir = 3
         self.nextDir = 3
         self.platforms = platforms
-        self.speed = PAC_SPEED
+        self.speed = TURNBOOST
         self.turning = None
-        self.state=0
+        self.ghostState=0
 
     def update(self):
         self.currDir = getDir(self)
@@ -304,14 +302,10 @@ class SlyderGhosts(Entity):
                 self.vel.y = self.speed
                 self.vel.x = 0
                 self.stopped = False
-        #increment in x direction
-        #self.rect.left += int(self.vel.x)
-        #if self.vel.x != 0:
-        #    ghostcollide(self, self.vel.x, 0)
-        # increment in y direction
-        #self.rect.top += int(self.vel.y)
-        #if self.vel.y != 0:
-        #    ghostcollide(self, 0, self.vel.y)
+        if self.ghostState == 3:
+            self.image.fill(Color("#0000ff"))
+        else: self.image.fill(Color("#32CD32"))       
+
 
 
 class WelchGhosts(Entity):
@@ -325,9 +319,9 @@ class WelchGhosts(Entity):
         self.lastDir = 2
         self.nextDir = 2
         self.platforms = platforms
-        self.speed = PAC_SPEED
+        self.speed = TURNBOOST
         self.turning = None
-        self.state=0
+        self.ghostState=0
 
     def update(self):
         self.currDir = getDir(self)
@@ -361,14 +355,10 @@ class WelchGhosts(Entity):
                 self.vel.y = self.speed
                 self.vel.x = 0
                 self.stopped = False
-        #increment in x direction
-        #self.rect.left += int(self.vel.x)
-        #if self.vel.x != 0:
-        #    ghostcollide(self, self.vel.x, 0)
-        # increment in y direction
-        #self.rect.top += int(self.vel.y)
-        #if self.vel.y != 0:
-        #    ghostcollide(self, 0, self.vel.y)
+        if self.ghostState == 3:
+            self.image.fill(Color("#0000ff"))
+        else: self.image.fill(Color("#800080"))      
+
 
 from game import Actions, Directions
 
@@ -376,7 +366,7 @@ class GhostRules:
     """
     These functions dictate how ghosts interact with their environment.
     """
-    GHOST_SPEED = PAC_SPEED
+    #GHOST_SPEED = PAC_SPEED
 
     @staticmethod
     def getLegalActions(state, ghostIndex):
@@ -433,7 +423,6 @@ class GhostRules:
             state.data.scoreChange += 200
             GhostRules.placeGhost(state, ghostState)
             ghostState.scaredTimer = 0
-            # Added for first-person
             state.data._eaten[agentIndex] = True
         else:
             if not state.data._win:

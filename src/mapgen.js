@@ -1949,7 +1949,7 @@ var mapgen = (function(){
         }
 
         // create the ghost door
-        setTile(2,12,'-');
+        //setTile(2,12,'-');
 
         // set energizers
         var getTopEnergizerRange = function() {

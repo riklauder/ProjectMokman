@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # Main game loop and core fuctions
 from settings import *
-import random, ctypes, math, heapq, itertools, time, collections, cython
+import random, ctypes, math, heapq, itertools, time, collections, cProfile, re, cython
 import pygame as pg
 import layout, pacmanrules, game, ghosts, roundrects
 import pygame.rect as rect
@@ -40,7 +40,7 @@ screen = pg.display.set_mode(DISPLAY, FLAGS, DEPTH)
 pg.display.set_caption("Mokman! Use arrows or Controller Stick to move!")
 screenp = pg.display.get_surface()
 timer = pg.time.Clock()
-global seconds
+
 seconds = 0
 
 up = down = left = right = running = False
@@ -120,11 +120,12 @@ def main():
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width,
         level_height))
     frame_count = 0
-    frame_rate = 30
-    start_time = 90
+    frame_rate = 20
+    start_time = 0
+    pg.display.flip()
 
 
-    # build the level    
+    # build the level and spawn ghosts
     x = y = 0
     for row in levelt:
         for col in row:
@@ -147,6 +148,7 @@ def main():
             if col == 'P':
                 player = Player(platforms, (x, y), foods, teleports, powerups, ghosts, hscore)
                 PinkyGhosts(platforms, (x-TILE_SIZE, y-(27*TILE_SIZE)), ghosts,  entities)
+                InkyGhosts(platforms, (x-TILE_SIZE, y-(27*2*TILE_SIZE)), ghosts,  entities)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
@@ -339,7 +341,7 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
         super().__init__()
         self.target = target
-        self.cam = pg.Vector2(0, 0)
+        self.cam = pg.Vector2(int(0), int(0))
         self.world_size = world_size
         if self.target:
             self.add(target)
@@ -362,7 +364,7 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
         init_rect = self._init_rect
         for spr in self.sprites():
             rec = spritedict[spr]
-            newrect = surface_blit(spr.image, spr.rect.move(self.cam))
+            newrect = surface_blit(spr.image, spr.rect.move((int(self.cam.x), int(self.cam.y))))
             if rec is init_rect:
                 dirty_append(newrect)
             else:
@@ -411,6 +413,8 @@ class Player(Entity):
         self.score=1
         self.combobegin= False
         self.hscore = hscore
+        self.ghostState = 0
+        self.ghostTimer = 0
 
 
 
@@ -508,6 +512,13 @@ class Player(Entity):
         #self.teleport(self.teleports)
         #self.powerup(self.powerups)
         ghostsMove(self.ghosts, self.teleports)
+        if self.ghostState == 3:
+            tb = sTimer(self.ghosts, self.ghostTimer)
+            if tb:
+                self.ghostState = 0
+                self.ghostTimer = 0
+            else: 
+                self.ghostTimer += 1
         score = self.score
         if DEBUG == True:
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
@@ -516,7 +527,7 @@ class Player(Entity):
         if self.score > int(self.hscore):
             self.hscore = str(self.score)
 
-
+    #collide function for Mokman main player
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
             if pg.sprite.collide_rect(self, p):
@@ -579,7 +590,10 @@ class Player(Entity):
         for p in self.powerups:
             if pg.sprite.collide_rect(self, p):
                 p.kill()
+                gstate = 3
                 self.score += 100
+                ghosts.chgGhostState(self.ghosts, gstate)
+                self.ghostState = gstate
                 snd_powerpellet.play()
 
     def a(self):
@@ -598,8 +612,8 @@ class Player(Entity):
 
 
 randomMapColours = []
-randomMapColours.append("#800080")
-randomMapColours.append("#0000FF")
+randomMapColours.append("#8A2BE2")
+randomMapColours.append("#FF69B4")
 randomMapColours.append("#FF00FF")
 randomMapColours.append("#228B22")
 randomMapColours.append("#191970")

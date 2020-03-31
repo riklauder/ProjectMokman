@@ -110,11 +110,12 @@ def getlayoutActions(self):
 
 
 def ghostAttack(self):
+    '''
+    args - mokman Player
+    Function used to make ghosts agressively pursue the Player
+    Uses Astar search currently
+    '''
     mokmanPos = self.laycoods
-    #maze = []
-    #for i in levelt:
-    #    for j in levelt[i]:
-    #        maze[i][j] = levelt[i][j]
 
     mazet = [[0] * int(X_DIM+1)] * int(Y_DIM+1)
     maze = level.layoutText

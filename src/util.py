@@ -215,6 +215,12 @@ def manhattanDistance( xy1, xy2 ):
   The search project should not need anything below this line.
 """
 
+def stateNameToCoords(name):
+    if name != None:
+        return [int(name.split('x')[1].split('y')[0]), int(name.split('x')[1].split('y')[0])]
+    else: return 'x1y1'
+
+
 class Counter(dict):
     """
     A counter keeps track of counts for a set of keys.

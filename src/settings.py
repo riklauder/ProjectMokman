@@ -1,3 +1,5 @@
+#Configurations settings - global variables and macros
+
 import os, sys
 import pygame as pg
 import util
@@ -25,6 +27,7 @@ DIR_LEFT = 3
 STOPPED = 4
 SCRIPT_PATH = sys.path[0]
 PAC_SPEED = 4
+GHOST_SPEED = 3
 TURNBOOST = 2
 SCORE_XOFFSET=14 # pixels from left edge
 SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)

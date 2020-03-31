@@ -1,10 +1,10 @@
 # ProjectMokman
 # CS-4432 Game Project
 
-## Project Ten Page PLan 
+## Project Ten Page Plan 
 Link to draft Ten Page Plan [Click Here!](https://1drv.ms/w/s!BC3kPYTrDe8AjeF9RJC0USLp8sFAeg?e=tSCDXQZf9E-M0kjkdhoAug&at=9)
 
-Living document will be updated until project end
+Living document will be updated until project end - Contains details of project design and lessons learned
 
 Map Analysis [Click Here](https://1drv.ms/x/s!Ai3kPYTrDe8Aj4QXeZNKA7SK2G1UnA?e=kCqbm4)
 

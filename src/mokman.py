@@ -1,9 +1,11 @@
 #! /usr/bin/python
 # Main game loop and core fuctions
 from settings import *
-import random, ctypes, math, heapq, itertools, time, collections, cProfile, re, cython
+import random, ctypes, math, heapq, itertools, time, collections, re, cython
+import numpy as np
+from scipy import linalg
 import pygame as pg
-import layout, pacmanrules, game, ghosts, roundrects
+import layout, pacmanrules, game, ghosts, gamestate, roundrects
 import pygame.rect as rect
 from pygame.compat import geterror
 from pygame import mixer
@@ -19,6 +21,10 @@ import threading, multiprocessing
 from multiprocessing import Process, Pool, current_process
 from collections import defaultdict
 from roundrects import aa_round_rect
+#from graph import Node, Graph
+#from grid import GridWorld
+#from util import stateNameToCoords
+#from d_star_lite import initDStarLite, moveAndRescan
 
 
 file = open("hiscore.t", "r")
@@ -48,7 +54,11 @@ maplay = 'randomfMap'
 level = layout.getLayout(maplay)
 global levelt
 levelt = level.layoutText
-
+X_DIM = level.width
+Y_DIM = level.height
+#VIEWING_RANGE = 4
+#global dgraph
+#dgraph = GridWorld(X_DIM+1, Y_DIM+1)
 
 snd_pellet = {0: pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", 
     "pellet1.wav")),1: pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res",
@@ -73,6 +83,8 @@ snd_shep.set_volume(.8)
 
 font_name = pg.font.match_font('roboto', bold=True)
 score = SCORE
+gstateobj = gamestate.GameState
+
 
 def CheckInputs():
     if js!=None and js.get_axis(JS_XAXIS)>0.5:
@@ -131,6 +143,8 @@ def main():
         for col in row:
             if col == '%':
                 Platform((x, y), platforms, entities)
+                #if (dgraph.cells[int(y/TILE_SIZE)][int(x/TILE_SIZE)] in [0, 2, 3]):
+                #    dgraph.cells[int(y/TILE_SIZE)][int(x/TILE_SIZE)] = -1
             if col == 'T':
                 Teleport((x, y), teleports, entities)
             if col == '.':
@@ -153,8 +167,6 @@ def main():
         y+=TILE_SIZE
         x=0
 
-    
-    
 
     while True:
         for e in pg.event.get():
@@ -206,6 +218,9 @@ def draw_text(surf, text, size, x, y):
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
+def sub(x, y):
+    return (x[0] - y[0], x[1] - y[1])
+
 def getDir(self):
     if (self.vel.x>=1): return DIR_RIGHT
     if (self.vel.x<=-1): return DIR_LEFT
@@ -213,28 +228,16 @@ def getDir(self):
     if (self.vel.y>=1): return DIR_DOWN
     if (self.vel.y == 0 and self.vel.x == 0): return STOPPED
 
-def getlayoutActions(self):
-    x = self.laycoods.x
-    y = self.laycoods.y
-    #if self.currDir == DIR_DOWN or DIR_RIGHT:
-    #    x -= 1
-    #    y -= 1
-    legals = []
-    #check L
-    if not isWall(x-1, y):
-        legals.append(DIR_LEFT)
-    #check R
-    if not isWall(x+1, y):
-        legals.append(DIR_RIGHT)
-    #check D
-    if not isWall(x, y+1):
-        legals.append(DIR_DOWN)
-    #check U
-    if not isWall(x, y-1):
-        legals.append(DIR_UP)
-    
-    return legals
-
+def getD(vec):
+    if abs(vec[1]) >= abs(vec[0]): 
+        if (vec[1]>=1): return DIR_LEFT
+        if (vec[1]<=-1): return DIR_RIGHT
+    elif abs(vec[0]) >= abs(vec[1]):
+        if (vec[0]<=-1): return DIR_DOWN
+        if (vec[0]>=1): return DIR_UP
+    if (vec[1] == 0 and vec[0] == 0): return STOPPED
+    #DIR_UP = 0   #DIR_RIGHT = 1
+    #DIR_DOWN = 2 #DIR_LEFT = 3 #STOPPED=4
 
 def teleport(self, teleports):
     for t in teleports:
@@ -244,10 +247,19 @@ def teleport(self, teleports):
             elif self.rect.left < 2*TILE_SIZE:
                 self.rect.left = WIN_WIDTH-TILE_SIZE
 
-def isWall(x, y):
-    if levelt[int(y)][int(x)] == '%':
-        return True
-    else: return False
+
+def getDirVec(action):
+    dirV = pg.Vector2(0, 0)
+    if action == DIR_UP:
+        dirV.y = -1
+    if action == DIR_DOWN:
+        dirV.y = 1
+    if action == DIR_LEFT:
+        dirV.x = -1
+    if action == DIR_RIGHT:
+        dirV.x = -1
+    return dirV
+
 
 def getillegalActions(self):
     """
@@ -410,12 +422,17 @@ class Player(Entity):
         self.change_y=0
         self.ghostLimit=7
         self.ghostCount=0
+        self.lose = False
         self.score=1
         self.combobegin= False
         self.hscore = hscore
+        self.state = 0
+        self.gsobj = gamestate.GameState #gamestate object
         self.ghostState = 0
         self.ghostTimer = 0
-
+        self.chaseTimer = 0
+        self.chaseState = False
+        self.loseTimer = 0
 
 
     def update(self):
@@ -456,7 +473,7 @@ class Player(Entity):
         #    self.isTurning()
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
-        legals = getlayoutActions(self)
+        legals = self.gsobj.getlayoutActions(self, levelt)
         if self.stopped == True:
             legals.append(STOPPED)
         if self.lastDir != STOPPED and DEBUG == True:
@@ -513,19 +530,38 @@ class Player(Entity):
         #self.powerup(self.powerups)
         ghostsMove(self.ghosts, self.teleports)
         if self.ghostState == 3:
+            self.chaseState = False
+            self.chaseTimer = 0
             tb = sTimer(self.ghosts, self.ghostTimer)
             if tb:
                 self.ghostState = 0
                 self.ghostTimer = 0
             else: 
                 self.ghostTimer += 1
+        if self.ghostState == 0:
+            self.chaseTimer += 1
+            if self.chaseState == False:
+                if self.chaseTimer > 160:
+                    self.chaseState = True
+            if self.chaseState == True:
+                if self.chaseTimer > 280:
+                    self.chaseState = False
+                    self.chaseTimer = 0
+                else:
+                    ghostAttack(self)
         score = self.score
+        #print("gTimer, gState, cTime, cState", self.ghostTimer, self.ghostState, self.chaseTimer, self.chaseState)
         if DEBUG == True:
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
         #STOPPED = 4
         if self.score > int(self.hscore):
             self.hscore = str(self.score)
+        if self.lose == True:
+            self.loseTimer += 1
+            if self.loseTimer > 10:
+                print("Mokman was killed in Action! Stay away from enemies that aren't dark Blue!")
+                pg.event.post(pg.event.Event(QUIT))
 
     #collide function for Mokman main player
     def collide(self, xvel, yvel, platforms):
@@ -561,6 +597,8 @@ class Player(Entity):
         self.foodCollide()
         teleport(self, self.teleports)
         self.powerup()
+        self.ghostMokmanCollide()
+
 
 
     def spawnRandomGhost(self):
@@ -581,10 +619,21 @@ class Player(Entity):
         for f in self.foods:
             if pg.sprite.collide_rect(self, f):
                 f.kill()
-                self.score += 1
+                self.score += 5
                 snd_wakka.play()
                 #snd_pellet[self.score%2].play()
 
+    def ghostMokmanCollide(self):
+        for g in self.ghosts:
+            if pg.sprite.collide_rect(self, g):
+                if self.ghostState == 0:
+                    self.lose = True
+                    snd_die.play()
+                if self.ghostState == 3:
+                    self.score += 200
+                    snd_eatgh.play()
+                    gname = g.gname
+                    respawnGhost(g, self.rect.left, self.rect.top, gname)
 
     def powerup(self):
         for p in self.powerups:
@@ -618,7 +667,7 @@ randomMapColours.append("#FF00FF")
 randomMapColours.append("#228B22")
 randomMapColours.append("#191970")
 randomMapColours.append("#7FFFD4")
-randomMapColours.append("#FF1493")
+randomMapColours.append("#FFB6C1")
 randomMapColours.append("#DC143C")
 randomMapColours.append("#FF69B4")
 randomMapColours.append("#000080")

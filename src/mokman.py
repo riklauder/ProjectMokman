@@ -2,7 +2,7 @@
 # Main game loop and core fuctions
 from settings import * # settings and gloval variables for mokman
 # library imports
-import random, math, heapq, itertools, time, collections 
+import random, math, heapq, itertools, time, collections, cProfile
 import numpy as np
 from scipy import linalg
 import pygame as pg
@@ -187,7 +187,7 @@ def main():
             elif e.type == pg.JOYBUTTONDOWN:
                 if e.button == 6:
                         f = open("hiscore.t", "w")
-                        f.write("9999")
+                        f.write(entities.target.hscore)
                         f.close()
                         return False
         CheckInputs()
@@ -212,7 +212,7 @@ def main():
 
         pg.display.update()
         frame_count += 1
-        timedelta = timer.tick(30)
+        timedelta = timer.tick(60)
         timedelta /= 1000
 #//////end main loop----------------------------#
 #/////0---0--end loop------O--O----O----------------#
@@ -439,6 +439,7 @@ class Player(Entity):
         self.chaseTimer = 0
         self.chaseState = False
         self.loseTimer = 0 # delay so that game does not end immediately
+        self.mazetf = getMaze(level)
         #self.particles = Particle((16,16))
 
 
@@ -610,7 +611,8 @@ class Player(Entity):
                     self.chaseState = False
                     self.chaseTimer = 0
                 else:
-                    ghostAttack(self) # ghosts change direction to go after pacman
+                    if self.chaseTimer % 2 == 0:
+                        ghostAttack(self, self.mazetf) # ghosts change direction to go after pacman
 
 
     def spawnRandomGhost(self):

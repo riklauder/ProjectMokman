@@ -1,11 +1,5 @@
 # SRC
 
-# Required
-1. Python 3.8.1 or higher
-2. Pygame 1.9.6
->pip install pygame
-3. WSL - Windows Subsystem for Linux (g++ is usually installed with deafult packages)
-4. Powershell for running batch script files in early project stage
 
 # Source Files
 
@@ -16,10 +10,10 @@ To run:
 
 > python mokman.py
 
-will run with static test random map
+will run game with last generated random maze
 
 
-mapTransform.cpp - transforms final map for pygame and adds Pacman/Ghost spawns.
+mapTransform.cpp - transforms final map for pygame and adds Pacman/Ghost spawns and teleports
 
 >compiled as mapt in dir so can be run seperately from PS
 
@@ -117,3 +111,16 @@ data res and roundrects dir
 
 -walls.py
 >python code that generates random maps from half map - maps are not consistent with desired authentic pacman style.  Was used in prototype phase only
+
+
+# Required dependecies
+1. Python 3.7 or higher
+also install packages if not part of your current distribution:
+>pip install numpy
+>pip install Naked
+
+2. Pygame 1.9.6
+>pip install pygame
+
+3. (optional)WSL - Windows Subsystem for Linux (g++ is installed with deafult Ubuntu LTS packages)
+4. Powershell or BASH for running scripts

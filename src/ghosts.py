@@ -6,6 +6,7 @@ from settings import *
 from mokman import *
 from astartwo import *
 
+
 class Entity(pg.sprite.Sprite):
     def __init__(self, color, pos, *groups):
         super().__init__(*groups)
@@ -135,22 +136,24 @@ def getMaze(level):
     mazet = npmazet.tolist()
     return mazet
 
-def ghostAttack(self):
+def ghostAttack(self, mazet):
     '''
-    args - mokman Player
+    args - mokman Player , mazet is map with walls only as 1 or 0
     Function used to make ghosts agressively pursue the Player
     Uses Astar search currently
     '''
     mokmanPos = self.laycoods
 
-    mazet = getMaze(level)
+    #mazet = getMaze(level)
     #print(mazet)
 
     for g in self.ghosts:
         if g.behave == "chase":
             pos = g.laycoods
-            if mokmanPos[1] - pos[1] < 30:
-                xadj = g.xadj + mokmanPos[0] #update xadj based on ghost personality
+            if abs(mokmanPos[1] - pos[1]) < 30:
+                if g.xadj != 0: #update xadj based on ghost personality
+                    if (pos[0]==mokmanPos[0] or pos[1]==mokmanPos[1]):
+                        break
                 start = [int(pos.y), int(pos.x)]
                 end = [int(mokmanPos.y), int(mokmanPos.x)]
                 pcost = 1

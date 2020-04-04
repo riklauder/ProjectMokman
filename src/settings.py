@@ -33,6 +33,7 @@ SCORE_XOFFSET=14 # pixels from left edge
 SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
 SCORE = 0
 GHOSTINT=200 #interval at which ghosts cycle through states
+#note 200 is equivalent to about 10 seconds
 GHOSTSSCARED=180 #interval for which ghosts stay scared
 
 from pygame.locals import (

@@ -1,9 +1,15 @@
 #! /usr/bin/python
 # Main game loop and core fuctions
-from settings import *
-import random, ctypes, math, heapq, itertools, time, collections, cython
+from settings import * # settings and gloval variables for mokman
+# library imports
+import random, math, heapq, itertools, time, collections 
+import numpy as np
+from scipy import linalg
 import pygame as pg
-import layout, pacmanrules, game, ghosts, roundrects
+from pygame.locals import*
+# mokman module imprts and library from imorts
+import util, layout, pacmanrules, game, ghosts, gamestate
+from util import *
 import pygame.rect as rect
 from pygame.compat import geterror
 from pygame import mixer
@@ -12,44 +18,47 @@ from pygame import *
 import pygame.surface as surface
 from math import sqrt, ceil, floor
 from pacmanrules import PacmanRules, GhostRules
-from util import nearestPoint
-from util import manhattanDistance
 from ghosts import *
 import threading, multiprocessing
 from multiprocessing import Process, Pool, current_process
 from collections import defaultdict
-from roundrects import aa_round_rect
+#from particle import Particle, Emitter, polygon
+from gamestate import GameState
 
 
 file = open("hiscore.t", "r")
 hiscore = file.read()
 file.close()
 
-# Must come before pygame.init()
+# Mixer for sound event - Must come before pygame.init()
 pg.mixer.pre_init(22050, 16, 2, 512)
 pg.mixer.init()
 
-pg.init()
+# pygame initialization globals - defines included in settins.py
+pg.init() # inititates pygame required objects before main loop
 #screen = pg.display.set_mode(SCREEN_SIZE.size)
 clock = pg.time.Clock()
 pg.display.init()
 if DEBUG:
     info = pg.display.Info()
     print(info)
-screen = pg.display.set_mode(DISPLAY, FLAGS, DEPTH)
+screen = pg.display.set_mode(DISPLAY, FLAGS) #sets display object
 pg.display.set_caption("Mokman! Use arrows or Controller Stick to move!")
 screenp = pg.display.get_surface()
 timer = pg.time.Clock()
-global seconds
 seconds = 0
-
 up = down = left = right = running = False
+
+#get maze object whish creates Mokman mazes sprites as well as 
+#initial enemy ghost spawns, teleports, food and powerups
 maplay = 'randomfMap'
 level = layout.getLayout(maplay)
 global levelt
 levelt = level.layoutText
+X_DIM = level.width
+Y_DIM = level.height
 
-
+#get sound resources
 snd_pellet = {0: pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", 
     "pellet1.wav")),1: pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res",
     "sounds", "pellet2.wav"))}
@@ -67,14 +76,21 @@ snd_chomp = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "chomp.wav
 snd_combo = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "combo.wav"))
 snd_wakka = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "wakawakam.wav"))
 snd_shep = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "Sheptone.ogg"))
+snd_theme = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "Theme.wav"))
 snd_wakka.set_volume(.9)
 snd_shep.set_volume(.8)
 
 
 font_name = pg.font.match_font('roboto', bold=True)
 score = SCORE
+gstateobj = GameState
 
+#  CheckInputs - does not work if moved to util moudule so it is included here
 def CheckInputs():
+    '''
+    Check joystick/gamepad inputs
+    returns a valid direction enumerated
+    '''
     if js!=None and js.get_axis(JS_XAXIS)>0.5:
         return DIR_RIGHT
     elif js!=None and js.get_axis(JS_XAXIS)<-0.5:
@@ -83,6 +99,7 @@ def CheckInputs():
         return DIR_DOWN
     elif js!=None and js.get_axis(JS_YAXIS)<-0.5:
         return DIR_UP
+#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
 
 # initialise the joystick
 if pg.joystick.get_count()>0:
@@ -91,18 +108,25 @@ if pg.joystick.get_count()>0:
     js.init()
 else: js=None
 
+
 class Entity(pg.sprite.Sprite):
+    ''''
+    Overiden pygame.sprite.Sprite class useed to create, update and draw sprites
+    '''
     def __init__(self, color, pos, *groups):
         super().__init__(*groups)
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft=pos)
-#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
+        self._layer = 1
 
-#-----------------------------------------------------------------------------#
-#----------O---O-----This is the main game loop-----O--------O----------------#
+
+
+#///------------------------------MAIN-------------------------------------///#
+#----------O---O-----This is the main() game loop-----O--------O--------------#
+#///------------------------------MAIN-------------------------------------///#
 def main():
-    snd_begin.play()
+    snd_theme.play()
     hscore = hiscore
     platforms = pg.sprite.Group()
     foods = pg.sprite.Group()
@@ -114,17 +138,18 @@ def main():
     hscore = hiscore
     player = Player(platforms, (playerX, playerY), foods, teleports, powerups,
         ghosts, hscore)
-    #all_sprites = pg.sprite.Group(platforms, player, ghosts, foods, teleports, powerups)
     level_width  = level.width*TILE_SIZE
     level_height = 999*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width,
         level_height))
     frame_count = 0
-    frame_rate = 30
-    start_time = 90
+    frame_rate = 20
+    start_time = 0
+    pg.display.flip()
 
 
-    # build the level    
+
+    # build the level and spawn ghosts, player, food, powerups, walls(platforms)
     x = y = 0
     for row in levelt:
         for col in row:
@@ -147,13 +172,12 @@ def main():
             if col == 'P':
                 player = Player(platforms, (x, y), foods, teleports, powerups, ghosts, hscore)
                 PinkyGhosts(platforms, (x-TILE_SIZE, y-(27*TILE_SIZE)), ghosts,  entities)
+                InkyGhosts(platforms, (x-TILE_SIZE, y-(27*2*TILE_SIZE)), ghosts,  entities)
             x+=TILE_SIZE
         y+=TILE_SIZE
         x=0
 
-    
-    
-
+    # Main Loop while game running
     while True:
         for e in pg.event.get():
             if e.type == pg.QUIT:
@@ -163,37 +187,40 @@ def main():
             elif e.type == pg.JOYBUTTONDOWN:
                 if e.button == 6:
                         f = open("hiscore.t", "w")
-                        f.write(entities.target.hscore)
+                        f.write("9999")
                         f.close()
                         return False
-
         CheckInputs()
 
         entities.update()
         screen.fill((0, 0, 0))
+        # seconds timer ticks before each draw
         total_seconds = frame_count // frame_rate
         minutes = total_seconds // 60
         seconds = total_seconds % 60
+
         entities.draw(screen)
         draw_text(screen, "Time: {0:02}:{1:02}".format(minutes, seconds), 22, 128, 10)
         draw_text(screen, "Score: " + str(entities.target.score), 24, HALF_WIDTH, 10)
         draw_text(screen, "HISCORE: " + entities.target.hscore, 26, WIN_WIDTH-128, 10)
-
-        # Calculate total seconds
+        # Calculate total seconds n minutes after draw
         total_seconds = start_time - (frame_count // frame_rate)
         if total_seconds < 0:
             total_seconds = 0
-        # Divide by 60 to get total minutes
         minutes = total_seconds // 60
-        # Use modulus (remainder) to get seconds
         seconds = total_seconds % 60
+
         pg.display.update()
         frame_count += 1
-        timedelta = timer.tick(60)
+        timedelta = timer.tick(30)
         timedelta /= 1000
+#//////end main loop----------------------------#
+#/////0---0--end loop------O--O----O----------------#
+
+
 #-------------------------------------------------#
-#--0--0---0--end loop------O--O----O----------------#
-#----core functions----------------------------#
+#----core functions-------------------------------#
+#----included here as they don't work if moved----#
 def draw_text(surf, text, size, x, y):
     font = pg.font.Font(font_name, size)
     text_surface = font.render(text, True, WHITE)
@@ -204,6 +231,9 @@ def draw_text(surf, text, size, x, y):
 def add(x, y):
     return (x[0] + y[0], x[1] + y[1])
 
+def sub(x, y):
+    return (x[0] - y[0], x[1] - y[1])
+
 def getDir(self):
     if (self.vel.x>=1): return DIR_RIGHT
     if (self.vel.x<=-1): return DIR_LEFT
@@ -211,28 +241,15 @@ def getDir(self):
     if (self.vel.y>=1): return DIR_DOWN
     if (self.vel.y == 0 and self.vel.x == 0): return STOPPED
 
-def getlayoutActions(self):
-    x = self.laycoods.x
-    y = self.laycoods.y
-    #if self.currDir == DIR_DOWN or DIR_RIGHT:
-    #    x -= 1
-    #    y -= 1
-    legals = []
-    #check L
-    if not isWall(x-1, y):
-        legals.append(DIR_LEFT)
-    #check R
-    if not isWall(x+1, y):
-        legals.append(DIR_RIGHT)
-    #check D
-    if not isWall(x, y+1):
-        legals.append(DIR_DOWN)
-    #check U
-    if not isWall(x, y-1):
-        legals.append(DIR_UP)
-    
-    return legals
-
+def getD(vec):
+    if abs(vec[1]) >= abs(vec[0]):
+        if (vec[1]>=1): return DIR_LEFT
+        if (vec[1]<=-1): return DIR_RIGHT
+    elif abs(vec[0]) >= abs(vec[1]):
+        if (vec[0]<=-1): return DIR_DOWN
+        if (vec[0]>=1): return DIR_UP
+    if (vec[1] == 0 and vec[0] == 0): return STOPPED
+    #DIR_UP = 0   #DIR_RIGHT = 1 DIR_DOWN = 2 #DIR_LEFT = 3 #STOPPED=4
 
 def teleport(self, teleports):
     for t in teleports:
@@ -242,10 +259,17 @@ def teleport(self, teleports):
             elif self.rect.left < 2*TILE_SIZE:
                 self.rect.left = WIN_WIDTH-TILE_SIZE
 
-def isWall(x, y):
-    if levelt[int(y)][int(x)] == '%':
-        return True
-    else: return False
+def getDirVec(action):
+    dirV = pg.Vector2(0, 0)
+    if action == DIR_UP:
+        dirV.y = -1
+    if action == DIR_DOWN:
+        dirV.y = 1
+    if action == DIR_LEFT:
+        dirV.x = -1
+    if action == DIR_RIGHT:
+        dirV.x = -1
+    return dirV
 
 def getillegalActions(self):
     """
@@ -295,15 +319,12 @@ def legalColl(plts, cpys, xvel, yvel, legal):
             if yvel < 0:
                 cpys.rect.top = p.rect.bottom
                 legal.append(DIR_UP)
-#DIR_UP = 0   #DIR_RIGHT = 1
-#DIR_DOWN = 2 #DIR_LEFT = 3 #STOPPED=4
-
+#DIR_UP = 0   #DIR_RIGHT = 1 DIR_DOWN = 2 #DIR_LEFT = 3 #STOPPED=4
 
 def getObjectPos(level, char ,coord):
     '''
-    returns x or y pos based on 
-    coord: of 'x' or 'y' 
-    x or y * TILE_SIZE
+    returns x or y pos in string based maze based on arg of char var
+    coord: of 'x' or 'y' x or y * TILE_SIZE
     '''
     x = y = 0
     for row in level:
@@ -317,10 +338,9 @@ def getObjectPos(level, char ,coord):
         y+=TILE_SIZE
         x=0
 
-
 def getObjectCoord(self, char):
     '''
-    returns x or y pos based on rect pos
+    returns x or y screen space pos based on pygame rect pos
     char: of 'x' or 'y' for return
     '''
     if char == 'x':
@@ -334,12 +354,12 @@ def getObjectCoord(self, char):
         else:
             return ceil(self.rect.top / TILE_SIZE)
 
-#-----------Main Game Helper Classes-------------#
+#-----------Main Game Loop Classes-------------#
 class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
     def __init__(self, target, world_size):
         super().__init__()
         self.target = target
-        self.cam = pg.Vector2(0, 0)
+        self.cam = pg.Vector2(int(0), int(0))
         self.world_size = world_size
         if self.target:
             self.add(target)
@@ -362,7 +382,7 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
         init_rect = self._init_rect
         for spr in self.sprites():
             rec = spritedict[spr]
-            newrect = surface_blit(spr.image, spr.rect.move(self.cam))
+            newrect = surface_blit(spr.image, spr.rect.move((int(self.cam.x), int(self.cam.y))))
             if rec is init_rect:
                 dirty_append(newrect)
             else:
@@ -374,10 +394,13 @@ class CameraAwareLayeredUpdates(pg.sprite.LayeredUpdates):
             spritedict[spr] = newrect
         return dirty
 
-#--------PPPPPPPLAAAAAYERRRR----------------------------#
+#--------------------PLAAAAAYERRRR----------------------------#
 class Player(Entity):
     '''
-    Player class - initialize with = Player(mapsprite,*(startX, startY))
+    Player class - initialize with player sprite and all other game
+    elements
+    
+    Player(mapsprite,*(startX, startY), food, etc.)
 
     *mapsprite - master sprite object representing game world
 
@@ -386,7 +409,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, hscore, *groups):
+    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, hscore,  *groups):
         super().__init__(Color("#ebef00"), pos)
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -399,16 +422,24 @@ class Player(Entity):
         self.teleports = teleports
         self.powerups = powerups
         self.ghosts = ghosts
-        self.speed = PAC_SPEED
+        self.speed = PAC_SPEED*TURNBOOST
         self.turning = None
         self.change_x=0
         self.change_y=0
         self.ghostLimit=7
         self.ghostCount=0
-        self.score=1
+        self.lose = False
+        self.score = 1
         self.combobegin= False
         self.hscore = hscore
-
+        self.state = 0
+        self.gsobj = gamestate.GameState #gamestate object
+        self.ghostState = 0
+        self.ghostTimer = 0
+        self.chaseTimer = 0
+        self.chaseState = False
+        self.loseTimer = 0 # delay so that game does not end immediately
+        #self.particles = Particle((16,16))
 
 
     def update(self):
@@ -418,44 +449,40 @@ class Player(Entity):
         left = pressed[K_LEFT]
         right = pressed[K_RIGHT]
         joyp = CheckInputs() 
-        #== DIR_UP or DIR_DOWN or DIR_LEFT or DIR_RIGHT:
-        #    joyp = CheckInputs
+        # DIR_UP or DIR_DOWN or DIR_LEFT or DIR_RIGHT:
+        #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
+        # joyp set in main by CheckInputs
         if joyp==DIR_UP:
             up = True
-            #self.dir=joyp
         if joyp==DIR_DOWN:
             down=True
-            #self.dir=joyp
         if joyp==DIR_LEFT:
             left=True
-            #self.dir=joyp
         if joyp==DIR_RIGHT:
             right=True
-            #self.dir=joyp
 
-
+        # update ghostcount live
         self.ghostCount=0
         for gh in self.ghosts:
             self.ghostCount+=1
         
         if self.combobegin > 100:
             snd_shep.play()
-
+        #spawn new random ghost if not all ghosts live on maze
         if self.ghostCount < self.ghostLimit:
             self.spawnRandomGhost()
 
-        self.currDir = getDir(self)
-        if getDir(self) != self.dir:
-            self.isTurning()
+        self.currDir = getDir(self) #update currDir based on actual  
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
-        legals = getlayoutActions(self)
-        if self.stopped == True:
+
+        legals = self.gsobj.getlayoutActions(self, levelt) # gets legal moves - no wall
+        if self.stopped == True: # add stopped to legals if pacman hits wall
             legals.append(STOPPED)
         if self.lastDir != STOPPED and DEBUG == True:
             print("currVselfVLastDir:", self.currDir, self.dir, self.lastDir)
             print("legals, l.x l.y", legals, self.laycoods.x, self.laycoods.y)
-        self.lastDir = self.currDir
+        self.lastDir = self.currDir #updates last Dir for next draw frame
         if self.stopped:
             self.dir = 4
             if self.dir in legals:
@@ -489,6 +516,8 @@ class Player(Entity):
                 self.change_y += self.vel.y
                 self.vel.x = 0
                 self.stopped = False
+
+        #Move the Player
         # increment in x direction
         self.rect.left += int(self.vel.x)
         if self.vel.x != 0:
@@ -501,19 +530,31 @@ class Player(Entity):
             if self.turning and abs(self.vel.y) < PAC_SPEED*TURNBOOST:
                 self.vel.y *= TURNBOOST
             self.collide(0, self.vel.y, self.platforms)
-        #self.foodCollide(self.foods)
-        #self.teleport(self.teleports)
-        #self.powerup(self.powerups)
-        ghostsMove(self.ghosts, self.teleports)
-        score = self.score
         if DEBUG == True:
-            print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)        
-        #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3
-        #STOPPED = 4
-        #if self.score > self.hscore:
-        #    self.hscore = str(self.score)
+            print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)  
+        #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
+
+        #Move the Ghosts
+        self.ghostMokmanCollide()
+        ghostsMove(self.ghosts, self.teleports)
+        #handle ghosts attack search and patterns
+        self.ghostAstar()
+
+        #update score - hiscore - save hiscore if game over
+        score = self.score
+        #print("gTimer, gState, cTime, cState", self.ghostTimer, self.ghostState, self.chaseTimer, self.chaseState)
+        if self.score > int(self.hscore):
+            self.hscore = str(self.score)
+        if self.lose == True:
+            self.loseTimer += 1
+            if self.loseTimer > 10:
+                print("GAME OVER! TRY AGAIN! How far can you go?")
+                print("What's your hiscore?")
+                print("Mokman must stay away from enemies unless they are dark Blue!")
+                pg.event.post(pg.event.Event(QUIT))
 
 
+    #collide function for Mokman main player
     def collide(self, xvel, yvel, platforms):
         for p in platforms:
             if pg.sprite.collide_rect(self, p):
@@ -542,11 +583,34 @@ class Player(Entity):
                     self.rect.top = p.rect.bottom
                     if curDir == 0:
                         self.stopped = True
-        #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  #DIR_LEFT = 3
-        #STOPPED = 4
+        #DIR_UP = 0  #DIR_RIGHT = 1  #DIR_DOWN = 2  
+        # #DIR_LEFT = 3     #STOPPED = 4
         self.foodCollide()
         teleport(self, self.teleports)
         self.powerup()
+
+
+    def ghostAstar(self):
+        if self.ghostState == 3:
+            self.chaseState = False
+            self.chaseTimer = 0
+            tb = sTimer(self.ghosts, self.ghostTimer)
+            if tb:
+                self.ghostState = 0
+                self.ghostTimer = 0
+            else: 
+                self.ghostTimer += 1
+        if self.ghostState == 0:
+            self.chaseTimer += 1
+            if self.chaseState == False:
+                if self.chaseTimer > GHOSTINT:
+                    self.chaseState = True
+            if self.chaseState == True:
+                if self.chaseTimer > GHOSTINT*2:
+                    self.chaseState = False
+                    self.chaseTimer = 0
+                else:
+                    ghostAttack(self) # ghosts change direction to go after pacman
 
 
     def spawnRandomGhost(self):
@@ -567,16 +631,31 @@ class Player(Entity):
         for f in self.foods:
             if pg.sprite.collide_rect(self, f):
                 f.kill()
-                self.score += 1
+                self.score += 5
                 snd_wakka.play()
                 #snd_pellet[self.score%2].play()
 
+    def ghostMokmanCollide(self):
+        for g in self.ghosts:
+            if pg.sprite.collide_rect(self, g):
+                if self.ghostState == 0:
+                    self.lose = True
+                    self.speed = 1
+                    snd_die.play()
+                if self.ghostState == 3:
+                    self.score += 200
+                    snd_eatgh.play()
+                    gname = g.gname
+                    respawnGhost(g, self.rect.left, self.rect.top, gname)
 
     def powerup(self):
         for p in self.powerups:
             if pg.sprite.collide_rect(self, p):
                 p.kill()
+                gstate = 3
                 self.score += 100
+                ghosts.chgGhostState(self.ghosts, gstate) #ghosts flag
+                self.ghostState = gstate #player flag
                 snd_powerpellet.play()
 
     def a(self):
@@ -593,18 +672,18 @@ class Player(Entity):
         else:
             return 'x'
 
-
+#pick one of pre-selected map colors
 randomMapColours = []
-randomMapColours.append("#800080")
-randomMapColours.append("#0000FF")
+randomMapColours.append("#8A2BE2")
+randomMapColours.append("#FF69B4")
 randomMapColours.append("#FF00FF")
 randomMapColours.append("#228B22")
 randomMapColours.append("#191970")
 randomMapColours.append("#7FFFD4")
-randomMapColours.append("#FF1493")
+randomMapColours.append("#FFB6C1")
 randomMapColours.append("#DC143C")
 randomMapColours.append("#FF69B4")
-randomMapColours.append("#000080")
+randomMapColours.append("#008080")
 randomMapColours.append("#B22222")
 randomMapColours.append("#DA70D6")
 pickint = random.randint(0, 11)

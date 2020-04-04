@@ -77,7 +77,7 @@ class GhostRules:
     """
     These functions dictate how ghosts interact with their environment.
     """
-    GHOST_SPEED=1.0
+    GHOST_SPEED=3
 
     @staticmethod
     def getLegalActions(state, ghostIndex):

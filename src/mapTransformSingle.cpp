@@ -12,6 +12,8 @@
 #include <limits>
 #include <iterator>
 
+//this code transforms a single small map for Mokman
+
 void getData(std::vector<std::string>& data, std::string fname) {
 	std::string s1;
 	int rows=31;
@@ -51,16 +53,16 @@ std::string filename(int n){
 
 int main(){
 	std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
-	for (int i=0; i <= 9; i++){
+	for (int i=0; i <= 1; i++){
 		std::vector<std::string> map;
 		std::string file = filename(i);
 		getData(map, file);
 
-		if (i == 8){
+		if (i == 0){
 			map[16][18]='W';
 			map[16][9]='W';
 		}
-		if (i == 9){
+		if (i == 1){
 			map[22][14]='P';
 			map[10][18]='B';//one ghost always spawn in house
 			/*2 ghosts spawn on north side of map*/

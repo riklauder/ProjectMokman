@@ -1,16 +1,24 @@
 #! /usr/bin/python
 
-import mokman
+import os, sys, random, settings, util, gamestate
 from settings import *
+#from mokman import Entity
 from mokman import *
-from mokman import Entity
-from roundrects import aa_round_rect
 from astartwo import *
 
+class Entity(pg.sprite.Sprite):
+    def __init__(self, color, pos, *groups):
+        super().__init__(*groups)
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=pos)
+        self._layer = 1
+#DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
 
 def scaredTimer():
-    return int(160)
+    return int(GHOSTSSCARED)
 
+#function called during loop to move ghosts to updated pos and dir
 def ghostsMove(ghosts, teleports):
     for g in ghosts:
         #increment in x direction
@@ -55,7 +63,6 @@ def respawnGhost(self, mx, my, gname):
             posx = 18
         self.rect.left = mx
         self.rect.top = my-(27*TILE_SIZE)
-
 
 
 def ghostcollide(self, xvel, yvel, teleports):
@@ -108,19 +115,10 @@ def getlayoutActions(self):
     
     return legals
 
-
-def ghostAttack(self):
-    '''
-    args - mokman Player
-    Function used to make ghosts agressively pursue the Player
-    Uses Astar search currently
-    '''
-    mokmanPos = self.laycoods
-
+def getMaze(level):
     mazet = [[0] * int(X_DIM+1)] * int(Y_DIM+1)
     maze = level.layoutText
-    #print(mazet)
-    #y = x = 0
+
     npmaze = np.array(maze)
     npmazet=np.array(mazet)
     xi=0
@@ -135,50 +133,71 @@ def ghostAttack(self):
         yi = 0
 
     mazet = npmazet.tolist()
+    return mazet
 
+def ghostAttack(self):
+    '''
+    args - mokman Player
+    Function used to make ghosts agressively pursue the Player
+    Uses Astar search currently
+    '''
+    mokmanPos = self.laycoods
+
+    mazet = getMaze(level)
     #print(mazet)
 
     for g in self.ghosts:
         if g.behave == "chase":
             pos = g.laycoods
-            legal = getlayoutActions(g)
-            legalActions = []
-            for l in legal:
-                legalActions.append(getDirVec(l))
-            start = [int(pos.y), int(pos.x)]
-            end = [int(mokmanPos.y), int(mokmanPos.x)]
-            pcost = 1
-            #print("st, en", start, end)
-            path = search(mazet, pcost, start, end)
-            #print('\n'.join([''.join(["{:" ">3d}".format(item) for item in row]) 
-                #for row in path]))
-            #print("")
-            nppath = np.array(path)
-            nextpx = np.argmax(nppath, axis=0)
-            nextpy = np.argmax(nppath, axis=1)
-            nextpos = np.unravel_index(np.argmax(nppath, axis=None), nppath.shape)
-            pos = (pos[1], pos[0])
-            nextpd = sub(pos, nextpos)
-            nextdir = getD(nextpd)
-            g.dir = nextdir
+            if mokmanPos[1] - pos[1] < 30:
+                xadj = g.xadj + mokmanPos[0] #update xadj based on ghost personality
+                start = [int(pos.y), int(pos.x)]
+                end = [int(mokmanPos.y), int(mokmanPos.x)]
+                pcost = 1
+                path = search(mazet, pcost, start, end)
+                if path != None:
+                    nppath = np.array(path)
+                    nextpx = np.argmax(nppath, axis=0)
+                    nextpy = np.argmax(nppath, axis=1)
+                    nextpos = np.unravel_index(np.argmax(nppath, axis=None), nppath.shape)
 
-            #print("gname, ndir", g.gname, nextdir)
-            #gstate = gamestate.GameState
-            #opts = util.PriorityQueue()
-            #opts.push((legal, list(), 0, 0), 0)
-            #ationVectors = [getDirVec(a) for a in legalActions]
-            #bestActions, lowestCost = list(), 999999
-            #if ationVectors:
-            #    newPositions = [(pos[0]+a[0], pos[1]+a[1]) for a in ationVectors]
-            #    adjXpos = g.xadj
-            #    dists2Mokman = [manhattanDistance(pos, (mokmanPos.x, -mokmanPos.y)) for pos in newPositions]
-            #    bestDir = min(dists2Mokman)
-            #    bestActions = [action for action, distance in zip(legalActions, dists2Mokman ) if distance == bestDir]
-            #    choice = bestActions[0]
-            #    g.dir = getD(choice)
-#                #print("best", bestActions)
-#                #print("ghostChoice", choice)
-#                #print("ghost: attkDir", g.gname, getD(bestActions[0]))
+                    b = np.argwhere(nppath==1)
+                    if b.size != 0:
+                        bpos = (b.max(), b.min())
+                        pos = (pos[1], pos[0])
+                        nextpd = sub(pos, bpos)
+                        nextdir = getD(nextpd)
+                        if nextdir != STOPPED:
+                            g.dir = nextdir
+        if g.behave == "sees":
+            pos = g.laycoods
+            seen = False
+            if (abs(mokmanPos[0]-pos[0]) <= g.xadj ):
+                seen = True
+            if (pos[0]==mokmanPos[0] or pos[1]==mokmanPos[1]):
+                seen = True
+            if seen:
+                continue
+                start = [int(pos.y), int(pos.x)]
+                end = [int(mokmanPos.y), int(mokmanPos.x)]
+                pcost = 1
+                path = search(mazet, pcost, start, end)
+                if path != None:
+                    nppath = np.array(path)
+                    nextpx = np.argmax(nppath, axis=0)
+                    nextpy = np.argmax(nppath, axis=1)
+                    nextpos = np.unravel_index(np.argmax(nppath, axis=None), nppath.shape)
+
+                    b = np.argwhere(nppath==1)
+                    if b.size != 0:
+                        bpos = (b.max(), b.min())
+                        pos = (pos[1], pos[0])
+                        nextpd = sub(pos, bpos)
+                        nextdir = getD(nextpd)
+                        if nextdir != STOPPED:
+                            g.dir = nextdir
+
+
 
 class BlinkyGhosts(Entity):
     def __init__(self, platforms, pos, *groups):
@@ -194,7 +213,7 @@ class BlinkyGhosts(Entity):
         self.turning = None
         self.ghostState=0
         self.gname = "Blinky"
-        self.xadj=0
+        self.xadj=0 # ghosts personality adjust attack vector
         self.behave = "chase"
 
     def update(self):
@@ -246,7 +265,7 @@ class PinkyGhosts(Entity):
         self.turning = None
         self.ghostState=0
         self.gname = "Pinky"
-        self.xadj=2
+        self.xadj=4 # ghosts personality adjust attack vector
         self.behave = "chase"
 
     def update(self):
@@ -293,11 +312,11 @@ class InkyGhosts(Entity):
         self.currDir = 3
         self.lastDir = 4
         self.platforms = platforms
-        self.speed = TURNBOOST
+        self.speed = GHOST_SPEED # moves slower
         self.turning = None
         self.ghostState=0
         self.gname = "Inky"
-        self.xadj=-4
+        self.xadj = -2 # ghosts personality adjust attack vector
         self.behave = "chase"
 
     def update(self):
@@ -347,9 +366,9 @@ class ClydeGhosts(Entity):
         self.speed = GHOST_SPEED*TURNBOOST
         self.turning = None
         self.ghostState=0
-        self.xadj = 4
+        self.xadj = 5 # Clyde only chases when he is on same level or within 5
         self.gname = "Clyde"
-        self.behave = "chase"
+        self.behave = "sees"
         
 
     def update(self):
@@ -402,6 +421,7 @@ class SlyderGhosts(Entity):
         self.ghostState=0
         self.gname = "Slyder"
         self.behave = "static"
+        self.xadj=0 # ghosts personality adjust attack vector
 
     def update(self):
         self.currDir = getDir(self)
@@ -457,6 +477,7 @@ class WelchGhosts(Entity):
         self.ghostState=0
         self.gname = "Welch"
         self.behave = "static"
+        self.xadj=0 # ghosts personality adjust attack vector
 
     def update(self):
         self.currDir = getDir(self)

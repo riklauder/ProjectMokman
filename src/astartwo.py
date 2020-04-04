@@ -1,5 +1,6 @@
 #Currently in use by GhostAgents
 import numpy as np
+import heapq
 
 class Node:
     """

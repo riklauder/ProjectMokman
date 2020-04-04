@@ -8,6 +8,7 @@ import sys
 import ctypes
 from io import StringIO, TextIOBase
 from multiprocessing import Process, current_process
+#from particle import Emitter, smoke_machine, rain_machine, wind_machine
 
 OLD_STDOUT = sys.stdout
 OLD_STDERR = sys.stderr

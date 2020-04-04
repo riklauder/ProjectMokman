@@ -1,12 +1,14 @@
 #State Machine for Mokmak
 # A State has an operation, and can be moved
 # into the next State given an Input:
+
+import settings
 from settings import *
 import multiprocessing
 from multiprocessing import Process, current_process
 from util import nearestPoint
 from util import manhattanDistance
-import pacmanrules, ghosts, mokman, game
+import pacmanrules, game
 
 
 class GameState:

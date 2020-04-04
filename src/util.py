@@ -1,25 +1,23 @@
 # util.py
 # -------
-# Licensing Information:  You are free to use or extend these projects for
-# educational purposes provided that (1) you do not distribute or publish
-# solutions, (2) you retain this notice, and (3) you provide clear
-# attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
-# Attribution Information: The Pacman AI projects were developed at UC Berkeley.
-# The core projects and autograders were primarily created by John DeNero
-# (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# Student side autograding was added by Brad Miller, Nick Hay, and
-# Pieter Abbeel (pabbeel@cs.berkeley.edu).
+# collection of global functions or objects used by other 
+# objeccts throughout Mokman Project - not all are used in final project
 
-
-import sys
-import inspect
+import sys, settings
+import inspect, math
 import heapq, random
 from io import StringIO
 import time, threading
 import multiprocessing
-# from io import StringIO
+#import scipy
+import numpy as np
 
+# ------- game constants ----------------------
+GRAD = math.pi / 180 # 2 * pi / 360   # math module needs Radiant instead of Grad
+# ----------- functions -----------
+
+def magnitude(vector):
+    return math.sqrt((vector[0] * vector[0]) + (vector[1] * vector[1]))
 
 class FixedRandom:
     def __init__(self):
@@ -117,7 +115,7 @@ class FixedRandom:
         self.random.setstate(fixedState)
 
 """
- Data structures useful for implementing SearchAgents
+Data structures useful for implementing SearchAgents
 """
 
 class Stack:
@@ -148,8 +146,8 @@ class Queue:
 
     def pop(self):
         """
-          Dequeue the earliest enqueued item still in the queue. This
-          operation removes the item from the queue.
+        Dequeue the earliest enqueued item still in the queue. This
+        operation removes the item from the queue.
         """
         return self.list.pop()
 
@@ -159,22 +157,19 @@ class Queue:
 
 class PriorityQueue:
     """
-      Implements a priority queue data structure. Each inserted item
-      has a priority associated with it and the client is usually interested
-      in quick retrieval of the lowest-priority item in the queue. This
-      data structure allows O(1) access to the lowest-priority item.
-
-      Note that this PriorityQueue does not allow you to change the priority
-      of an item.  However, you may insert the same item multiple times with
-      different priorities.
+    Implements a priority queue data structure. Each inserted item
+    has a priority associated with it and the client is usually interested
+    in quick retrieval of the lowest-priority item in the queue. This
+    data structure allows O(1) access to the lowest-priority item.
+    Note that this PriorityQueue does not allow you to change the priority
+    of an item.  However, you may insert the same item multiple times with
+    different priorities.
     """
     def  __init__(self):
         self.heap = []
         self.count = 0
 
     def push(self, item, priority):
-        # FIXME: restored old behaviour to check against old results better
-        # FIXED: restored to stable behaviour
         entry = (priority, self.count, item)
         # entry = (priority, item)
         heapq.heappush(self.heap, entry)
@@ -209,10 +204,343 @@ def manhattanDistance( xy1, xy2 ):
     "Returns the Manhattan distance between points xy1 and xy2"
     return abs( xy1[0] - xy2[0] ) + abs( xy1[1] - xy2[1] )
 
-"""
-  Data structures and functions useful for various course projects
 
-  The search project should not need anything below this line.
+def normalize(vectorOrCounter):
+    """
+    normalize a vector or counter by dividing each value by the sum of all values
+    """
+    normalizedCounter = Counter()
+    if type(vectorOrCounter) == type(normalizedCounter):
+        counter = vectorOrCounter
+        total = float(counter.totalCount())
+        if total == 0: return counter
+        for key in counter.keys():
+            value = counter[key]
+            normalizedCounter[key] = value / total
+        return normalizedCounter
+    else:
+        vector = vectorOrCounter
+        s = float(sum(vector))
+        if s == 0: return vector
+        return [el / s for el in vector]
+
+def nSample(distribution, values, n):
+    if sum(distribution) != 1:
+        distribution = normalize(distribution)
+    rand = [random.random() for i in range(n)]
+    rand.sort()
+    samples = []
+    samplePos, distPos, cdf = 0,0, distribution[0]
+    while samplePos < n:
+        if rand[samplePos] < cdf:
+            samplePos += 1
+            samples.append(values[distPos])
+        else:
+            distPos += 1
+            cdf += distribution[distPos]
+    return samples
+
+def sample(distribution, values = None):
+    if type(distribution) == Counter:
+        items = sorted(distribution.items())
+        distribution = [i[1] for i in items]
+        values = [i[0] for i in items]
+    if sum(distribution) != 1:
+        distribution = normalize(distribution)
+    choice = random.random()
+    i, total= 0, distribution[0]
+    while choice > total:
+        i += 1
+        total += distribution[i]
+    return values[i]
+
+def sampleFromCounter(ctr):
+    items = sorted(ctr.items())
+    return sample([v for k,v in items], [k for k,v in items])
+
+def getProbability(value, distribution, values):
+    """
+      Gives the probability of a value under a discrete distribution
+      defined by (distributions, values).
+    """
+    total = 0.0
+    for prob, val in zip(distribution, values):
+        if val == value:
+            total += prob
+    return total
+
+def flipCoin( p ):
+    r = random.random()
+    return r < p
+
+def chooseFromDistribution( distribution ):
+    "Takes either a counter or a list of (prob, key) pairs and samples"
+    if type(distribution) == dict or type(distribution) == Counter:
+        return sample(distribution)
+    r = random.random()
+    base = 0.0
+    for prob, element in distribution:
+        base += prob
+        if r <= base: return element
+
+def nearestPoint( pos ):
+    """
+    Finds the nearest grid point to a position (discretizes).
+    """
+    ( current_row, current_col ) = pos
+
+    grid_row = int( current_row + 0.5 )
+    grid_col = int( current_col + 0.5 )
+    return ( grid_row, grid_col )
+
+def sign( x ):
+    """
+    Returns 1 or -1 depending on the sign of x
+    """
+    if( x >= 0 ):
+        return 1
+    else:
+        return -1
+
+def arrayInvert(array):
+    """
+    Inverts a matrix stored as a list of lists.
+    """
+    result = [[] for i in array]
+    for outer in array:
+        for inner in range(len(outer)):
+            result[inner].append(outer[inner])
+    return result
+
+def matrixAsList( matrix, value = True ):
+    """
+    Turns a matrix into a list of coordinates matching the specified value
+    """
+    rows, cols = len( matrix ), len( matrix[0] )
+    cells = []
+    for row in range( rows ):
+        for col in range( cols ):
+            if matrix[row][col] == value:
+                cells.append( ( row, col ) )
+    return cells
+
+def lookup(name, namespace):
+    """
+    Get a method or class from any imported module from its name.
+    Usage: lookup(functionName, globals())
+    """
+    dots = name.count('.')
+    if dots > 0:
+        moduleName, objName = '.'.join(name.split('.')[:-1]), name.split('.')[-1]
+        module = __import__(moduleName)
+        return getattr(module, objName)
+    else:
+        modules = [obj for obj in namespace.values() if str(type(obj)) == "<type 'module'>"]
+        options = [getattr(module, name) for module in modules if name in dir(module)]
+        options += [obj[1] for obj in namespace.items() if obj[0] == name ]
+        if len(options) == 1: return options[0]
+        if len(options) > 1: raise Exception('Name conflict for %s')
+        raise Exception('%s not found as a method or class' % name)
+
+def pause():
+    """
+    Pauses the output stream awaiting user feedback.
+    """
+    print("<Press enter/return to continue>")
+    input()
+
+
+## code to handle timeouts
+#
+# NOTE: TimeoutFuncton is NOT reentrant.  Later timeouts will silently
+# disable earlier timeouts.  Could be solved by maintaining a global list
+# of active time outs.  Currently, questions which have test cases calling
+# this have all student code so wrapped.
+#
+import signal, os, sys
+import time
+class TimeoutFunctionException(Exception):
+    """Exception to raise on a timeout"""
+    pass
+
+
+class TimeoutFunction:
+    def __init__(self, function, timeout):
+        self.timeout = timeout
+        self.function = function
+
+    def handle_timeout(self, signum, frame):
+        raise TimeoutFunctionException()
+
+    def __call__(self, *args, **keyArgs):
+        # If we have SIGALRM signal, use it to cause an exception if and
+        # when this function runs too long.  Otherwise check the time taken
+        # after the method has returned, and throw an exception then.
+        if hasattr(signal, 'SIGALRM'):
+            old = signal.signal(signal.SIGINT, self.handle_timeout)
+            signal.signal(signal.SIGTERM, self.handle_timeout)
+            try:
+                result = self.function(*args, **keyArgs)
+            finally:
+                signal.signal(signal.SIG_IGN, old)
+        else:
+            startTime = time.time()
+            result = self.function(*args, **keyArgs)
+            timeElapsed = time.time() - startTime
+            if timeElapsed >= self.timeout:
+                self.handle_timeout(None, None)
+        return result
+
+
+
+_ORIGINAL_STDOUT = None
+_ORIGINAL_STDERR = None
+_MUTED = False
+
+class WritableNull:
+    def write(self, string):
+        pass
+
+def mutePrint():
+    global _ORIGINAL_STDOUT, _ORIGINAL_STDERR, _MUTED
+    if _MUTED:
+        return
+    _MUTED = True
+
+    _ORIGINAL_STDOUT = sys.stdout
+    #_ORIGINAL_STDERR = sys.stderr
+    sys.stdout = WritableNull()
+    #sys.stderr = WritableNull()
+
+def unmutePrint():
+    global _ORIGINAL_STDOUT, _ORIGINAL_STDERR, _MUTED
+    if not _MUTED:
+        return
+    _MUTED = False
+
+    sys.stdout = _ORIGINAL_STDOUT
+    #sys.stderr = _ORIGINAL_STDERR
+
+class uNode():
+    ROOT = 0
+    BRANCH = 1
+    LEAF = 2
+    minsize = 1   # Set by QuadTree
+    #_______________________________________________________
+    # In the case of a root node "parent" will be None. The
+    # "rect" lists the minx,minz,maxx,maxz of the rectangle
+    # represented by the node.
+    def __init__(self, parent, rect):
+        self.parent = parent
+        self.children = [None,None,None,None]
+        if parent == None:
+            self.depth = 0
+        else:
+            self.depth = parent.depth + 1
+        self.rect = rect
+        x0,z0,x1,z1 = rect
+        if self.parent == None:
+            self.type = uNode.ROOT
+        elif (x1 - x0) <= uNode.minsize:
+            self.type = uNode.LEAF
+        else:
+            self.type = uNode.BRANCH
+    #_______________________________________________________
+    # Recursively subdivides a rectangle. Division occurs 
+    # ONLY if the rectangle spans a "feature of interest".
+    def subdivide(self):
+        if self.type == uNode.LEAF:
+            return
+        x0,z0,x1,z1 = self.rect
+        h = (x1 - x0)/2
+        rects = []
+        rects.append( (x0, z0, x0 + h, z0 + h) )
+        rects.append( (x0, z0 + h, x0 + h, z1) )
+        rects.append( (x0 + h, z0 + h, x1, z1) )
+        rects.append( (x0 + h, z0, x1, z0 + h) )
+        for n in range(len(rects)):
+            span = self.spans_feature(rects[n])
+            if span == True:
+                self.children[n] = self.getinstance(rects[n])
+                self.children[n].subdivide() # << recursion
+    #_______________________________________________________
+    # A utility proc that returns True if the coordinates of
+    # a point are within the bounding box of the node.
+    def contains(self, x, z):
+        x0,z0,x1,z1 = self.rect
+        if x >= x0 and x <= x1 and z >= z0 and z <= z1:
+            return True
+        return False
+    #_______________________________________________________
+    # Sub-classes must override these two methods.
+    def getinstance(self,rect):
+        return uNode(self,rect)            
+    def spans_feature(self, rect):
+        return False
+  
+#===========================================================            
+class QuadTree():
+    maxdepth = 1 # the "depth" of the tree
+    leaves = []
+    allnodes = []
+    #_______________________________________________________
+    def __init__(self, rootnode, minrect):
+        uNode.minsize = minrect
+        rootnode.subdivide() # constructs the network of nodes
+        self.prune(rootnode)
+        self.traverse(rootnode)
+    #_______________________________________________________
+    # Sets children of 'node' to None if they do not have any
+    # LEAF nodes.        
+    def prune(self, node):
+        if node.type == uNode.LEAF:
+            return 1
+        leafcount = 0
+        removals = []
+        for child in node.children:
+            if child != None:
+                leafcount += self.prune(child)
+                if leafcount == 0:
+                    removals.append(child)
+        for item in removals:
+            n = node.children.index(item)
+            node.children[n] = None        
+        return leafcount
+    #_______________________________________________________
+    # Appends all nodes to a "generic" list, but only LEAF 
+    # nodes are appended to the list of leaves.
+    def traverse(self, node):
+        QuadTree.allnodes.append(node)
+        if node.type == uNode.LEAF:
+            QuadTree.leaves.append(node)
+            if node.depth > QuadTree.maxdepth:
+                QuadTree.maxdepth = node.depth
+        for child in node.children:
+            if child != None:
+                self.traverse(child) # << recursion
+
+def minimize_mask(bbox, mask, mini_shape):
+    """Resize masks to a smaller version to cut memory load.
+    Mini-masks can then resized back to image scale using expand_masks()
+
+    See inspect_data.ipynb notebook for more details.
+    """
+    mini_mask = np.zeros(mini_shape + (mask.shape[-1],), dtype=bool)
+    for i in range(mask.shape[-1]):
+        m = mask[:, :, i]
+        y1, x1, y2, x2 = bbox[i][:4]
+        m = m[y1:y2, x1:x2]
+        if len(np.unique(m)) > 0:
+            m = scipy.misc.imresize(m.astype(float), mini_shape, interp='bilinear')
+        else:
+            m = np.zeros(mini_shape)
+            m[0] = 128
+        mini_mask[:, :, i] = np.where(m >= 128, 1, 0)
+    return mini_mask
+
+"""
+Data structures and functions useful for various course projects
+
 """
 
 def stateNameToCoords(name):
@@ -441,221 +769,3 @@ def raiseNotDefined():
 
     print("*** Method not implemented: %s at line %s of %s" % (method, line, fileName))
     sys.exit(1)
-
-def normalize(vectorOrCounter):
-    """
-    normalize a vector or counter by dividing each value by the sum of all values
-    """
-    normalizedCounter = Counter()
-    if type(vectorOrCounter) == type(normalizedCounter):
-        counter = vectorOrCounter
-        total = float(counter.totalCount())
-        if total == 0: return counter
-        for key in counter.keys():
-            value = counter[key]
-            normalizedCounter[key] = value / total
-        return normalizedCounter
-    else:
-        vector = vectorOrCounter
-        s = float(sum(vector))
-        if s == 0: return vector
-        return [el / s for el in vector]
-
-def nSample(distribution, values, n):
-    if sum(distribution) != 1:
-        distribution = normalize(distribution)
-    rand = [random.random() for i in range(n)]
-    rand.sort()
-    samples = []
-    samplePos, distPos, cdf = 0,0, distribution[0]
-    while samplePos < n:
-        if rand[samplePos] < cdf:
-            samplePos += 1
-            samples.append(values[distPos])
-        else:
-            distPos += 1
-            cdf += distribution[distPos]
-    return samples
-
-def sample(distribution, values = None):
-    if type(distribution) == Counter:
-        items = sorted(distribution.items())
-        distribution = [i[1] for i in items]
-        values = [i[0] for i in items]
-    if sum(distribution) != 1:
-        distribution = normalize(distribution)
-    choice = random.random()
-    i, total= 0, distribution[0]
-    while choice > total:
-        i += 1
-        total += distribution[i]
-    return values[i]
-
-def sampleFromCounter(ctr):
-    items = sorted(ctr.items())
-    return sample([v for k,v in items], [k for k,v in items])
-
-def getProbability(value, distribution, values):
-    """
-      Gives the probability of a value under a discrete distribution
-      defined by (distributions, values).
-    """
-    total = 0.0
-    for prob, val in zip(distribution, values):
-        if val == value:
-            total += prob
-    return total
-
-def flipCoin( p ):
-    r = random.random()
-    return r < p
-
-def chooseFromDistribution( distribution ):
-    "Takes either a counter or a list of (prob, key) pairs and samples"
-    if type(distribution) == dict or type(distribution) == Counter:
-        return sample(distribution)
-    r = random.random()
-    base = 0.0
-    for prob, element in distribution:
-        base += prob
-        if r <= base: return element
-
-def nearestPoint( pos ):
-    """
-    Finds the nearest grid point to a position (discretizes).
-    """
-    ( current_row, current_col ) = pos
-
-    grid_row = int( current_row + 0.5 )
-    grid_col = int( current_col + 0.5 )
-    return ( grid_row, grid_col )
-
-def sign( x ):
-    """
-    Returns 1 or -1 depending on the sign of x
-    """
-    if( x >= 0 ):
-        return 1
-    else:
-        return -1
-
-def arrayInvert(array):
-    """
-    Inverts a matrix stored as a list of lists.
-    """
-    result = [[] for i in array]
-    for outer in array:
-        for inner in range(len(outer)):
-            result[inner].append(outer[inner])
-    return result
-
-def matrixAsList( matrix, value = True ):
-    """
-    Turns a matrix into a list of coordinates matching the specified value
-    """
-    rows, cols = len( matrix ), len( matrix[0] )
-    cells = []
-    for row in range( rows ):
-        for col in range( cols ):
-            if matrix[row][col] == value:
-                cells.append( ( row, col ) )
-    return cells
-
-def lookup(name, namespace):
-    """
-    Get a method or class from any imported module from its name.
-    Usage: lookup(functionName, globals())
-    """
-    dots = name.count('.')
-    if dots > 0:
-        moduleName, objName = '.'.join(name.split('.')[:-1]), name.split('.')[-1]
-        module = __import__(moduleName)
-        return getattr(module, objName)
-    else:
-        modules = [obj for obj in namespace.values() if str(type(obj)) == "<type 'module'>"]
-        options = [getattr(module, name) for module in modules if name in dir(module)]
-        options += [obj[1] for obj in namespace.items() if obj[0] == name ]
-        if len(options) == 1: return options[0]
-        if len(options) > 1: raise Exception('Name conflict for %s')
-        raise Exception('%s not found as a method or class' % name)
-
-def pause():
-    """
-    Pauses the output stream awaiting user feedback.
-    """
-    print("<Press enter/return to continue>")
-    input()
-
-
-## code to handle timeouts
-#
-# FIXME
-# NOTE: TimeoutFuncton is NOT reentrant.  Later timeouts will silently
-# disable earlier timeouts.  Could be solved by maintaining a global list
-# of active time outs.  Currently, questions which have test cases calling
-# this have all student code so wrapped.
-#
-import signal, os, sys
-import time
-class TimeoutFunctionException(Exception):
-    """Exception to raise on a timeout"""
-    pass
-
-
-class TimeoutFunction:
-    def __init__(self, function, timeout):
-        self.timeout = timeout
-        self.function = function
-
-    def handle_timeout(self, signum, frame):
-        raise TimeoutFunctionException()
-
-    def __call__(self, *args, **keyArgs):
-        # If we have SIGALRM signal, use it to cause an exception if and
-        # when this function runs too long.  Otherwise check the time taken
-        # after the method has returned, and throw an exception then.
-        if hasattr(signal, 'SIGALRM'):
-            old = signal.signal(signal.SIGINT, self.handle_timeout)
-            signal.signal(signal.SIGTERM, self.handle_timeout)
-            try:
-                result = self.function(*args, **keyArgs)
-            finally:
-                signal.signal(signal.SIG_IGN, old)
-        else:
-            startTime = time.time()
-            result = self.function(*args, **keyArgs)
-            timeElapsed = time.time() - startTime
-            if timeElapsed >= self.timeout:
-                self.handle_timeout(None, None)
-        return result
-
-
-
-_ORIGINAL_STDOUT = None
-_ORIGINAL_STDERR = None
-_MUTED = False
-
-class WritableNull:
-    def write(self, string):
-        pass
-
-def mutePrint():
-    global _ORIGINAL_STDOUT, _ORIGINAL_STDERR, _MUTED
-    if _MUTED:
-        return
-    _MUTED = True
-
-    _ORIGINAL_STDOUT = sys.stdout
-    #_ORIGINAL_STDERR = sys.stderr
-    sys.stdout = WritableNull()
-    #sys.stderr = WritableNull()
-
-def unmutePrint():
-    global _ORIGINAL_STDOUT, _ORIGINAL_STDERR, _MUTED
-    if not _MUTED:
-        return
-    _MUTED = False
-
-    sys.stdout = _ORIGINAL_STDOUT
-    #sys.stderr = _ORIGINAL_STDERR
-

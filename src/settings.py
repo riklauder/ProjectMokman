@@ -8,15 +8,15 @@ from pygame.locals import *
 DEBUG= False
 TRUE = True
 FALSE = False
-WIN_WIDTH = 860
-WIN_HEIGHT = 800
+WIN_WIDTH = 648
+WIN_HEIGHT = 600
 HALF_WIDTH = int(WIN_WIDTH / 2)
 HALF_HEIGHT = int(WIN_HEIGHT / 2)
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
-DEPTH = 32
-#FLAGS = 0
+#DEPTH = 32 used to set depth in pygame - used to test 32 or 64 bit
+FLAGS = 1
 SCREEN_SIZE = pg.Rect((0, 0, WIN_WIDTH, WIN_HEIGHT))
-TILE_SIZE = 32
+TILE_SIZE = 24
 GRAVITY = pg.Vector2((0, 0))
 WALL_RADIUS = 16
 WALL_WIDTH = 3
@@ -32,6 +32,8 @@ TURNBOOST = 2
 SCORE_XOFFSET=14 # pixels from left edge
 SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
 SCORE = 0
+GHOSTINT=200 #interval at which ghosts cycle through states
+GHOSTSSCARED=180 #interval for which ghosts stay scared
 
 from pygame.locals import (
     K_UP,
@@ -61,7 +63,8 @@ RED = "#FF0000"
 LIGHTPINK = (255, 182, 193)
 ORANGE = "#FFA500"
 PURPLE = "#EE82EE"
-FLAGS = pg.DOUBLEBUF | pg.HWACCEL
+FLAGS = pg.DOUBLEBUF | pg.HWACCEL | pg.ASYNCBLIT | pg.HWSURFACE | pg.HWPALETTE
 
 COLLISION_TOLERANCE = 0.7 # How close ghosts must be to Pacman to kill
+
 

@@ -1,5 +1,6 @@
 # ProjectMokman
 
+![CI](https://github.com/riklauder/ProjectMokman/workflows/CI/badge.svg)
 
 # CS-4432 Game Project
 

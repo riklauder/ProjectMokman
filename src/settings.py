@@ -26,14 +26,18 @@ DIR_DOWN = 2
 DIR_LEFT = 3
 STOPPED = 4
 SCRIPT_PATH = sys.path[0]
-PAC_SPEED = 4
-GHOST_SPEED = 3
+#May need to adjust these speed vars depending on system 
+#PAC_SPEED=3, GHOST=2or3 if it's too slow
+PAC_SPEED = 3 
+GHOST_SPEED = 2
 TURNBOOST = 2
 SCORE_XOFFSET=14 # pixels from left edge
 SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
 SCORE = 0
-GHOSTINT=200 #interval at which ghosts cycle through states
-GHOSTSSCARED=180 #interval for which ghosts stay scared
+GHOSTINT=400 #interval at which ghosts cycle through states
+#note 300 is equivalent to about 10 seconds in 30/60 frametime
+GHOSTSSCARED=320 #interval for which ghosts stay scared
+COMBOSOUND = False
 
 from pygame.locals import (
     K_UP,

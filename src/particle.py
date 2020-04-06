@@ -1,21 +1,21 @@
 import itertools
 import pygame as pg
+from pygame.locals import *
 import numpy
 import math
-from pygame.locals import *
 import pygame.surfarray as surfarray
 colors = pg.color.THECOLORS
 
 def memoize(function):
-  memo = {}
-  def wrapper(*args):
-    if args in memo:
-      return memo[args]
-    else:
-      rv = function(*args)
-      memo[args] = rv
-      return rv
-  return wrapper
+    memo = {}
+    def wrapper(*args):
+        if args in memo:
+            return memo[args]
+        else:
+            rv = function(*args)
+            memo[args] = rv
+            return rv
+    return wrapper
 
 @memoize  
 def makecircle(radius, color):
@@ -128,9 +128,9 @@ def wind_machine(total_level_width, total_level_height):
         yield create()
 
 def smoke_machine(total_level_width, total_level_height):
-    cm = [colors['grey'],
-          colors['darkgrey'],
-          colors['gray52']]
+    cm = [colors['pink'],
+        colors['white'],
+        colors['gray52']]
     
     behaviour = age(1), ascending(1), fan_out(400), wind(1, 15), grow(0.5), kill_at(total_level_width, total_level_height/2)
 
@@ -166,8 +166,8 @@ class Emitter(object):
         tmp = filter(Particle.move, tmp) # side effect!
         self.particles = list(tmp)
 
-    def draw(self, screen, position_translater_func):
-        x, y = position_translater_func(self.pos)
+    def draw(self, screen, pos):
+        x, y = pos#_translater_func(self.pos)
         for p in self.particles:
             target_pos = p.x + x, p.y + y 
             circle = makecircle(int(p.size), p.col)

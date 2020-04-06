@@ -1,17 +1,13 @@
-#!/bin/sh
-
-@echo off
-node mapgen.js > layouts/randomMap0.lay
-node mapgen.js > layouts/randomMap1.lay
-node mapgen.js > layouts/randomMap2.lay
-node mapgen.js > layouts/randomMap3.lay
-node mapgen.js > layouts/randomMap4.lay
-node mapgen.js > layouts/randomMap5.lay
-node mapgen.js > layouts/randomMap6.lay
-node mapgen.js > layouts/randomMap7.lay
-node mapgen.js > layouts/randomMap8.lay
-node mapgen.js > layouts/randomMap9.lay
-
-
+#!/bin/bash
+python3 -m maptpy > layouts/randomMap0.lay
+python3 -m maptpy > layouts/randomMap1.lay
+python3 -m maptpy > layouts/randomMap2.lay
+python3 -m maptpy > layouts/randomMap3.lay
+python3 -m maptpy > layouts/randomMap4.lay
+python3 -m maptpy > layouts/randomMap5.lay
+python3 -m maptpy > layouts/randomMap6.lay
+python3 -m maptpy > layouts/randomMap7.lay
+python3 -m maptpy > layouts/randomMap8.lay
+python3 -m maptpy > layouts/randomMap9.lay
 ./mapt > layouts/randomfMap.lay
-python mokman.py
+python3 mokman.py

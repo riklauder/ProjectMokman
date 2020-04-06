@@ -1,6 +1,6 @@
 # ProjectMokman
 
-[ master ]_
+|GithubCommits|_ |TravisBuild|_
 
 # CS-4432 Game Project
 

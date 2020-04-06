@@ -148,7 +148,8 @@ def saveghosts(self):
     for g in self.ghosts:
         mpos = self.laycoods
         gpos = g.laycoods
-        if abs(mokmanPos[1] - pos[1]) < 30:
+        if abs(mpos[1] - gpos[1]) > 60:
+            gname = g.gname
             respawnGhost(g, self.rect.left, self.rect.top, gname)
 
 

@@ -22,8 +22,8 @@ from ghosts import *
 import threading, multiprocessing
 from multiprocessing import Process, Pool, current_process
 from collections import defaultdict, deque
-import particle
-from particle import Emitter, smoke_machine, rain_machine, wind_machine
+#import particle
+#from particle import Emitter, smoke_machine, rain_machine, wind_machine
 from gamestate import GameState
 
 
@@ -75,16 +75,16 @@ snd_eatg2 = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatgh2.wav")
 snd_fruitbounce = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds",
     "fruitbounce.wav"))
 snd_eatfruit = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","eatfruit.wav"))
-snd_extralife = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
+snd_extra = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","extralife.wav"))
 snd_die = pg.mixer.Sound(os.path.join(SCRIPT_PATH,"res","sounds","die.wav"))
 snd_begin = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "begin.wav"))
 snd_chomp = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "chomp.wav"))
 snd_combo = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "combo.wav"))
 snd_wakka = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "wakawakam.wav"))
-snd_shep = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "Sheptone.ogg"))
+snd_shep = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "Sheptone.wav"))
 snd_theme = pg.mixer.Sound(os.path.join(SCRIPT_PATH, "res", "sounds", "Theme.wav"))
 snd_wakka.set_volume(.9)
-snd_shep.set_volume(.8)
+snd_shep.set_volume(.2)
 
 
 font_name = pg.font.match_font('consolas', bold=True)
@@ -145,7 +145,7 @@ def main():
     player = Player(platforms, (playerX, playerY), foods, teleports, powerups,
         ghosts, hscore)
     level_width  = level.width*TILE_SIZE
-    level_height = 255*TILE_SIZE
+    level_height = 500*TILE_SIZE
     entities = CameraAwareLayeredUpdates(player, pg.Rect(0, -level_height, level_width,
         level_height))
     frame_count = 0
@@ -416,7 +416,7 @@ class Player(Entity):
     *startY - y coordinate for staring position
 
     '''
-    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, hscore,  *groups):
+    def __init__(self, platforms, pos, foods, teleports, powerups, ghosts, hscore, *groups):
         super().__init__(Color("#DDA0DD"), pos)  #ebef00
         self.dir = 4
         self.laycoods = pg.Vector2(0, 0)
@@ -426,6 +426,7 @@ class Player(Entity):
         self.lastDir = 4
         self.platforms = platforms
         self.foods = foods
+        self.foodtime = 0
         self.teleports = teleports
         self.powerups = powerups
         self.ghosts = ghosts
@@ -437,7 +438,7 @@ class Player(Entity):
         self.ghostCount=0
         self.lose = False
         self.score = 1
-        self.combobegin= False
+        self.combocount = 0
         self.hscore = hscore
         self.state = 0
         self.gsobj = gamestate.GameState #gamestate object
@@ -447,7 +448,7 @@ class Player(Entity):
         self.chaseState = False
         self.loseTimer = 0 # delay so that game does not end immediately
         self.mazetf = getMaze(levelt, Y_DIM) #maze of walls as 1 r 0
-        #self.particles = Particle((16,16))
+        #self.particles = Emitter((self.rect.left, self.rect.top), smoke_machine(5*TILE_SIZE , 5*TILE_SIZE))
         #load player animation
         self.mmanL = {}
         self.mmanR = {}
@@ -487,16 +488,16 @@ class Player(Entity):
         if joyp==DIR_RIGHT:
             right=True
 
-        if self.rect.top <= 54*TILE_SIZE:
-            self.updatemap()
+        #if self.rect.top <= 54*TILE_SIZE:
+        #    self.updatemap()
 
         # update ghostcount live
         self.ghostCount=0
         for gh in self.ghosts:
             self.ghostCount+=1
-        
-        if self.combobegin > 100:
-            snd_shep.play()
+
+        self.combotracker()
+
         #spawn new random ghost if not all ghosts live on maze
         if self.ghostCount < self.ghostLimit:
             self.spawnRandomGhost()
@@ -577,6 +578,7 @@ class Player(Entity):
                 self.animFrame = 1
             self.image = self.mmanCurrent[self.animFrame]
         else: self.image = self.mmanS[1]
+        self.foodtime += 1
         if DEBUG == True:
             print("v.x new.x v.y", self.vel.x, self.rect.left, self.vel.y)  
         #DIR_UP = 0  #DIR_RIGHT = 1 #DIR_DOWN = 2  #DIR_LEFT = 3 #STOPPED = 4
@@ -681,10 +683,26 @@ class Player(Entity):
     def foodCollide(self):
         for f in self.foods:
             if pg.sprite.collide_rect(self, f):
+                if self.foodtime > 10:
+                    self.combocount = 0
                 f.kill()
                 self.score += 5
                 snd_wakka.play()
+                self.foodtime = 0
+                self.combocount += 1
                 #snd_pellet[self.score%2].play()
+
+    def combotracker(self):
+        if self.combocount > 15:
+            if COMBOSOUND:
+                snd_shep.play()
+        if self.combocount < 15:
+            snd_shep.stop()
+        if self.combocount >= 75:
+            self.score += 1000
+            snd_shep.stop()
+            snd_extra.play()
+            self.combocount = 0
 
     def ghostMokmanCollide(self):
         for g in self.ghosts:

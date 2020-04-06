@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 import os, sys, random, settings, util, gamestate
 from settings import *
@@ -102,23 +102,24 @@ def getlayoutActions(self):
     gobjs = gamestate.GameState
     legals = []
     #check L
-    if not gobjs.isWall(x-1, y, levelt):
+    if not gobjs.isWall(x-1, y, self.levelt):
         legals.append(DIR_LEFT)
     #check R
-    if not gobjs.isWall(x+1, y, levelt):
+    if not gobjs.isWall(x+1, y, self.levelt):
         legals.append(DIR_RIGHT)
     #check D
-    if not gobjs.isWall(x, y+1, levelt):
+    if not gobjs.isWall(x, y+1, self.levelt):
         legals.append(DIR_DOWN)
     #check U
-    if not gobjs.isWall(x, y-1, levelt):
+    if not gobjs.isWall(x, y-1, self.levelt):
         legals.append(DIR_UP)
     
     return legals
 
-def getMaze(level):
-    mazet = [[0] * int(X_DIM+1)] * int(Y_DIM+1)
-    maze = level.layoutText
+
+def getMaze(level, y):
+    mazet = [[0] * int(X_DIM+1)] * int(y+1)
+    maze = level
 
     npmaze = np.array(maze)
     npmazet=np.array(mazet)
@@ -136,17 +137,31 @@ def getMaze(level):
     mazet = npmazet.tolist()
     return mazet
 
+def updateghosts(self):
+    for g in self.ghosts:
+        g.platforms=self.platforms
+        g.rect.top += 27*TILE_SIZE
+        g.levelt = self.mchunks.copy()
+
+def saveghosts(self):
+    #checks for any ghosts left behind and respawns
+    for g in self.ghosts:
+        mpos = self.laycoods
+        gpos = g.laycoods
+        if abs(mokmanPos[1] - pos[1]) < 30:
+            respawnGhost(g, self.rect.left, self.rect.top, gname)
+
+
 def ghostAttack(self, mazet):
     '''
-    args - mokman Player , mazet is map with walls only as 1 or 0
+    :param self: mokman Player sprite group or ghosts
+    :param mazet is map with walls only as 1 or 0
     Function used to make ghosts agressively pursue the Player
     Uses Astar search currently
     '''
     mokmanPos = self.laycoods
-
     #mazet = getMaze(level)
     #print(mazet)
-
     for g in self.ghosts:
         if g.behave == "chase":
             pos = g.laycoods
@@ -218,6 +233,7 @@ class BlinkyGhosts(Entity):
         self.gname = "Blinky"
         self.xadj=0 # ghosts personality adjust attack vector
         self.behave = "chase"
+        self.levelt=levelt
 
     def update(self):
         self.currDir = getDir(self)
@@ -225,7 +241,9 @@ class BlinkyGhosts(Entity):
         self.laycoods.y = getObjectCoord(self, 'y')
 
         legals = getlayoutActions(self)
-        randmove = random.randint(0, len(legals)-1)
+        randmove =0
+        if len(legals) != 0:
+            randmove = random.randint(0, len(legals)-1)
         if self.stopped:
             self.dir = legals[randmove]
         if self.dir == 1:
@@ -270,13 +288,16 @@ class PinkyGhosts(Entity):
         self.gname = "Pinky"
         self.xadj=4 # ghosts personality adjust attack vector
         self.behave = "chase"
+        self.levelt=levelt
 
     def update(self):
         self.currDir = getDir(self)
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
-        randmove = random.randint(0, len(legals)-1)
+        randmove =0
+        if len(legals) != 0:
+            randmove = random.randint(0, len(legals)-1)
         if self.stopped:
             self.dir = legals[randmove]
         if self.dir == 1:
@@ -321,13 +342,16 @@ class InkyGhosts(Entity):
         self.gname = "Inky"
         self.xadj = -2 # ghosts personality adjust attack vector
         self.behave = "chase"
+        self.levelt=levelt
 
     def update(self):
         self.currDir = getDir(self)
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
-        randmove = random.randint(0, len(legals)-1)
+        randmove =0
+        if len(legals) != 0:
+            randmove = random.randint(0, len(legals)-1)
         if self.stopped:
             self.dir = legals[randmove]
         if self.dir == 1:
@@ -372,6 +396,7 @@ class ClydeGhosts(Entity):
         self.xadj = 5 # Clyde only chases when he is on same level or within 5
         self.gname = "Clyde"
         self.behave = "sees"
+        self.levelt=levelt
         
 
     def update(self):
@@ -379,7 +404,9 @@ class ClydeGhosts(Entity):
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
-        randmove = random.randint(0, len(legals)-1)
+        randmove =0
+        if len(legals) != 0:
+            randmove = random.randint(0, len(legals)-1)
         if self.stopped:
             self.dir = legals[randmove]
         if self.dir == 1:
@@ -425,13 +452,16 @@ class SlyderGhosts(Entity):
         self.gname = "Slyder"
         self.behave = "static"
         self.xadj=0 # ghosts personality adjust attack vector
+        self.levelt=levelt
 
     def update(self):
         self.currDir = getDir(self)
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
-        randmove = random.randint(0, len(legals)-1)
+        randmove =0
+        if len(legals) != 0:
+            randmove = random.randint(0, len(legals)-1)
         if self.stopped:
             self.dir = self.nextDir
             if self.nextDir == 3:
@@ -481,13 +511,16 @@ class WelchGhosts(Entity):
         self.gname = "Welch"
         self.behave = "static"
         self.xadj=0 # ghosts personality adjust attack vector
+        self.levelt=levelt
 
     def update(self):
         self.currDir = getDir(self)
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
-        randmove = random.randint(0, len(legals)-1)
+        randmove =0
+        if len(legals) != 0:
+            randmove = random.randint(0, len(legals)-1)
         if self.stopped:
             self.dir = self.nextDir
             if self.nextDir == 2:

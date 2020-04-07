@@ -151,11 +151,13 @@ def saveghosts(self):
         if abs(mpos[1] - gpos[1]) > 60:
             gname = g.gname
             respawnGhost(g, self.rect.left, self.rect.top, gname)
+            # added gMOve to prevent ghosts setting vel to 0 and getting stuck in wall
+    ghostsMove(self.ghosts, self.teleports) 
 
 
 def ghostAttack(self, mazet):
     '''
-    :param self: mokman Player sprite group or ghosts
+    :param self: mokman Player sprite group with child ghosts ob or ghosts obj
     :param mazet is map with walls only as 1 or 0
     Function used to make ghosts agressively pursue the Player
     Uses Astar search currently
@@ -460,7 +462,7 @@ class SlyderGhosts(Entity):
         self.laycoods.x = getObjectCoord(self, 'x')
         self.laycoods.y = getObjectCoord(self, 'y')
         legals = getlayoutActions(self)
-        randmove =0
+        randmove = 0
         if len(legals) != 0:
             randmove = random.randint(0, len(legals)-1)
         if self.stopped:

@@ -62,9 +62,9 @@ int main(){
 		}
 		if (i == 9){
 			map[22][14]='P';
-			map[10][18]='B';//one ghost always spawn in house
+			map[8][18]='B';//one ghost always spawn in house
 			/*2 ghosts spawn on north side of map*/
-			map[16][9]='C';
+			map[10][9]='C';
 			map[0][3]='S';
 			map[0][24]='S';
 			/*random L R spawn south end*/

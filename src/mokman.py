@@ -408,7 +408,8 @@ class Player(Entity):
     elements /w sprite groups
     
     Player(mapsprite,*(startX, startY), food, etc.)
-
+    :param platforms: :param pos: :param foods: :param teleports:
+    :param powerups: :param ghosts: :param hscore:
     *mapsprite - master sprite object representing game world
 
     *startX - x coordinate for staring position

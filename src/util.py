@@ -114,9 +114,9 @@ class FixedRandom:
         self.random = random.Random()
         self.random.setstate(fixedState)
 
-"""
+'''
 Data structures useful for implementing SearchAgents
-"""
+'''
 
 class Stack:
     "A container with a last-in-first-out (LIFO) queuing policy."
@@ -145,10 +145,10 @@ class Queue:
         self.list.insert(0,item)
 
     def pop(self):
-        """
+        '''
         Dequeue the earliest enqueued item still in the queue. This
         operation removes the item from the queue.
-        """
+        '''
         return self.list.pop()
 
     def isEmpty(self):
@@ -156,7 +156,7 @@ class Queue:
         return len(self.list) == 0
 
 class PriorityQueue:
-    """
+    '''
     Implements a priority queue data structure. Each inserted item
     has a priority associated with it and the client is usually interested
     in quick retrieval of the lowest-priority item in the queue. This
@@ -164,7 +164,7 @@ class PriorityQueue:
     Note that this PriorityQueue does not allow you to change the priority
     of an item.  However, you may insert the same item multiple times with
     different priorities.
-    """
+    '''
     def  __init__(self):
         self.heap = []
         self.count = 0
@@ -184,12 +184,12 @@ class PriorityQueue:
         return len(self.heap) == 0
 
 class PriorityQueueWithFunction(PriorityQueue):
-    """
+    '''
     Implements a priority queue with the same push/pop signature of the
     Queue and the Stack classes. This is designed for drop-in replacement for
     those two classes. The caller has to provide a priority function, which
     extracts each item's priority.
-    """
+    '''
     def  __init__(self, priorityFunction):
         "priorityFunction (item) -> priority"
         self.priorityFunction = priorityFunction      # store the priority function
@@ -206,9 +206,9 @@ def manhattanDistance( xy1, xy2 ):
 
 
 def normalize(vectorOrCounter):
-    """
+    '''
     normalize a vector or counter by dividing each value by the sum of all values
-    """
+    '''
     normalizedCounter = Counter()
     if type(vectorOrCounter) == type(normalizedCounter):
         counter = vectorOrCounter
@@ -259,10 +259,10 @@ def sampleFromCounter(ctr):
     return sample([v for k,v in items], [k for k,v in items])
 
 def getProbability(value, distribution, values):
-    """
+    '''
       Gives the probability of a value under a discrete distribution
       defined by (distributions, values).
-    """
+    '''
     total = 0.0
     for prob, val in zip(distribution, values):
         if val == value:
@@ -284,9 +284,9 @@ def chooseFromDistribution( distribution ):
         if r <= base: return element
 
 def nearestPoint( pos ):
-    """
+    '''
     Finds the nearest grid point to a position (discretizes).
-    """
+    '''
     ( current_row, current_col ) = pos
 
     grid_row = int( current_row + 0.5 )
@@ -294,18 +294,18 @@ def nearestPoint( pos ):
     return ( grid_row, grid_col )
 
 def sign( x ):
-    """
+    '''
     Returns 1 or -1 depending on the sign of x
-    """
+    '''
     if( x >= 0 ):
         return 1
     else:
         return -1
 
 def arrayInvert(array):
-    """
+    '''
     Inverts a matrix stored as a list of lists.
-    """
+    '''
     result = [[] for i in array]
     for outer in array:
         for inner in range(len(outer)):
@@ -313,9 +313,9 @@ def arrayInvert(array):
     return result
 
 def matrixAsList( matrix, value = True ):
-    """
+    '''
     Turns a matrix into a list of coordinates matching the specified value
-    """
+    '''
     rows, cols = len( matrix ), len( matrix[0] )
     cells = []
     for row in range( rows ):
@@ -325,10 +325,10 @@ def matrixAsList( matrix, value = True ):
     return cells
 
 def lookup(name, namespace):
-    """
+    '''
     Get a method or class from any imported module from its name.
     Usage: lookup(functionName, globals())
-    """
+    '''
     dots = name.count('.')
     if dots > 0:
         moduleName, objName = '.'.join(name.split('.')[:-1]), name.split('.')[-1]
@@ -343,9 +343,9 @@ def lookup(name, namespace):
         raise Exception('%s not found as a method or class' % name)
 
 def pause():
-    """
+    '''
     Pauses the output stream awaiting user feedback.
-    """
+    '''
     print("<Press enter/return to continue>")
     input()
 
@@ -360,7 +360,7 @@ def pause():
 import signal, os, sys
 import time
 class TimeoutFunctionException(Exception):
-    """Exception to raise on a timeout"""
+    '''Exception to raise on a timeout'''
     pass
 
 
@@ -520,11 +520,11 @@ class QuadTree():
                 self.traverse(child) # << recursion
 
 def minimize_mask(bbox, mask, mini_shape):
-    """Resize masks to a smaller version to cut memory load.
+    '''Resize masks to a smaller version to cut memory load.
     Mini-masks can then resized back to image scale using expand_masks()
 
     See inspect_data.ipynb notebook for more details.
-    """
+    '''
     mini_mask = np.zeros(mini_shape + (mask.shape[-1],), dtype=bool)
     for i in range(mask.shape[-1]):
         m = mask[:, :, i]
@@ -538,10 +538,10 @@ def minimize_mask(bbox, mask, mini_shape):
         mini_mask[:, :, i] = np.where(m >= 128, 1, 0)
     return mini_mask
 
-"""
+'''
 Data structures and functions useful for various course projects
 
-"""
+'''
 
 def stateNameToCoords(name):
     if name != None:
@@ -550,7 +550,7 @@ def stateNameToCoords(name):
 
 
 class Counter(dict):
-    """
+    '''
     A counter keeps track of counts for a set of keys.
 
     The counter class is an extension of the standard python
@@ -588,13 +588,13 @@ class Counter(dict):
     the classifiers for this assignment.  Two counters can be added,
     subtracted or multiplied together.  See below for details.  They can
     also be normalized and their total count and arg max can be extracted.
-    """
+    '''
     def __getitem__(self, idx):
         self.setdefault(idx, 0)
         return dict.__getitem__(self, idx)
 
     def incrementAll(self, keys, count):
-        """
+        '''
         Increments all elements of keys by the same count.
 
         >>> a = Counter()
@@ -603,14 +603,14 @@ class Counter(dict):
         1
         >>> a['two']
         1
-        """
+        '''
         for key in keys:
             self[key] += count
 
     def argMax(self):
-        """
+        '''
         Returns the key with the highest value.
-        """
+        '''
         if len(self.keys()) == 0: return None
         all = self.items()
         values = [x[1] for x in all]
@@ -618,7 +618,7 @@ class Counter(dict):
         return all[maxIndex][0]
 
     def sortedKeys(self):
-        """
+        '''
         Returns a list of keys sorted by their values.  Keys
         with the highest values will appear first.
 
@@ -628,46 +628,46 @@ class Counter(dict):
         >>> a['third'] = 1
         >>> a.sortedKeys()
         ['second', 'third', 'first']
-        """
+        '''
         sortedItems = self.items()
         compare = lambda x, y:  sign(y[1] - x[1])
         sortedItems.sort(cmp=compare)
         return [x[0] for x in sortedItems]
 
     def totalCount(self):
-        """
+        '''
         Returns the sum of counts for all keys.
-        """
+        '''
         return sum(self.values())
 
     def normalize(self):
-        """
+        '''
         Edits the counter such that the total count of all
         keys sums to 1.  The ratio of counts for all keys
         will remain the same. Note that normalizing an empty
         Counter will result in an error.
-        """
+        '''
         total = float(self.totalCount())
         if total == 0: return
         for key in self.keys():
             self[key] = self[key] / total
 
     def divideAll(self, divisor):
-        """
+        '''
         Divides all counts by divisor
-        """
+        '''
         divisor = float(divisor)
         for key in self:
             self[key] /= divisor
 
     def copy(self):
-        """
+        '''
         Returns a copy of the counter
-        """
+        '''
         return Counter(dict.copy(self))
 
     def __mul__(self, y ):
-        """
+        '''
         Multiplying two counters gives the dot product of their vectors where
         each unique label is a vector element.
 
@@ -681,7 +681,7 @@ class Counter(dict):
         >>> a['fourth'] = 2.5
         >>> a * b
         14
-        """
+        '''
         sum = 0
         x = self
         if len(x) > len(y):
@@ -693,7 +693,7 @@ class Counter(dict):
         return sum
 
     def __radd__(self, y):
-        """
+        '''
         Adding another counter to a counter increments the current counter
         by the values stored in the second counter.
 
@@ -706,12 +706,12 @@ class Counter(dict):
         >>> a += b
         >>> a['first']
         1
-        """
+        '''
         for key, value in y.items():
             self[key] += value
 
     def __add__( self, y ):
-        """
+        '''
         Adding two counters gives a counter with the union of all keys and
         counts of the second added to counts of the first.
 
@@ -723,7 +723,7 @@ class Counter(dict):
         >>> b['third'] = 1
         >>> (a + b)['first']
         1
-        """
+        '''
         addend = Counter()
         for key in self:
             if key in y:
@@ -737,7 +737,7 @@ class Counter(dict):
         return addend
 
     def __sub__( self, y ):
-        """
+        '''
         Subtracting a counter from another gives a counter with the union of all keys and
         counts of the second subtracted from counts of the first.
 
@@ -749,7 +749,7 @@ class Counter(dict):
         >>> b['third'] = 1
         >>> (a - b)['first']
         -5
-        """
+        '''
         addend = Counter()
         for key in self:
             if key in y:

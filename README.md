@@ -6,6 +6,7 @@
 
 [go to src code](https://github.com/riklauder/ProjectMokman/tree/master/src)
 
+![](Screenshot1.png)
 
 ## Project Ten Page Plan 
 Link to draft Ten Page Plan [Click Here!](https://1drv.ms/w/s!BC3kPYTrDe8AjeF9RJC0USLp8sFAeg?e=tSCDXQZf9E-M0kjkdhoAug&at=9)

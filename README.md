@@ -109,7 +109,7 @@ To install pygame
 
 *batch file will execute code then automatically start python game if run from correct dir
 
-*requires WSL bash shell with g++ installed although could likely be compiled to mapt.exe using VS or Windoes based  
+*requires WSL bash shell with g++ installed  
 
 
 *working project and more details in README in [src](https://github.com/riklauder/ProjectMokman/tree/master/src) dir

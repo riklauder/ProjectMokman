@@ -19,7 +19,7 @@ just some random analysis in Excel used to generate Map grids
 Project Scedule and Story Planning [click here](https://1drv.ms/x/s!Ai3kPYTrDe8Aj4VHUD1C-X5nfQ5vfA?e=CYuuac)
 
 ## Project Description
-Pacman Clone for undergrad game project
+Pacman Clone for undergrad game project. note: This project isn't entirely complete. May revisist when Pygame 2 is out of beta.
 
 | Feature       | detail        | 
 | ------------- |:-------------:| 

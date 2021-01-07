@@ -2,7 +2,7 @@
 # Main game loop and core fuctions
 from settings import * # settings and gloval variables for mokman
 # library imports
-import random, math, heapq, itertools, time, collections, cProfile
+import os, sys, random, math, heapq, itertools, time, collections, cProfile
 import numpy as np
 from scipy import linalg  # shuld run without this so comment if required
 import pygame as pg
@@ -218,7 +218,7 @@ def main():
 
         pg.display.update()
         frame_count += 1
-        timedelta = timer.tick(60)
+        timedelta = timer.tick(120)
         timedelta /= 1000
         pg.display.flip()
 #//////end main loop----------------------------#

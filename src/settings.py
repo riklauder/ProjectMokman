@@ -38,7 +38,7 @@ SCORE_YOFFSET=14 # pixels from bottom edge (to top of score)
 SCORE = 0
 #interval at which ghosts cycle through states
 GHOSTSFREE = 100 # ghosts in randon browse state
-GHOSTINT=400 #interval at which ghosts cycle through states
+GHOSTINT=300 #interval at which ghosts cycle through states
 #note 300 is equivalent to about 10 seconds in 30/60 frametime
 GHOSTSSCARED=320 #interval for which ghosts stay scared
 COMBOSOUND = False

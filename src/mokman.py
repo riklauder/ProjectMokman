@@ -32,7 +32,7 @@ hiscore = file.read()
 file.close()
 
 # Mixer for sound event - Must come before pygame.init()
-pg.mixer.pre_init(22050, 16, 2, 512)
+pg.mixer.pre_init(22050, -16, 2, 512)
 pg.mixer.init()
 
 # pygame initialization globals - defines included in settins.py
@@ -204,11 +204,15 @@ def main():
         total_seconds = frame_count // frame_time
         minutes = total_seconds // 60
         seconds = total_seconds % 60
+        #fps=60
+        #if timer.tick(fps) > 10:
+        #    mfps=timer
 
         entities.draw(screen)
         draw_text(screen, "Time: {0:02}:{1:02}".format(minutes, seconds), 22, 128, 10)
         draw_text(screen, "Score: " + str(entities.target.score), 24, HALF_WIDTH, 10)
-        draw_text(screen, "HISCORE: " + entities.target.hscore, 26, WIN_WIDTH-128, 10)
+        draw_text(screen, "HISCORE: " + entities.target.hscore, 26, WIN_WIDTH-100, 10)
+        draw_text(screen, "FPS: " + str(int(timer.get_fps())), 26, WIN_WIDTH-100, 30)
         # Calculate total seconds n minutes after draw
         total_seconds = start_time - (frame_count // frame_time)
         if total_seconds < 0:
@@ -218,8 +222,8 @@ def main():
 
         pg.display.update()
         frame_count += 1
-        timedelta = timer.tick(120)
-        timedelta /= 1000
+        timedelta = timer.tick(frame_time)
+        timedelta /= frame_time
         pg.display.flip()
 #//////end main loop----------------------------#
 #/////0---0--end loop------O--O----O----------------#

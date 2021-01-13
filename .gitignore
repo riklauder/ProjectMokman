@@ -12,6 +12,7 @@ __pycache__/
 
 # C extensions
 *.so
+*.asm
 
 # Distribution / packaging
 .Python

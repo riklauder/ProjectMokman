@@ -185,7 +185,7 @@ def main():
         x=0
 
     # Main Loop while game is running starts here
-    while True:
+    while 1:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 exit(entities.target.hscore)

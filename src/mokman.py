@@ -39,11 +39,12 @@ pg.mixer.init()
 pg.init() # inititates pygame required objects before main loop
 #screen = pg.display.set_mode(SCREEN_SIZE.size)
 clock = pg.time.Clock()
+dflags = pg.SCALED 
 pg.display.init()
 if DEBUG:
     info = pg.display.Info()
     print(info)
-screen = pg.display.set_mode(DISPLAY) #sets display object
+screen = pg.display.set_mode(DISPLAY, dflags) #sets display object
 pg.display.set_caption("Mokman! Use arrows or Controller Stick to move!")
 screenp = pg.display.get_surface()
 timer = pg.time.Clock()
@@ -703,7 +704,7 @@ class Player(Entity):
                 snd_shep.play()
         if self.combocount < 15:
             snd_shep.stop()
-        if self.combocount >= 75:
+        if self.combocount >= 60:
             self.score += 1000
             snd_shep.stop()
             snd_extra.play()

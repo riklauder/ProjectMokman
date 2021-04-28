@@ -10,8 +10,8 @@ TRUE = True
 FALSE = False
 #Currently game is set by these paramters so do not change for scaling purpose
 #Use pygame api to resize
-WIN_WIDTH = 648
-WIN_HEIGHT = 600
+WIN_WIDTH = 648 
+WIN_HEIGHT = 672
 HALF_WIDTH = int(WIN_WIDTH / 2)
 HALF_HEIGHT = int(WIN_HEIGHT / 2)
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
@@ -29,7 +29,7 @@ DIR_LEFT = 3
 STOPPED = 4
 SCRIPT_PATH = sys.path[0]
 #May need to adjust these speed vars depending on system 
-#PAC_SPEED=3, GHOST=2or3 if it's too slow
+#PAC_SPEED=3, GHOST=3 also or 2 if too fast
 PAC_SPEED = 3 
 GHOST_SPEED = 2
 TURNBOOST = 2
@@ -41,6 +41,8 @@ GHOSTSFREE = 100 # ghosts in randon browse state
 GHOSTINT=300 #interval at which ghosts cycle through states
 #note 300 is equivalent to about 10 seconds in 30/60 frametime
 GHOSTSSCARED=320 #interval for which ghosts stay scared
+#Will activatae combo bonus feature tense sound in background while combo builds - sound stops
+# if progress towards combo stops 
 COMBOSOUND = False
 
 from pygame.locals import (

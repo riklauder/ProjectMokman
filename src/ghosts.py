@@ -141,6 +141,7 @@ def updateghosts(self):
     for g in self.ghosts:
         g.platforms=self.platforms
         g.rect.top += 27*TILE_SIZE
+        g.levelt = self.mchunks
         g.levelt = self.mchunks.copy()
 
 def saveghosts(self):

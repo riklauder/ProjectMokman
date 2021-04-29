@@ -23,11 +23,13 @@ Pacman Clone for undergrad game project. note: This project isn't entirely compl
 
 | Feature       | detail        | 
 | ------------- |:-------------:| 
-| Behaviours | Ghosts will have different behaviours and spawning than OG game| 
-| Maze Generation | Automatically generate random pacman style mazes   |
-| Endless Mode | Game will go on for much longer with randomly created mazes with authentic Pacman style | 
-| Power Ups | Power-ups and 256-combo(like in pacman 356 )  |
-
+| Behaviours | Ghosts will have different behaviours and spawning patterns than OG game| 
+| Maze Generation | Automatically generate random pacman style mazes |
+| Endless Mode | Game plays single regenerating level that dynamically creates unique mazes with authentic Pacman style. Much better than using Eller type procedural generation which does not produce playable maps.  | 
+| Power Ups | Power-ups - Typical power-pellets and continous food combo bonus(similar to pacman 256 )  |
+| A-star search | Ghosts use A-star search in combination with behaviour attributes to obtain path to pacman
+| Game Audio | Implemented instant player feedback and audio hints towards combo progress
+  
 
 ## AIversion
 [AIversion](https://github.com/riklauder/ProjectMokman/tree/master/AIversion)
